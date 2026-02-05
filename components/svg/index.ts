@@ -1,3 +1,3 @@
-export { default as English } from "/svg/English.svg";
-export { default as Georgian } from "/svg/Georgian.svg";
-export { default as Russian } from "/svg/Russian.svg";
+export { default as English } from "@/public/svg/English.svg";
+export { default as Georgian } from "@/public/svg/Georgian.svg";
+export { default as Russian } from "@/public/svg/Russian.svg";
