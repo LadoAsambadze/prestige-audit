@@ -44,7 +44,7 @@ const faqs = [
 
 export default function FAQSection() {
   return (
-    <section className="relative w-full  rounded-to-[50px] -mt-10 min-h-screen bg-[#0f141a] py-20 md:py-24 lg:py-28 px-5 sm:px-8 lg:px-12 overflow-hidden">
+    <section className="relative w-full     rounded-t-[80px] -mt-10 min-h-screen bg-[#0f141a] py-20 md:py-24 lg:py-28 px-5 sm:px-8 lg:px-12 overflow-hidden">
       {/* Main background photo – abstract waves/cells */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-25"

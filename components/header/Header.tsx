@@ -66,43 +66,7 @@ export default function Header() {
             className="flex items-center gap-3"
             style={{ width: "25%" }}
           >
-            {/* Chart Bars Icon */}
-            <div className="flex items-end gap-[3px]">
-              <div
-                className="rounded-sm"
-                style={{
-                  width: "5px",
-                  height: "12px",
-                  backgroundColor: "#4A9FF5",
-                }}
-              ></div>
-              <div
-                className="rounded-sm"
-                style={{
-                  width: "5px",
-                  height: "20px",
-                  backgroundColor: "#4A9FF5",
-                }}
-              ></div>
-              <div
-                className="rounded-sm"
-                style={{
-                  width: "5px",
-                  height: "16px",
-                  backgroundColor: "#4A9FF5",
-                }}
-              ></div>
-            </div>
-            <span
-              className="text-white tracking-tight"
-              style={{
-                fontSize: "28px",
-                fontWeight: 700,
-                fontFamily: "'DM Sans', sans-serif",
-              }}
-            >
-              Bullish
-            </span>
+            <img src="./Logo.png" className="w-60 h-auto" />
           </Link>
 
           {/* Desktop Navigation - Center */}

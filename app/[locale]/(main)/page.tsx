@@ -1,17 +1,17 @@
-import React from "react";
-
 import HeroSection from "./_components/HeroSection";
-import ServicesSection from "./_components/ServicesSection";
+
 import TestimonialsSection from "./_components/TestimonialSection";
 
 import FAQSection from "./_components/FaqSection";
 import TeamSection from "./_components/TeamSection";
+import OurIdentity from "./_components/OurIdentity";
 
 export default function Page() {
   return (
     <div>
       <HeroSection />
-      <ServicesSection />
+      <OurIdentity />
+
       <TestimonialsSection />
       <FAQSection />
       <TeamSection />
