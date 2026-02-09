@@ -53,6 +53,12 @@ const teamMembers: TeamMember[] = [
     department: "Finance",
     image: "2.png",
   },
+  {
+    name: "David Thompson",
+    title: "CFO",
+    department: "Finance",
+    image: "7.png",
+  },
 ];
 
 const TeamCard = React.memo(
