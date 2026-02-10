@@ -44,130 +44,48 @@ const faqs = [
 
 export default function FAQSection() {
   return (
-    <section className="relative w-full     rounded-t-[80px] -mt-10 min-h-screen bg-[#0f141a] py-20 md:py-24 lg:py-28 px-5 sm:px-8 lg:px-12 overflow-hidden">
-      {/* Main background photo – abstract waves/cells */}
+    <section className="relative w-full rounded-t-[60px] -mt-10 min-h-screen bg-[#020817] pt-24 pb-32 px-5 overflow-hidden">
+      {/* 1. THE EXACT BACKGROUND IMAGE: Abstract Blue Light Trails */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-25"
+        className="absolute inset-0 z-0 opacity-60 mix-blend-screen"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1617791160505-6f00504e3519')`,
-          // You can also try these alternatives:
-          // https://images.unsplash.com/photo-1617791160505-6f00504e3519 (soft blue waves)
-          // https://images.unsplash.com/photo-1557683311-973673baf3a6 (dark fluid cells)
-          // https://images.unsplash.com/photo-1557683316-973673baf926 (geometric flow)
+          backgroundImage: `url('4.jpeg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
 
-      {/* Subtle dark overlay to keep text readable */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/70" />
+      {/* 2. GLOWING ORBS: Creates the 'light spot' effect from your image */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Optional extra subtle wave overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <svg
-          className="w-full h-full"
-          preserveAspectRatio="none"
-          viewBox="0 0 1200 800"
-        >
-          <defs>
-            <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#1e40af" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M0,300 Q300,180 600,300 T1200,300 L1200,800 L0,800 Z"
-            fill="url(#waveGrad)"
-            opacity="0.15"
-          />
-          <path
-            d="M0,450 Q300,330 600,450 T1200,450 L1200,800 L0,800 Z"
-            fill="url(#waveGrad)"
-            opacity="0.1"
-          />
-        </svg>
-      </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-down {
-          animation: fadeInDown 0.7s ease-out forwards;
-        }
-        .faq-item {
-          opacity: 0;
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-        .faq-item:nth-child(1) {
-          animation-delay: 0.1s;
-        }
-        .faq-item:nth-child(2) {
-          animation-delay: 0.2s;
-        }
-        .faq-item:nth-child(3) {
-          animation-delay: 0.3s;
-        }
-        .faq-item:nth-child(4) {
-          animation-delay: 0.4s;
-        }
-        .faq-item:nth-child(5) {
-          animation-delay: 0.5s;
-        }
-        .hover-lift {
-          transition: all 0.25s ease;
-        }
-        .hover-lift:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-        }
-      `}</style>
+      {/* 3. VIGNETTE OVERLAY: Keeps the edges dark and the center focused */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020817_80%)] z-0" />
 
       <div className="mx-auto max-w-4xl relative z-10">
-        {/* Header */}
-        <div className="text-center mb-12 md:mb-16 animate-fade-in-down">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Frequently Asked <span className="text-blue-400">Questions</span>
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+            Frequently Asked <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+              Questions
+            </span>
           </h2>
-          <p className="text-gray-300 text-lg">
-            Find quick answers to the most common questions about our services
-          </p>
         </div>
 
-        {/* Accordion */}
         <Accordion type="single" collapsible className="space-y-4">
           {faqs.map((faq) => (
-            <div key={faq.id} className="faq-item">
-              <div className="hover-lift">
-                <AccordionItem
-                  value={faq.id}
-                  className="rounded-xl border border-gray-700/70 bg-gray-900/50 backdrop-blur-md shadow-xl overflow-hidden transition-all"
-                >
-                  <AccordionTrigger className="px-5 py-5 text-left text-base md:text-lg font-medium text-gray-100 hover:text-white hover:no-underline transition-colors data-[state=open]:bg-blue-950/40">
-                    {faq.question}
-                  </AccordionTrigger>
-
-                  <AccordionContent className="px-5 pb-5 pt-1 text-gray-200 text-base leading-relaxed border-t border-gray-700/50">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              </div>
-            </div>
+            <AccordionItem
+              key={faq.id}
+              value={faq.id}
+              className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-2 transition-all hover:bg-white/10 hover:border-blue-500/30 shadow-2xl"
+            >
+              <AccordionTrigger className="px-4 py-6 text-left text-white font-medium hover:no-underline text-lg">
+                <span className="flex items-center gap-4">{faq.question}</span>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 text-blue-100/70 text-base leading-relaxed">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
           ))}
         </Accordion>
       </div>

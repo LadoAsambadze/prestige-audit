@@ -2,7 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown, CheckCircle2, X } from "lucide-react";
+import { ArrowRight, ChevronDown, CheckCircle2 } from "lucide-react";
 import React, { useState } from "react";
 import Image from "next/image";
 
@@ -25,6 +25,7 @@ const services: Service[] = [
         viewBox="0 0 30 30"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
+        fill="currentColor"
       >
         <path d="M24.45,0a2.29,2.29,0,0,0-2.28,2.28,2.4,2.4,0,0,0,.12.71L18,6.83a2.27,2.27,0,0,0-2.29.25L11.93,4.91a1.6,1.6,0,0,0,0-.23,2.29,2.29,0,0,0-4.57,0,2.38,2.38,0,0,0,.15.81L3.12,9.86a2.32,2.32,0,0,0-.84-.16A2.29,2.29,0,1,0,4.57,12a2.25,2.25,0,0,0-.16-.81L8.84,6.8A2.32,2.32,0,0,0,9.67,7,2.24,2.24,0,0,0,11,6.51L14.8,8.68c0,.07,0,.15,0,.23a2.29,2.29,0,1,0,4.45-.7l4.29-3.85a2.22,2.22,0,0,0,.93.21,2.29,2.29,0,1,0,0-4.57Z" />
         <path d="M8,11h3.27a.65.65,0,0,1,.65.65V29.11H7.39V11.65A.65.65,0,0,1,8,11Z" />
@@ -35,7 +36,6 @@ const services: Service[] = [
       </svg>
     ),
     contentTitle: "პროფესიონალური აუდიტორული მომსახურება",
-
     description:
       "სრული ფინანსური აუდიტი საერთაშორისო სტანდარტების მიხედვით. ჩვენი გამოცდილი სპეციალისტები უზრუნველყოფენ თქვენი ბიზნესის ფინანსური მდგომარეობის სრულ და ობიექტურ შეფასებას.",
     features: [
@@ -48,12 +48,12 @@ const services: Service[] = [
   {
     id: "tax-services",
     title: "საგადასახადო მომსახურება",
-
     icon: (
       <svg
         viewBox="0 0 30 30"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
+        fill="currentColor"
       >
         <path d="M15,6.75A8.25,8.25,0,1,0,23.25,15,8.25,8.25,0,0,0,15,6.75Zm-.94,6.79a4.59,4.59,0,0,0,1.35.65c.33.12.67.24,1,.41a2.62,2.62,0,0,1,1.37,1.53,2.85,2.85,0,0,1-.19,2.23,2.63,2.63,0,0,1-1.8,1.32v.78a.83.83,0,0,1-1.65,0v-.8A2.62,2.62,0,0,1,12,17.27a.83.83,0,0,1,1.65,0c0,.43.64.85,1.3.85a1.11,1.11,0,0,0,1.28-1.47.89.89,0,0,0-.49-.55c-.31-.14-.62-.25-.92-.36A5.64,5.64,0,0,1,13,14.8a2.57,2.57,0,0,1-.68-3,2.61,2.61,0,0,1,1.86-1.44V9.54a.83.83,0,0,1,1.65,0v.8A2.63,2.63,0,0,1,18,12.73a.83.83,0,1,1-1.65,0c0-.43-.65-.85-1.31-.85-.94,0-1.15.44-1.22.59a.92.92,0,0,0,.25,1.07Z" />
         <path d="M27.58,24.76l-1.51.35A15.06,15.06,0,0,0,30,15a14.91,14.91,0,0,0-.72-4.61.92.92,0,1,0-1.76.56A13,13,0,0,1,28.16,15a13.16,13.16,0,0,1-3.71,9.15l.63-2.06a.92.92,0,0,0-1.76-.54l-1.53,5a.91.91,0,0,0,.88,1.19.65.65,0,0,0,.2,0L28,26.56a.91.91,0,0,0,.69-1.11.92.92,0,0,0-1.1-.69Z" />
@@ -63,7 +63,6 @@ const services: Service[] = [
       </svg>
     ),
     contentTitle: "საგადასახადო დაგეგმვა და კონსულტაცია",
-
     description:
       "ყოვლისმომცველი საგადასახადო მომსახურება ფიზიკური და იურიდიული პირებისთვის. ჩვენ დაგეხმარებით გადასახადების ოპტიმიზაციაში და მოქმედი კანონმდებლობის დაცვაში.",
     features: [
@@ -76,12 +75,12 @@ const services: Service[] = [
   {
     id: "accounting",
     title: "საბუღალტრო მომსახურება",
-
     icon: (
       <svg
         viewBox="0 0 30 30"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
+        fill="currentColor"
       >
         <path d="M1.92,4.28a.22.22,0,0,1,.2-.11H3.21V.44A.44.44,0,0,1,3.65,0H5.84a.44.44,0,0,1,.44.44V4.17H7.37a.2.2,0,0,1,.19.11.24.24,0,0,1,0,.23L4.93,8.72a.22.22,0,0,1-.37,0L1.93,4.51a.24.24,0,0,1,0-.23Z" />
         <path d="M12.18,4.28a.21.21,0,0,1,.19-.11h1.1V.44A.44.44,0,0,1,13.91,0H16.1a.44.44,0,0,1,.43.44V4.17h1.1a.22.22,0,0,1,.18.34L15.19,8.72a.22.22,0,0,1-.38,0L12.19,4.51a.24.24,0,0,1,0-.23Z" />
@@ -93,7 +92,6 @@ const services: Service[] = [
       </svg>
     ),
     contentTitle: "სრული საბუღალტრო აღრიცხვა",
-
     description:
       "სრული ციკლის საბუღალტრო მომსახურება, მათ შორის ბუღალტრული აღრიცხვა და ფინანსური ანგარიშგება. ჩვენ უზრუნველვყოფთ თქვენი ბიზნესის ფინანსური ინფორმაციის სიზუსტეს.",
     features: [
@@ -106,12 +104,12 @@ const services: Service[] = [
   {
     id: "valuation",
     title: "საშემფასებლო მომსახურება",
-
     icon: (
       <svg
         viewBox="0 0 30 30"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
+        fill="currentColor"
       >
         <path d="M16.72,0H13.28a2,2,0,0,0-2,2V5.4a2,2,0,0,0,2,2H14v6.83a8.26,8.26,0,0,1,1-.06c.28,0,.56,0,.84,0V7.36h.88a2,2,0,0,0,2-2V2A2,2,0,0,0,16.72,0Z" />
         <path d="M5.4,7.36H2a2,2,0,0,0-2,2v3.44a2,2,0,0,0,2,2h.8v8a1.57,1.57,0,0,0,1.57,1.57H6.18a8.42,8.42,0,0,1-.09-1.24,5.91,5.91,0,0,1,0-.6H4.6V14.72h.8a2,2,0,0,0,2-2V9.32a2,2,0,0,0-2-2Z" />
@@ -120,7 +118,6 @@ const services: Service[] = [
       </svg>
     ),
     contentTitle: "ექსპერტული შეფასების მომსახურება",
-
     description:
       "უძრავი ქონების და ბიზნესის პროფესიონალური შეფასება. ჩვენი ექსპერტები უზრუნველყოფენ ობიექტურ და საბაზრო ფასებზე დაფუძნებულ შეფასებას.",
     features: [
@@ -133,12 +130,12 @@ const services: Service[] = [
   {
     id: "legal",
     title: "სრული იურიდიული მომსახურება",
-
     icon: (
       <svg
         viewBox="0 0 30 30"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
+        fill="currentColor"
       >
         <path d="M15,6a9,9,0,1,0,9.05,9A9,9,0,0,0,15,6ZM14,13.4a4.75,4.75,0,0,0,1.48.71c.36.13.73.27,1.14.46a2.78,2.78,0,0,1,1.5,1.67,3.13,3.13,0,0,1-.21,2.45,2.94,2.94,0,0,1-2,1.45V21a.91.91,0,1,1-1.81,0v-.87a2.87,2.87,0,0,1-2.37-2.62.91.91,0,1,1,1.81,0c0,.47.7.93,1.43.93a1.22,1.22,0,0,0,1.4-1.61,1,1,0,0,0-.54-.6c-.34-.15-.68-.28-1-.4a6.34,6.34,0,0,1-2-1,2.83,2.83,0,0,1-.75-3.33,2.86,2.86,0,0,1,2-1.58V9a.91.91,0,0,1,1.81,0v.87a2.89,2.89,0,0,1,2.37,2.63.91.91,0,0,1-1.81,0c0-.48-.72-.94-1.44-.94-1,0-1.26.49-1.34.65A1,1,0,0,0,14,13.4Z" />
         <path d="M30,27.32a2.69,2.69,0,0,1-5.37,0,2.79,2.79,0,0,1,.25-1.13L22.1,23.4a11.4,11.4,0,0,0,1.3-1.3l2.79,2.78a2.78,2.78,0,0,1,1.12-.25A2.68,2.68,0,0,1,30,27.32Z" />
@@ -148,7 +145,6 @@ const services: Service[] = [
       </svg>
     ),
     contentTitle: "სრული იურიდიული მხარდაჭერა",
-
     description:
       "სრული იურიდიული მხარდაჭერა და კონსულტაცია თქვენი ბიზნესის ყველა საჭიროებისთვის. ჩვენი გამოცდილი იურისტები დაგეხმარებიან სამართლებრივ საკითხებში.",
     features: [
@@ -161,18 +157,17 @@ const services: Service[] = [
   {
     id: "consulting",
     title: "ბიზნეს კონსულტაციები",
-
     icon: (
       <svg
         viewBox="0 0 30 30"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
+        fill="currentColor"
       >
         <path d="M15,0A15,15,0,1,0,30,15,15,15,0,0,0,15,0Zm8.06,7a.79.79,0,0,1-.2.52A55.39,55.39,0,0,0,13.19,23a1.24,1.24,0,0,1-2.25.11,35.8,35.8,0,0,0-4.25-6.49,1.78,1.78,0,0,1,2.66-2.36,32.86,32.86,0,0,1,2.82,3.45,0,0,0,0,0,0,0A46.22,46.22,0,0,1,21.8,6.44.76.76,0,0,1,23.06,7Z" />
       </svg>
     ),
     contentTitle: "სტრატეგიული ბიზნეს კონსულტაცია",
-
     description:
       "სტრატეგიული ბიზნეს კონსულტაცია თქვენი კომპანიის ზრდისა და ოპტიმიზაციისთვის. ჩვენ დაგეხმარებით ბიზნეს პროცესების გაუმჯობესებასა და ეფექტურობის ამაღლებაში.",
     features: [
@@ -184,16 +179,6 @@ const services: Service[] = [
   },
 ];
 
-const checkIcon = (
-  <svg
-    viewBox="0 0 30 30"
-    xmlns="http://www.w3.org/2000/svg"
-    className="w-full h-full"
-  >
-    <path d="M15,0A15,15,0,1,0,30,15,15,15,0,0,0,15,0Zm8.06,7a.79.79,0,0,1-.2.52A55.39,55.39,0,0,0,13.19,23a1.24,1.24,0,0,1-2.25.11,35.8,35.8,0,0,0-4.25-6.49,1.78,1.78,0,0,1,2.66-2.36,32.86,32.86,0,0,1,2.82,3.45,0,0,0,0,0,0,0A46.22,46.22,0,0,1,21.8,6.44.76.76,0,0,1,23.06,7Z" />
-  </svg>
-);
-
 export default function ServicesSection() {
   const [activeService, setActiveService] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -204,125 +189,125 @@ export default function ServicesSection() {
   };
 
   return (
-    <section className="bg-[#f3f5f4] py-16 px-6 overflow-hidden">
+    <section className="relative z-50 -mt-18 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] py-20 px-6 overflow-hidden pb-24 md:pb-16 lg:pb-16  shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
       <div className="max-w-7xl mx-auto">
-        {/* Updated Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="w-8 h-0.5"
+            style={{ backgroundColor: "#2563eb" }}
+          ></div>
+          <span
+            className="text-sm font-medium uppercase tracking-wider"
+            style={{
+              color: "#6B7280",
+              fontFamily: "'DM Sans', sans-serif",
+              letterSpacing: "2px",
+            }}
+          >
             Our Services
-          </h2>
-          <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-6 px-8 font-semibold flex items-center gap-2 group transition-all">
-            View More
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </span>
+          <div
+            className="w-8 h-0.5"
+            style={{ backgroundColor: "#2563eb" }}
+          ></div>
         </div>
 
-        {/* Mobile Dropdown */}
-        <div className="lg:hidden mb-6 relative">
+        {/* Mobile Dropdown – unchanged */}
+        <div className="lg:hidden mb-8">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-full flex items-center justify-between bg-white p-5 rounded-[24px] shadow-sm border border-gray-100 transition-all active:scale-[0.98] hover:shadow-md"
+            className="w-full flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-200"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 text-gray-900">
+              <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-full text-white flex items-center justify-center">
                 {services[activeService].icon}
               </div>
-              <span className="font-bold text-lg text-gray-900">
+              <span className="font-semibold text-gray-900">
                 {services[activeService].title}
               </span>
             </div>
             <ChevronDown
-              className={`w-6 h-6 text-gray-900 transition-transform duration-300 ${isMobileMenuOpen ? "rotate-180" : ""}`}
+              className={`w-5 h-5 transition-transform ${
+                isMobileMenuOpen ? "rotate-180" : ""
+              }`}
             />
           </button>
 
           {isMobileMenuOpen && (
-            <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="mt-2 bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden">
               {services.map((service, index) => (
                 <button
                   key={service.id}
                   onClick={() => handleServiceSelect(index)}
-                  className={`w-full flex items-center gap-4 p-4 text-left hover:bg-gray-50 border-b border-gray-50 last:border-0 ${
-                    activeService === index ? "bg-gray-50" : ""
+                  className={`w-full text-left p-4 flex items-center gap-3 transition-colors ${
+                    activeService === index ? "bg-blue-50" : "hover:bg-gray-50"
                   }`}
                 >
-                  <div className="w-6 h-6 text-gray-700">{service.icon}</div>
-                  <span className="font-medium text-gray-900 flex-1">
+                  <div className="w-9 h-9 p-2 bg-blue-600 rounded-full text-white flex items-center justify-center flex-shrink-0">
+                    {service.icon}
+                  </div>
+                  <span className="font-medium text-gray-900">
                     {service.title}
                   </span>
-                  {activeService === index && (
-                    <CheckCircle2 className="w-5 h-5 text-[#2563eb]" />
-                  )}
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        {/* Main Grid Layout - Equal Height on Desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-          {/* LEFT SIDE - DESKTOP ONLY - Smaller Items */}
-          <div className="hidden lg:flex lg:col-span-5 flex-col gap-3">
+        {/* Desktop Layout – improved equal height & smaller left items */}
+        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-6 items-stretch">
+          {/* Left Navigation – smaller height buttons */}
+          <div className="lg:col-span-5 flex flex-col gap-3 lg:gap-7 h-full">
             {services.map((service, index) => (
               <button
                 key={service.id}
                 onClick={() => setActiveService(index)}
-                className={`w-full text-left p-4 rounded-[24px] transition-all duration-300 shadow-sm hover:shadow-md ${
+                className={`flex text-left p-4 rounded-2xl transition-all flex items-center gap-4 shadow-sm min-h-[72px] ${
                   activeService === index
-                    ? "bg-[#2563eb] text-white"
-                    : "bg-white hover:bg-gray-50"
+                    ? "bg-blue-50 border border-blue-200"
+                    : "bg-white hover:bg-gray-50 border border-transparent"
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-10 h-10 flex-shrink-0 ${activeService === index ? "text-white" : "text-gray-900"}`}
-                  >
-                    {service.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3
-                      className={`text-base font-bold mb-0.5 ${activeService === index ? "text-white" : "text-gray-900"}`}
-                    >
-                      {service.title}
-                    </h3>
-                  </div>
+                <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-full text-white flex items-center justify-center flex-shrink-0">
+                  {service.icon}
                 </div>
+                <h3 className="text-base font-semibold text-gray-900 leading-tight">
+                  {service.title}
+                </h3>
               </button>
             ))}
           </div>
 
-          {/* RIGHT SIDE - CONTENT CARD - Equal Height on Desktop */}
+          {/* Right Content – full height matching left column */}
           <div className="lg:col-span-7">
-            <Card className="bg-white border-none rounded-[24px] py-0 overflow-hidden shadow-sm h-full">
+            <Card className="bg-white border-none rounded-3xl py-0 shadow-sm overflow-hidden h-full flex flex-col">
               <div className="flex flex-col lg:flex-row h-full">
-                {/* Image Section */}
-                <div className="lg:w-1/2 relative h-64 lg:h-auto min-h-[400px] lg:min-h-0 overflow-hidden bg-gray-100">
+                <div className="lg:w-1/2 relative min-h-[300px] lg:min-h-0 bg-gray-100">
                   <Image
                     src={services[activeService].image}
                     alt={services[activeService].title}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority
                   />
                 </div>
 
-                {/* Content Section */}
-                <div className="lg:w-1/2 p-6 lg:p-8 flex flex-col justify-center">
-                  <h4 className="text-xl lg:text-2xl font-bold mb-3 text-gray-900 leading-tight">
+                <div className="lg:w-1/2 p-8 flex flex-col justify-center overflow-auto">
+                  <h4 className="text-2xl font-bold mb-5 text-gray-900">
                     {services[activeService].contentTitle}
                   </h4>
-                  <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-gray-600 mb-7 leading-relaxed">
                     {services[activeService].description}
                   </p>
-
-                  <ul className="space-y-3">
+                  <ul className="space-y-4">
                     {services[activeService].features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="w-5 h-5 flex-shrink-0 text-[#2563eb] mt-0.5">
-                          {checkIcon}
-                        </span>
-                        <span className="text-sm text-gray-700">{feature}</span>
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-gray-700"
+                      >
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>

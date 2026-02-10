@@ -89,7 +89,7 @@ TeamCard.displayName = "TeamCard";
 
 export default function TeamSection() {
   return (
-    <section className="bg-[#f3f5f4]   py-20 px-6">
+    <section className="bg-[#f3f5f4] pt-16 pb-28 px-6">
       <div className="max-w-7xl mx-auto">
         <Carousel
           opts={{
@@ -99,10 +99,25 @@ export default function TeamSection() {
           className="w-full"
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
-                Meet the team behind the vision
-              </h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="w-8 h-0.5"
+                style={{ backgroundColor: "#2563eb" }}
+              ></div>
+              <span
+                className="text-sm font-medium uppercase tracking-wider"
+                style={{
+                  color: "#6B7280",
+                  fontFamily: "'DM Sans', sans-serif",
+                  letterSpacing: "2px",
+                }}
+              >
+                Our Team
+              </span>
+              <div
+                className="w-8 h-0.5"
+                style={{ backgroundColor: "#2563eb" }}
+              ></div>
             </div>
 
             <div className="hidden md:flex items-center gap-4">

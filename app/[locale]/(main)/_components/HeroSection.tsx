@@ -19,7 +19,7 @@ export default function HeroCarousel(): JSX.Element {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[110vh] flex items-center justify-center overflow-hidden"
       style={{
         backgroundColor: "#F3F5F4",
         fontFamily: "'DM Sans', sans-serif",
