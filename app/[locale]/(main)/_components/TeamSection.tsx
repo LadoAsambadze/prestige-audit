@@ -89,7 +89,7 @@ TeamCard.displayName = "TeamCard";
 
 export default function TeamSection() {
   return (
-    <section className="bg-[#f3f5f4] rounded-t-[80px] -mt-20  w-full absolute  py-20 px-6">
+    <section className="bg-[#f3f5f4]   py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <Carousel
           opts={{
@@ -103,10 +103,6 @@ export default function TeamSection() {
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
                 Meet the team behind the vision
               </h2>
-              <p className="text-lg text-gray-600">
-                A passionate group of experts committed to innovation and
-                excellence.
-              </p>
             </div>
 
             <div className="hidden md:flex items-center gap-4">

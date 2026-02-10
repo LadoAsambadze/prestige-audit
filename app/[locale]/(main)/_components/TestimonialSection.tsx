@@ -92,7 +92,7 @@ TestimonialCard.displayName = "TestimonialCard";
 
 export default function TestimonialsSection() {
   return (
-    <section className="bg-[#f3f5f4] py-16 px-6 overflow-hidden pb-24 md:pb-28 lg:pb-32 rounded-b-[40px] md:rounded-b-[60px] lg:rounded-b-[80px]">
+    <section className="bg-[#f3f5f4] rounded-t-[80px] -mt-20  w-full absolute py-16 px-6 overflow-hidden pb-24 md:pb-28 lg:pb-32 rounded-b-[40px] md:rounded-b-[60px] lg:rounded-b-[80px]">
       <style jsx global>{`
         @keyframes scrollUp {
           0% {

@@ -1,47 +1,10 @@
 "use client";
 import { useState, useEffect, JSX } from "react";
 
-interface Slide {
-  id: number;
-  subtitle: string;
-  title: string;
-  titleHighlight: string;
-  titleEnd: string;
-  buttonText: string;
-  backgroundImage: string;
-}
-
-const slides: Slide[] = [
-  {
-    id: 1,
-    subtitle: "Business Consultant",
-    title: "Trusted",
-    titleHighlight: "Finance",
-    titleEnd: "Consulting Partner",
-    buttonText: "Free Consultation",
-    backgroundImage:
-      "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-01.jpg",
-  },
-  {
-    id: 2,
-    subtitle: "Financial Strategist",
-    title: "Executive",
-    titleHighlight: "Leader",
-    titleEnd: "Through Change",
-    buttonText: "Schedule a call",
-    backgroundImage:
-      "https://wdtbullish.wpengine.com/wp-content/uploads/2025/06/h1-hero-banner-img.jpg",
-  },
-  {
-    id: 3,
-    subtitle: "Expert Advisor",
-    title: "Business",
-    titleHighlight: "Growth",
-    titleEnd: "Through Finance",
-    buttonText: "Get Started",
-    backgroundImage:
-      "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-02.jpg",
-  },
+const backgroundImages: string[] = [
+  "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-01.jpg",
+  "https://wdtbullish.wpengine.com/wp-content/uploads/2025/06/h1-hero-banner-img.jpg",
+  "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-02.jpg",
 ];
 
 export default function HeroCarousel(): JSX.Element {
@@ -49,15 +12,10 @@ export default function HeroCarousel(): JSX.Element {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % backgroundImages.length);
     }, 5000);
-
     return () => clearInterval(interval);
   }, []);
-
-  const goToSlide = (index: number): void => {
-    setCurrentSlide(index);
-  };
 
   return (
     <section
@@ -67,42 +25,39 @@ export default function HeroCarousel(): JSX.Element {
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
+      {/* Background Images Carousel */}
       <div className="absolute inset-0 z-0">
-        {slides.map((slide, index) => (
+        {backgroundImages.map((img, index) => (
           <div
-            key={slide.id}
+            key={index}
             className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
             style={{
               opacity: currentSlide === index ? 1 : 0,
+              backgroundImage: `url("${img}")`,
+              backgroundPosition: "top center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           >
+            {/* Dark Overlay/Texture */}
             <div
               className="absolute inset-0"
               style={{
-                backgroundImage: `url("${slide.backgroundImage}")`,
-                backgroundPosition: "top center",
+                backgroundColor: "#000000",
+                backgroundImage:
+                  'url("https://wdtbullish.wpengine.com/wp-content/uploads/2025/06/Union.png")',
+                backgroundPosition: "center left",
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
+                backgroundSize: "contain",
+                filter: "brightness(20%)",
+                opacity: 0.45,
               }}
-            >
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundColor: "#000000",
-                  backgroundImage:
-                    'url("https://wdtbullish.wpengine.com/wp-content/uploads/2025/06/Union.png")',
-                  backgroundPosition: "center left",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  filter: "brightness(20%)",
-                  opacity: 0.45,
-                }}
-              />
-            </div>
+            />
           </div>
         ))}
       </div>
 
+      {/* Static Content */}
       <div className="relative z-20 w-full">
         <div
           className="mx-auto flex flex-col md:flex-row items-center justify-center gap-0"
@@ -114,14 +69,8 @@ export default function HeroCarousel(): JSX.Element {
             paddingRight: "30px",
           }}
         >
-          <div
-            className="w-full md:w-1/2 relative"
-            style={{
-              paddingTop: "90px",
-              paddingBottom: "70px",
-              zIndex: 1,
-            }}
-          >
+          <div className="w-full md:w-1/2 relative" style={{ zIndex: 1 }}>
+            {/* Glow Effect */}
             <div
               className="absolute pointer-events-none"
               style={{
@@ -136,12 +85,8 @@ export default function HeroCarousel(): JSX.Element {
             />
 
             <div className="relative z-10">
-              <div
-                className="mb-8"
-                style={{
-                  paddingBottom: "60px",
-                }}
-              >
+              <div className="mb-8">
+                {/* Subtitle Line */}
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex items-center">
                     <div
@@ -153,20 +98,16 @@ export default function HeroCarousel(): JSX.Element {
                       style={{ width: "32px", height: "1px" }}
                     />
                   </div>
-
                   <span
-                    className="text-white uppercase tracking-wider whitespace-nowrap"
+                    className="text-white uppercase tracking-wider"
                     style={{
                       fontSize: "15px",
                       fontWeight: 500,
-                      lineHeight: 1.55,
-                      fontFamily: "'DM Sans', sans-serif",
                       letterSpacing: "2px",
                     }}
                   >
-                    {slides[currentSlide].subtitle}
+                    Business Consultant
                   </span>
-
                   <div className="flex items-center">
                     <div
                       className="bg-white/50"
@@ -179,80 +120,56 @@ export default function HeroCarousel(): JSX.Element {
                   </div>
                 </div>
 
+                {/* Main Heading */}
                 <h1
                   className="text-white font-semibold mb-6"
                   style={{
                     fontSize: "clamp(36px, 8vw, 70px)",
-                    fontWeight: 600,
                     lineHeight: 1.2,
-                    fontFamily: "'DM Sans', sans-serif",
-                    textAlign: "start",
                   }}
                 >
-                  {slides[currentSlide].title}{" "}
-                  <span style={{ color: "#2563eb" }}>
-                    {slides[currentSlide].titleHighlight}
-                  </span>
+                  Trusted <span style={{ color: "#2563eb" }}>Finance</span>
                   <br />
-                  {slides[currentSlide].titleEnd}
+                  Consulting Partner
                 </h1>
+
+                <p className="text-white/80 max-w-lg mb-8 text-lg">
+                  We provide expert financial strategies to help your business
+                  navigate complex market changes and achieve sustainable
+                  growth.
+                </p>
               </div>
 
-              <div
-                className="inline-block"
+              <a
+                href="#"
+                className="group inline-flex items-center gap-3 bg-[#2563eb] hover:bg-white text-white hover:text-black font-semibold rounded-xl transition-all duration-300 ease-linear"
                 style={{
-                  textAlign: "start",
+                  padding: "1.2rem 2.5rem",
+                  fontSize: "16px",
+                  borderRadius: "12px",
                 }}
               >
-                <a
-                  href="#"
-                  className="group inline-flex items-center gap-3 bg-[#2563eb] hover:bg-white text-white hover:text-black font-semibold rounded-xl transition-all duration-300 ease-linear"
-                  style={{
-                    padding:
-                      "clamp(1.125rem, 1.0971rem + 0.1274vw, 1.25rem) clamp(1.5rem, 1.2771rem + 1.0191vw, 2.5rem)",
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    fontFamily: "'DM Sans', sans-serif",
-                    borderRadius: "12px",
-                  }}
+                <span>Free Consultation</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 27.7 18"
+                  className="w-6 h-4 fill-current"
                 >
-                  <span>{slides[currentSlide].buttonText}</span>
-                  <span className="flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 27.7 18"
-                      className="w-6 h-4 fill-current"
-                    >
-                      <path d="M12.1,18V10.6H0V7.4H12.1V0L27.7,9Z" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
+                  <path d="M12.1,18V10.6H0V7.4H12.1V0L27.7,9Z" />
+                </svg>
+              </a>
             </div>
           </div>
-
-          <div className="hidden md:block md:w-1/2 relative">
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                bottom: "10%",
-                right: "-40%",
-                width: "100%",
-                height: "550px",
-                zIndex: 0,
-                background:
-                  "radial-gradient(at center center, #1d4ed83d 0%, #F2295B00 70%)",
-              }}
-            />
-          </div>
+          <div className="hidden md:block md:w-1/2" />
         </div>
       </div>
 
+      {/* Background Navigation Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
-        {slides.map((_, index) => (
+        {backgroundImages.map((_, index) => (
           <button
             key={index}
-            onClick={() => goToSlide(index)}
+            onClick={() => setCurrentSlide(index)}
             className="transition-all duration-300"
             style={{
               width: currentSlide === index ? "32px" : "12px",
@@ -263,7 +180,6 @@ export default function HeroCarousel(): JSX.Element {
               border: "none",
               cursor: "pointer",
             }}
-            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
