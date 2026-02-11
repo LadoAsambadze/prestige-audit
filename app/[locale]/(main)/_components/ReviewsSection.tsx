@@ -1,6 +1,5 @@
 "use client";
 
- 
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -98,15 +97,23 @@ export default function ReviewsSection() {
        3. rounded-t-[80px] creates the curve
        4. z-10 ensures it stays above the previous section
     */
-    <section className="relative z-10 -mt-20 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] py-20 px-6 overflow-hidden pb-24 md:pb-28 lg:pb-32 rounded-b-[40px] md:rounded-b-[60px] lg:rounded-b-[80px] shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
+    <section className="relative z-10 -mt-20 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] pt-20 pb-0 px-6 overflow-hidden    shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
       <style jsx global>{`
         @keyframes scrollUp {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(0, -50%, 0); }
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(0, -50%, 0);
+          }
         }
         @keyframes scrollDown {
-          0% { transform: translate3d(0, -50%, 0); }
-          100% { transform: translate3d(0, 0, 0); }
+          0% {
+            transform: translate3d(0, -50%, 0);
+          }
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
         }
         .animate-scroll-up {
           animation: scrollUp 25s linear infinite;
@@ -116,14 +123,12 @@ export default function ReviewsSection() {
           animation: scrollDown 25s linear infinite;
           will-change: transform;
         }
-        .pause-on-hover:hover {
-          animation-play-state: paused;
-        }
       `}</style>
 
-      <div className="max-w-7xl mx-auto pt-10"> {/* Added pt-10 to give space from the curve */}
+      <div className="max-w-7xl mx-auto pt-10">
+        {" "}
+        {/* Added pt-10 to give space from the curve */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
           {/* LEFT COLUMN: CTA */}
           <div className="lg:col-span-3">
             <Card className="rounded-[40px] p-10 border-none shadow-sm h-full flex flex-col justify-center bg-white">
@@ -131,10 +136,10 @@ export default function ReviewsSection() {
                 Trusted By Over 1300 Loyal Clients
               </h2>
               <p className="text-gray-500 mb-8 text-sm leading-relaxed">
-                Ad litora torquent per conubia nostra inceptos himenaeos. 
+                Ad litora torquent per conubia nostra inceptos himenaeos.
               </p>
               <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-6 px-8 w-fit flex items-center gap-2 group transition-all">
-                Contact Us 
+                Contact Us
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Card>
@@ -163,9 +168,11 @@ export default function ReviewsSection() {
             {/* Mobile View */}
             <div className="block lg:hidden relative h-[420px] overflow-hidden rounded-[32px]">
               <div className="animate-scroll-up pause-on-hover flex flex-col">
-                {[...allMobileTestimonials, ...allMobileTestimonials].map((t, i) => (
-                  <TestimonialCard key={`m-${i}`} {...t} />
-                ))}
+                {[...allMobileTestimonials, ...allMobileTestimonials].map(
+                  (t, i) => (
+                    <TestimonialCard key={`m-${i}`} {...t} />
+                  ),
+                )}
               </div>
             </div>
           </div>
@@ -176,25 +183,36 @@ export default function ReviewsSection() {
               <div className="text-5xl font-bold mb-2">4.80</div>
               <div className="flex justify-center gap-1 mb-2">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star
+                    key={i}
+                    className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                  />
                 ))}
               </div>
               <p className="text-gray-400 text-xs mb-6">2,568 Reviews</p>
             </Card>
 
             <Card className="rounded-[40px] p-8 bg-[#dbeafe] border-none relative overflow-hidden flex-1 flex flex-col justify-center">
-              <h4 className="font-bold text-lg mb-4 text-gray-800">Group Cooperation</h4>
+              <h4 className="font-bold text-lg mb-4 text-gray-800">
+                Group Cooperation
+              </h4>
               <div className="flex -space-x-3">
                 {[1, 2, 3].map((i) => (
-                  <Avatar key={i} className="border-2 border-[#dbeafe] w-10 h-10">
-                    <AvatarImage src={`https://i.pravatar.cc/150?u=${i + 20}`} />
+                  <Avatar
+                    key={i}
+                    className="border-2 border-[#dbeafe] w-10 h-10"
+                  >
+                    <AvatarImage
+                      src={`https://i.pravatar.cc/150?u=${i + 20}`}
+                    />
                   </Avatar>
                 ))}
-                <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center font-bold text-xs">+12</div>
+                <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center font-bold text-xs">
+                  +12
+                </div>
               </div>
             </Card>
           </div>
-
         </div>
       </div>
     </section>

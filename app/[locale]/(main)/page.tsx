@@ -4,6 +4,7 @@ import TeamSection from "./_components/TeamSection";
 import OurIdentity from "./_components/OurHistory";
 import ServicesSection from "./_components/ServicesSection";
 import ReviewsSection from "./_components/ReviewsSection";
+import PartnersSection from "./_components/PartnersSection";
 
 export default function Page() {
   return (
@@ -14,6 +15,7 @@ export default function Page() {
       <TeamSection />
       <FAQSection />
       <ReviewsSection />
+      <PartnersSection />
     </div>
   );
 }

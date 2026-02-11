@@ -138,36 +138,6 @@ const OurIdentity: React.FC = () => {
                 </div>
               </div>
             </div>
-
-            {/* Get Started Button */}
-
-            <a
-              href="#"
-              className="group inline-flex items-center gap-3 text-white hover:text-black font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-xl"
-              style={{
-                backgroundColor: "#2563eb",
-                padding:
-                  "clamp(1.125rem, 1.0971rem + 0.1274vw, 1.25rem) clamp(1.5rem, 1.2771rem + 1.0191vw, 2.5rem)",
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 600,
-                borderRadius: "12px",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#2563eb";
-              }}
-            >
-              <span>Contact Us</span>
-              <svg
-                className="w-6 h-4 fill-current group-hover:translate-x-1 transition-transform"
-                viewBox="0 0 27.7 18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12.1,18V10.6H0V7.4H12.1V0L27.7,9Z" />
-              </svg>
-            </a>
           </div>
 
           {/* Right Image Section - ACCA Logo */}
