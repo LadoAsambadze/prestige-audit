@@ -25,7 +25,7 @@ export default function Footer() {
       <div
         className="absolute inset-0 z-0 opacity-60 mix-blend-screen pointer-events-none"
         style={{
-          backgroundImage: `url('background.png')`,
+          backgroundImage: `url('./background.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

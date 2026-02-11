@@ -48,7 +48,7 @@ export default function FAQSection() {
       <div
         className="absolute inset-0 z-0 opacity-40 mix-blend-overlay"
         style={{
-          backgroundImage: `url('background.png')`,
+          backgroundImage: `url('./background.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
