@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  
+}
+
+model News {
+  id           String            @id @default(cuid())
+  image        String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  translations NewsTranslation[]
+}
+
+model NewsTranslation {
+  id       String @id @default(cuid())
+  newsId   String
+  language String // "en", "ka", "ru"
+  title    String
+  category     String
+  content  String @db.Text
+
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@unique([newsId, language]) // Prevents duplicate translations for same lang
+}

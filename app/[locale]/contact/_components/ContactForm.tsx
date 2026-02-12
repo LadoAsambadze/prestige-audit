@@ -32,337 +32,264 @@ export default function ContactForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSelectChange = (value: string) => {
-    setFormData({
-      ...formData,
-      subject: value,
-    });
+    setFormData({ ...formData, subject: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitStatus("success");
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-
       setTimeout(() => setSubmitStatus("idle"), 5000);
     }, 1500);
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="relative h-[240px] sm:h-[280px] lg:h-[320px] overflow-hidden">
+      {/* HERO SECTION - ADJUSTED FOR ABSOLUTE HEADER */}
+      <section className="relative w-full bg-[#0a1a3f] pt-40 pb-48 px-5 overflow-hidden text-center">
+        {/* BACKGROUND IMAGE & EFFECTS */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 z-0 opacity-40 mix-blend-overlay pointer-events-none"
           style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1600&h=400&fit=crop')",
+            backgroundImage: `url('/background.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
-        >
-          <div className="absolute inset-0 bg-primary/40"></div>
-        </div>
+        />
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/30 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-400/20 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#0a1a3f_90%)] z-0" />
 
-        <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-accent/15 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-secondary/15 rounded-full blur-3xl"></div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
-          <div className="flex items-center space-x-2 mb-2 sm:mb-3">
-            <div className="w-8 sm:w-10 h-0.5 bg-accent"></div>
-            <span className="text-primary-foreground/90 font-semibold tracking-wider uppercase text-xs">
-              Contact Us
+        <div className="mx-auto max-w-7xl relative z-10">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+            Contact{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200">
+              Us
             </span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-primary-foreground">
-            Financial <span className="text-accent">Consulting</span> Services
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-primary-foreground/80 max-w-2xl leading-relaxed">
-            Expert guidance in auditing, accounting, and financial planning.
-            Let's discuss how we can help your business grow.
+          <p className="text-blue-100/60 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
+            Reach out to our experts and let's start planning your success.
           </p>
         </div>
+      </section>
 
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-12 sm:h-16 lg:h-20"
-          >
-            <path
-              d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z"
-              fill="hsl(var(--background))"
-            />
-          </svg>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 -mt-10 sm:-mt-12 lg:-mt-16 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          <div className="lg:col-span-1 h-full">
-            <Card className="bg-card border-2 border-accent/30 shadow-xl h-full">
-              <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl font-bold flex items-center">
-                  <div className="w-0.5 h-6 bg-gradient-to-b from-primary to-accent mr-2 rounded-full"></div>
-                  Contact Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
-                <div className="flex items-start space-x-3 group cursor-pointer">
-                  <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-lg shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                    <Phone className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-sm mb-0.5">Phone</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground hover:text-accent transition-colors truncate">
-                      +1 (555) 123-4567
-                    </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground hover:text-accent transition-colors truncate">
-                      +1 (555) 987-6543
-                    </p>
-                  </div>
-                </div>
-
-                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
-
-                <div className="flex items-start space-x-3 group cursor-pointer">
-                  <div className="bg-gradient-to-br from-secondary to-accent p-2 rounded-lg shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                    <Mail className="w-4 h-4 text-secondary-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-sm mb-0.5">Email</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground hover:text-accent transition-colors break-all">
-                      info@financeconsult.com
-                    </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground hover:text-accent transition-colors break-all">
-                      audit@financeconsult.com
-                    </p>
-                  </div>
-                </div>
-
-                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
-
-                <div className="flex items-start space-x-3 group cursor-pointer">
-                  <div className="bg-gradient-to-br from-accent to-secondary p-2 rounded-lg shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                    <MapPin className="w-4 h-4 text-accent-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-sm mb-0.5">
-                      Office Address
-                    </h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      123 Financial District
-                      <br />
-                      Suite 450
-                      <br />
-                      New York, NY 10004
-                    </p>
-                  </div>
-                </div>
-
-                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
-
-                <div className="flex items-start space-x-3 group cursor-pointer">
-                  <div className="bg-gradient-to-br from-primary to-accent p-2 rounded-lg shadow-md group-hover:scale-110 transition-transform flex-shrink-0">
-                    <Clock className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-sm mb-0.5">
-                      Business Hours
-                    </h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      Monday - Friday: 9:00 AM - 6:00 PM
-                    </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      Saturday: 10:00 AM - 2:00 PM
-                    </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      Sunday: Closed
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="lg:col-span-2 h-full">
-            <Card className="border-2 border-accent/30 shadow-2xl h-full">
-              <CardHeader className="pb-3 sm:pb-4">
-                <div className="flex items-center">
-                  <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-accent mr-3 rounded-full"></div>
-                  <CardTitle className="text-xl sm:text-2xl font-bold">
-                    Send us a Message
+      {/* FORM CONTENT SECTION - MATCHING REVIEWS SECTION STYLE */}
+      <section className="relative z-20 -mt-20 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] pt-20 pb-20 px-6 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Left Info Side */}
+            <div className="lg:col-span-4">
+              <Card className="rounded-[40px] p-10 border-none shadow-sm h-full flex flex-col bg-white">
+                <CardHeader className="p-0 mb-8 text-left">
+                  <CardTitle className="text-3xl font-bold leading-tight text-gray-900">
+                    Our Offices
                   </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {submitStatus === "success" && (
-                  <Alert className="mb-4 bg-accent/10 border-2 border-accent">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
-                      <AlertDescription className="text-xs sm:text-sm font-semibold text-accent-foreground">
-                        Thank you for contacting us! We'll get back to you
-                        shortly.
+                  <p className="text-gray-500 mt-4 text-sm leading-relaxed">
+                    Prefer a direct chat? Visit one of our offices or reach out
+                    via phone.
+                  </p>
+                </CardHeader>
+
+                <CardContent className="p-0 space-y-8">
+                  {[
+                    {
+                      icon: Phone,
+                      title: "Phone",
+                      lines: ["+1 (555) 123-4567"],
+                      color: "bg-blue-50 text-blue-600",
+                    },
+                    {
+                      icon: Mail,
+                      title: "Email",
+                      lines: ["info@bullish.com"],
+                      color: "bg-cyan-50 text-cyan-600",
+                    },
+                    {
+                      icon: MapPin,
+                      title: "Office",
+                      lines: ["123 Financial District, NY"],
+                      color: "bg-blue-50 text-blue-600",
+                    },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-4 items-center">
+                      <div
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${item.color}`}
+                      >
+                        <item.icon className="w-5 h-5" />
+                      </div>
+                      <div className="text-left">
+                        <h4 className="text-gray-400 font-bold text-[11px] uppercase tracking-widest">
+                          {item.title}
+                        </h4>
+                        {item.lines.map((line, idx) => (
+                          <p
+                            key={idx}
+                            className="text-gray-900 font-semibold text-sm"
+                          >
+                            {line}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="mt-auto pt-10">
+                    <div className="bg-[#dbeafe] p-6 rounded-[32px] flex items-center gap-4">
+                      <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                        <Clock className="w-5 h-5" />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-xs font-bold text-blue-800">
+                          Available Now
+                        </p>
+                        <p className="text-[11px] text-blue-600">
+                          Mon-Fri: 9AM - 6PM
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Right Form Side */}
+            <div className="lg:col-span-8">
+              <Card className="border-none shadow-sm rounded-[40px] bg-white overflow-hidden h-full">
+                <CardContent className="p-10">
+                  {submitStatus === "success" && (
+                    <Alert className="mb-8 bg-green-50 border-green-100 rounded-2xl">
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                      <AlertDescription className="text-green-800 font-medium ml-2">
+                        Success! Your message has been sent to our consultants.
                       </AlertDescription>
-                    </div>
-                  </Alert>
-                )}
+                    </Alert>
+                  )}
 
-                <form
-                  onSubmit={handleSubmit}
-                  className="space-y-3 sm:space-y-4"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div className="space-y-1.5">
+                  <form onSubmit={handleSubmit} className="space-y-6 text-left">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label
+                          htmlFor="name"
+                          className="text-sm font-bold text-gray-700 ml-1"
+                        >
+                          Full Name
+                        </Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          placeholder="John Doe"
+                          className="h-14 rounded-2xl border-gray-100 bg-gray-50/50 focus:bg-white transition-all"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label
+                          htmlFor="email"
+                          className="text-sm font-bold text-gray-700 ml-1"
+                        >
+                          Email Address
+                        </Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          placeholder="john@example.com"
+                          className="h-14 rounded-2xl border-gray-100 bg-gray-50/50 focus:bg-white transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label
+                          htmlFor="phone"
+                          className="text-sm font-bold text-gray-700 ml-1"
+                        >
+                          Phone Number
+                        </Label>
+                        <Input
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="+1 (555) 000-0000"
+                          className="h-14 rounded-2xl border-gray-100 bg-gray-50/50"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label
+                          htmlFor="subject"
+                          className="text-sm font-bold text-gray-700 ml-1"
+                        >
+                          Service Required
+                        </Label>
+                        <Select
+                          value={formData.subject}
+                          onValueChange={handleSelectChange}
+                          required
+                        >
+                          <SelectTrigger className="h-14 rounded-2xl border-gray-100 bg-gray-50/50">
+                            <SelectValue placeholder="Choose a service" />
+                          </SelectTrigger>
+                          <SelectContent className="rounded-2xl">
+                            <SelectItem value="financial">
+                              Wealth Management
+                            </SelectItem>
+                            <SelectItem value="audit">Tax & Audit</SelectItem>
+                            <SelectItem value="consulting">
+                              Business Consulting
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
                       <Label
-                        htmlFor="name"
-                        className="text-xs sm:text-sm font-semibold"
+                        htmlFor="message"
+                        className="text-sm font-bold text-gray-700 ml-1"
                       >
-                        Full Name *
+                        How can we help?
                       </Label>
-                      <Input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
                         onChange={handleChange}
                         required
-                        className="h-9 sm:h-10 text-sm"
-                        placeholder="John Doe"
+                        rows={5}
+                        placeholder="Tell us about your goals..."
+                        className="rounded-2xl border-gray-100 bg-gray-50/50 resize-none p-4"
                       />
                     </div>
 
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="email"
-                        className="text-xs sm:text-sm font-semibold"
-                      >
-                        Email Address *
-                      </Label>
-                      <Input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="h-9 sm:h-10 text-sm"
-                        placeholder="john@example.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="phone"
-                        className="text-xs sm:text-sm font-semibold"
-                      >
-                        Phone Number
-                      </Label>
-                      <Input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="h-9 sm:h-10 text-sm"
-                        placeholder="+1 (555) 000-0000"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="subject"
-                        className="text-xs sm:text-sm font-semibold"
-                      >
-                        Service Interest *
-                      </Label>
-                      <Select
-                        value={formData.subject}
-                        onValueChange={handleSelectChange}
-                        required
-                      >
-                        <SelectTrigger className="h-9 sm:h-10 text-sm w-full">
-                          <SelectValue placeholder="Select a service" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem
-                            value="financial-consulting"
-                            className="text-sm"
-                          >
-                            💼 Financial Consulting
-                          </SelectItem>
-                          <SelectItem
-                            value="audit-services"
-                            className="text-sm"
-                          >
-                            📋 Audit Services
-                          </SelectItem>
-                          <SelectItem value="tax-planning" className="text-sm">
-                            💰 Tax Planning
-                          </SelectItem>
-                          <SelectItem value="accounting" className="text-sm">
-                            📊 Accounting Services
-                          </SelectItem>
-                          <SelectItem value="other" className="text-sm">
-                            💬 Other Inquiry
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label
-                      htmlFor="message"
-                      className="text-xs sm:text-sm font-semibold"
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-7 px-10 w-full md:w-fit flex items-center gap-2 group transition-all font-bold"
                     >
-                      Your Message *
-                    </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="resize-none text-sm"
-                      placeholder="Please provide details about your inquiry..."
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full h-10 sm:h-11 text-sm sm:text-base font-bold shadow-lg"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2" />
-                        <span>Sending Message...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4 mr-2" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                      {isSubmitting ? "Processing..." : "Send My Inquiry"}
+                      <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

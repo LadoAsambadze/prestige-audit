@@ -70,7 +70,7 @@ const services: Service[] = [
       "საგადასახადო დაგეგმვა და ოპტიმიზაცია",
       "საგადასახადო კანონმდებლობასთან შესაბამისობა",
     ],
-    image: "/images/tax-services.jpg",
+    image: "/Office.jpg",
   },
   {
     id: "accounting",
@@ -99,7 +99,7 @@ const services: Service[] = [
       "ფინანსური ანგარიშგების მომზადება",
       "ხელფასების დამუშავება და კალკულაცია",
     ],
-    image: "/images/accounting.jpg",
+    image: "/Service1.jpg",
   },
   {
     id: "valuation",
@@ -125,7 +125,7 @@ const services: Service[] = [
       "ბიზნესის შეფასება და ანალიზი",
       "საინვესტიციო პროექტების ეკონომიკური შეფასება",
     ],
-    image: "/images/valuation.jpg",
+    image: "/Office.jpg",
   },
   {
     id: "legal",
@@ -152,7 +152,7 @@ const services: Service[] = [
       "კორპორატიული მართვის კონსულტაცია",
       "სამართლებრივი რისკების მართვა",
     ],
-    image: "/images/legal.jpg",
+    image: "/Office.jpg",
   },
   {
     id: "consulting",
@@ -175,7 +175,7 @@ const services: Service[] = [
       "ოპერაციული პროცესების ოპტიმიზაცია",
       "ბაზრის ანალიზი და კვლევა",
     ],
-    image: "/images/consulting.jpg",
+    image: "/Office.jpg",
   },
 ];
 

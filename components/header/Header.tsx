@@ -1,130 +1,106 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Search, LayoutGrid } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Completely hide the header if the path includes "admin"
+  // This covers http://localhost:3000/en/admin/dashboard
+  if (pathname.includes("admin")) {
+    return null;
+  }
 
   const navItems = [
-    { name: "Home", href: "/", active: true, hasDropdown: true },
-    { name: "Pages", href: "#", hasDropdown: true },
-    { name: "Blog", href: "#", hasDropdown: true },
-    { name: "Careers", href: "#", hasDropdown: true },
-    { name: "Contact Us", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "Team", href: "/team" },
+    { name: "News", href: "/news" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
     <header
-      className="absolute top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        padding: "30px 30px 0",
-      }}
+      className="absolute top-0 left-0 right-0 z-50"
+      style={{ padding: "30px 30px 0" }}
     >
-      <div
-        className="relative max-w-[1420px] mx-auto transition-all duration-300"
-        style={{
-          // Container positioning
-          position: "relative",
-        }}
-      >
-        {/* Glass morphism background layer */}
+      <div className="relative max-w-[1420px] mx-auto">
+        {/* Glass morphism background - FAQ Section Theme Tint */}
         <div
-          className="absolute inset-0 transition-all duration-300"
+          className="absolute inset-0"
           style={{
-            backgroundColor: isScrolled
-              ? "rgba(30, 41, 59, 0.35)"
-              : "rgba(255, 255, 255, 0.1)",
-            backdropFilter: isScrolled ? "blur(12px)" : "blur(10px)",
-            WebkitBackdropFilter: isScrolled ? "blur(12px)" : "blur(10px)",
+            backgroundColor: "rgba(10, 26, 63, 0.15)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
             border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: isScrolled ? "0 0 16px 16px" : "16px",
-            boxShadow: isScrolled
-              ? "0 5px 20px -8px rgba(30, 41, 59, 0.3)"
-              : "none",
+            borderRadius: "24px",
           }}
-        ></div>
+        />
 
         {/* Content */}
         <div
-          className="relative flex items-center justify-between px-8 transition-all duration-300"
-          style={{
-            height: "80px",
-            paddingTop: isScrolled ? "0" : undefined,
-          }}
+          className="relative flex items-center justify-between px-10"
+          style={{ height: "80px" }}
         >
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3"
+            className="flex items-center transition-opacity hover:opacity-80"
             style={{ width: "25%" }}
           >
-            <img src="./Logo.png" className="w-60 h-auto" />
+            <img
+              src="/test.png"
+              alt="Logo"
+              className="max-w-[200px] md:max-w-[240px] h-auto object-contain"
+            />
           </Link>
 
-          {/* Desktop Navigation - Center */}
+          {/* Desktop Navigation */}
           <nav
-            className="hidden lg:flex items-center justify-center gap-0"
+            className="hidden lg:flex items-center justify-center gap-2"
             style={{ width: "50%" }}
           >
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="group inline-flex items-center transition-colors duration-300"
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "15px",
-                  fontWeight: 500,
-                  color: item.active ? "#4A9FF5" : "rgba(255, 255, 255, 0.9)",
-                  padding: "33px 22px",
-                  textTransform: "capitalize",
-                }}
-              >
-                <span className="group-hover:text-[#4A9FF5] transition-colors">
-                  {item.name}
-                </span>
-                {item.hasDropdown && (
-                  <span
-                    className="ml-1.5 text-[10px] opacity-60 group-hover:opacity-100 transition-opacity"
-                    style={{ marginTop: "2px" }}
-                  >
-                    ▼
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="group relative px-6 py-2 transition-colors duration-300"
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                    color: isActive ? "#4A9FF5" : "rgba(255, 255, 255, 0.9)",
+                  }}
+                >
+                  <span className="relative z-10 group-hover:text-white transition-colors">
+                    {item.name}
                   </span>
-                )}
-              </Link>
-            ))}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-6 right-6 h-0.5 bg-[#4A9FF5] rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Action Buttons - Right */}
+          {/* Action Buttons */}
           <div
             className="flex items-center justify-end gap-4"
             style={{ width: "25%" }}
           >
-            {/* Search Button */}
             <button
-              className="p-2.5 rounded-full text-white transition-all duration-300 hover:bg-white/10"
-              style={{
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-              }}
+              className="p-3 rounded-xl text-white transition-all duration-300 hover:bg-white/10 border border-white/10"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Menu Button */}
             <button
-              className="p-2.5 rounded-full text-white transition-all duration-300 hover:bg-white/10"
-              style={{
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-              }}
+              className="p-3 rounded-xl text-white transition-all duration-300 hover:bg-[#2563eb] border border-white/10 bg-white/5"
               aria-label="Menu"
             >
               <LayoutGrid className="w-5 h-5" />

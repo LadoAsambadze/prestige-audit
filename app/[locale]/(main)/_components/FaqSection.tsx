@@ -26,29 +26,17 @@ const faqs = [
     answer:
       "We follow strict security protocols including end-to-end encryption, secure cloud storage, regular security audits, and full compliance with GDPR, SOC 2, and relevant financial regulations.",
   },
-  {
-    id: "4",
-    question: "What are the different types of audits we perform?",
-    answer:
-      "We conduct financial statement audits, compliance audits, operational audits, internal audits, IT system audits, and forensic audits — each tailored to meet specific regulatory or business needs.",
-  },
-  {
-    id: "5",
-    question: "What is the purpose of a financial audit?",
-    answer:
-      "A financial audit provides an independent, objective evaluation of your financial statements to confirm their accuracy, completeness, and compliance with applicable accounting standards and regulations.",
-  },
 ];
 
 export default function FAQSection() {
   return (
     // Lighter background color #0a1a3f instead of #061232
-    <section className="relative w-full rounded-t-[60px] -mt-10 min-h-screen bg-[#0a1a3f] pt-24 pb-32 px-5 overflow-hidden">
+    <section className="relative w-full rounded-t-[60px] -mt-10  bg-[#0a1a3f] pt-24 pb-32 px-5 overflow-hidden">
       {/* 1. BACKGROUND IMAGE: Reduced opacity for a 'lighter' feel */}
       <div
         className="absolute inset-0 z-0 opacity-40 mix-blend-overlay"
         style={{
-          backgroundImage: `url('./background.png')`,
+          backgroundImage: `url('/background.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

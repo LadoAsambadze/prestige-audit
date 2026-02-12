@@ -5,6 +5,7 @@ import OurIdentity from "./_components/OurHistory";
 import ServicesSection from "./_components/ServicesSection";
 import ReviewsSection from "./_components/ReviewsSection";
 import PartnersSection from "./_components/PartnersSection";
+import BlogSection from "./_components/BlogSection";
 
 export default function Page() {
   return (
@@ -12,10 +13,11 @@ export default function Page() {
       <HeroSection />
       <ServicesSection />
       <OurIdentity />
+      <PartnersSection />
       <TeamSection />
       <FAQSection />
       <ReviewsSection />
-      <PartnersSection />
+      <BlogSection />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Added this
 import {
   Send,
   Twitter,
@@ -14,45 +15,47 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Logic to hide the footer if the URL contains 'admin'
+  const isAdmin = pathname.includes("admin");
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // If we are on an admin page, return null so nothing renders
+  if (isAdmin) {
+    return null;
+  }
+
   return (
-    // Added -mt-10 and rounded-t-[60px] to match the FAQ overlap style
-    <footer className="relative w-full z-50 rounded-t-[60px] md:rounded-t-[80px] -mt-10  pb-10  bg-[#0a1a3f] pt-24  px-5 overflow-hidden">
-      {/* 1. BACKGROUND IMAGE: Increased opacity and changed blend mode to make it visible */}
+    <footer className="relative w-full z-50 rounded-t-[60px] md:rounded-t-[80px] -mt-10 pb-10 bg-[#0a1a3f] pt-24 px-5 overflow-hidden">
+      {/* 1. BACKGROUND IMAGE */}
       <div
         className="absolute inset-0 z-0 opacity-60 mix-blend-screen pointer-events-none"
         style={{
-          backgroundImage: `url('./background.png')`,
+          backgroundImage: `url('/background.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
 
-      {/* 2. LIGHT GRADIENTS: Matching the "Light spot" effect */}
+      {/* 2. LIGHT GRADIENTS */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* 3. VIGNETTE: Ensures text remains readable while keeping the background "deep" */}
+      {/* 3. VIGNETTE */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#061232_90%)] z-0" />
 
       <div className="mx-auto max-w-7xl relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
           {/* Left Column: Branding */}
           <div className="md:col-span-4 space-y-8">
-            <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-br from-green-400 to-emerald-600 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-white text-2xl shadow-lg shadow-green-500/20">
-                B
-              </div>
-              <span className="text-3xl font-bold text-white tracking-tight">
-                Bullish
-              </span>
-            </div>
+            <div className="flex items-center gap-2"></div>
             <p className="text-blue-100/60 leading-relaxed max-w-sm text-lg">
-              Sed quaerat cupiditate ut aspernatur pariatur quo facere dolores
-              et natus quisqua.
+              Empowering your financial future through expert analysis and
+              strategic market insights.
             </p>
             <div className="space-y-4">
               <h4 className="text-white/80 font-semibold uppercase tracking-[0.2em] text-xs">
@@ -104,45 +107,37 @@ export default function Footer() {
           {/* Right Columns: Links */}
           <div className="md:col-span-4 grid grid-cols-2 gap-8">
             <div className="space-y-5">
-              <h4 className="text-white font-bold text-lg">Support Pages</h4>
+              <h4 className="text-white font-bold text-lg">Support</h4>
               <ul className="space-y-3 text-blue-100/50 text-base">
-                {[
-                  "About",
-                  "Live Chat",
-                  "Trading Guide",
-                  "Terms & Conditions",
-                  "Privacy Policy",
-                ].map((item) => (
-                  <li key={item}>
-                    <Link
-                      href="#"
-                      className="hover:text-green-400 transition-colors"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+                {["About", "Live Chat", "Guide", "Terms", "Privacy"].map(
+                  (item) => (
+                    <li key={item}>
+                      <Link
+                        href="#"
+                        className="hover:text-green-400 transition-colors"
+                      >
+                        {item}
+                      </Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
             <div className="space-y-5">
               <h4 className="text-white font-bold text-lg">Quick Links</h4>
               <ul className="space-y-3 text-blue-100/50 text-base">
-                {[
-                  "FAQ",
-                  "Pricing Plan",
-                  "Contact",
-                  "Market Overview",
-                  "Deposit",
-                ].map((item) => (
-                  <li key={item}>
-                    <Link
-                      href="#"
-                      className="hover:text-green-400 transition-colors"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+                {["FAQ", "Pricing", "Contact", "Market", "Deposit"].map(
+                  (item) => (
+                    <li key={item}>
+                      <Link
+                        href="#"
+                        className="hover:text-green-400 transition-colors"
+                      >
+                        {item}
+                      </Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
           </div>
@@ -151,7 +146,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-blue-100/30 text-sm">
-            © 2025 Wedesigntech. All Rights Reserved
+            © 2026 Bullish. All Rights Reserved
           </p>
           <div className="flex gap-8 text-sm text-blue-100/30">
             <Link href="#" className="hover:text-white transition-colors">

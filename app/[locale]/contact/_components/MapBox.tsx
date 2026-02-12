@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { Layers, Navigation } from "lucide-react";
+import { Layers, Navigation, Maximize2 } from "lucide-react";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
@@ -27,13 +27,13 @@ export default function MapboxMap({
   longitude,
   title = "Our Office",
   address,
-  zoom = 16,
+  zoom = 15,
   enable3D = true,
   defaultView = "3d",
   pitch3D = 60,
   bearing3D = -20,
-  markerColor = "#3b82f6",
-  className = "w-full h-[450px] sm:h-[550px] lg:h-[600px]",
+  markerColor = "#2563eb",
+  className = "w-full h-[500px] lg:h-[600px]",
   showDirections = true,
 }: MapboxMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -45,16 +45,11 @@ export default function MapboxMap({
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
-    if (!mapboxgl.accessToken) {
-      console.error(
-        "Mapbox access token is missing. Add NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN to your .env file",
-      );
-      return;
-    }
+    if (!mapboxgl.accessToken) return;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/light-v11",
+      style: "mapbox://styles/mapbox/light-v11", // Changed back to Light for a clean look
       center: [longitude, latitude],
       zoom,
       pitch: is3D ? pitch3D : 0,
@@ -63,35 +58,32 @@ export default function MapboxMap({
     });
 
     map.addControl(
-      new mapboxgl.NavigationControl({
-        showCompass: true,
-        showZoom: true,
-        visualizePitch: true,
-      }),
-      "top-right",
+      new mapboxgl.NavigationControl({ showCompass: false }),
+      "bottom-right",
     );
-
-    map.addControl(new mapboxgl.FullscreenControl(), "top-right");
 
     mapRef.current = map;
 
+    // Custom Premium Marker
     const el = document.createElement("div");
     el.className = "custom-marker";
-    el.style.width = "40px";
-    el.style.height = "40px";
-    el.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='${encodeURIComponent(markerColor)}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'%3E%3C/path%3E%3Ccircle cx='12' cy='10' r='3' fill='${encodeURIComponent(markerColor)}'%3E%3C/circle%3E%3C/svg%3E")`;
-    el.style.backgroundSize = "contain";
-    el.style.cursor = "pointer";
-    el.style.filter = "drop-shadow(0 2px 4px rgba(0,0,0,0.2))";
+    el.innerHTML = `
+      <div style="background: white; border-radius: 12px; padding: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 2px solid ${markerColor};">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="${markerColor}" stroke-width="2.5" fill="none">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3" fill="${markerColor}20"></circle>
+        </svg>
+      </div>
+    `;
 
     const popup = new mapboxgl.Popup({
-      offset: 25,
+      offset: 35,
       closeButton: false,
       maxWidth: "280px",
     }).setHTML(`
-      <div style="padding: 8px;">
-        <h3 style="font-weight: 600; font-size: 15px; margin-bottom: 4px; color: #1f2937;">${title}</h3>
-        ${address ? `<p style="font-size: 13px; color: #6b7280; line-height: 1.4;">${address}</p>` : ""}
+      <div style="padding: 12px; font-family: inherit;">
+        <h3 style="font-weight: 700; font-size: 14px; margin: 0; color: #111827;">${title}</h3>
+        ${address ? `<p style="font-size: 12px; color: #6b7280; margin: 4px 0 0 0;">${address}</p>` : ""}
       </div>
     `);
 
@@ -100,91 +92,58 @@ export default function MapboxMap({
       .setPopup(popup)
       .addTo(map);
 
-    markerRef.current.togglePopup();
-
     map.on("load", () => {
-      const labelLayerId = map
-        .getStyle()
-        .layers?.find(
-          (l) => l.type === "symbol" && l.layout?.["text-field"],
-        )?.id;
-
-      if (!map.getLayer("3d-buildings")) {
-        map.addLayer(
-          {
-            id: "3d-buildings",
-            source: "composite",
-            "source-layer": "building",
-            filter: ["==", "extrude", "true"],
-            type: "fill-extrusion",
-            minzoom: 15,
-            paint: {
-              "fill-extrusion-color": [
-                "interpolate",
-                ["linear"],
-                ["get", "height"],
-                0,
-                "#e0e7ff",
-                50,
-                "#c7d2fe",
-                100,
-                "#a5b4fc",
-              ],
-              "fill-extrusion-height": ["get", "height"],
-              "fill-extrusion-base": ["get", "min_height"],
-              "fill-extrusion-opacity": 0.85,
-            },
-          },
-          labelLayerId,
-        );
-      }
+      map.addLayer({
+        id: "3d-buildings",
+        source: "composite",
+        "source-layer": "building",
+        filter: ["==", "extrude", "true"],
+        type: "fill-extrusion",
+        minzoom: 14,
+        paint: {
+          "fill-extrusion-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "height"],
+            0,
+            "#dbeafe", // Soft light blue for buildings
+            50,
+            "#bfdbfe",
+            100,
+            "#93c5fd",
+          ],
+          "fill-extrusion-height": ["get", "height"],
+          "fill-extrusion-base": ["get", "min_height"],
+          "fill-extrusion-opacity": 0.8,
+        },
+      });
     });
 
-    return () => {
-      markerRef.current?.remove();
-      map.remove();
-      markerRef.current = null;
-      mapRef.current = null;
-    };
-  }, [
-    latitude,
-    longitude,
-    title,
-    address,
-    zoom,
-    markerColor,
-    is3D,
-    pitch3D,
-    bearing3D,
-  ]);
-
-  useEffect(() => {
-    if (!mapRef.current) return;
-
-    mapRef.current.easeTo({
-      pitch: is3D ? pitch3D : 0,
-      bearing: is3D ? bearing3D : 0,
-      duration: 800,
-    });
-  }, [is3D, pitch3D, bearing3D]);
+    return () => map.remove();
+  }, [latitude, longitude, is3D]);
 
   const handleGetDirections = () => {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-    window.open(url, "_blank");
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+      "_blank",
+    );
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-2xl border-2 border-accent/30">
+    <div className="relative rounded-[40px] overflow-hidden shadow-xl border border-gray-100 bg-white">
       <div ref={mapContainerRef} className={className} />
 
-      <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
+      {/* Control Buttons - Floating Style */}
+      <div className="absolute top-6 left-6 flex flex-col gap-3 z-10">
         {enable3D && (
           <button
             onClick={() => setIs3D((prev) => !prev)}
-            className="bg-card dark:bg-card px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 text-sm font-semibold hover:bg-accent hover:text-accent-foreground transition-all duration-200 border-2 border-accent/30"
-            title={is3D ? "Switch to 2D view" : "Switch to 3D view"}
+            className="bg-white/90 backdrop-blur-md text-gray-900 px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2 text-sm font-bold border border-gray-100 hover:bg-gray-50 transition-all duration-300"
           >
-            <Layers size={18} />
+            <Layers
+              size={18}
+              className={is3D ? "text-blue-600" : "text-gray-400"}
+            />
             <span>{is3D ? "2D View" : "3D View"}</span>
           </button>
         )}
@@ -192,13 +151,29 @@ export default function MapboxMap({
         {showDirections && (
           <button
             onClick={handleGetDirections}
-            className="bg-gradient-to-br from-primary to-secondary text-primary-foreground px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 text-sm font-semibold hover:scale-105 transition-all duration-200"
-            title="Get directions"
+            className="bg-[#2563eb] text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2 text-sm font-bold hover:bg-[#1d4ed8] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
           >
             <Navigation size={18} />
             <span>Get Directions</span>
           </button>
         )}
+      </div>
+
+      {/* Info Badge - Bottom Overlay */}
+      <div className="absolute bottom-6 left-6 right-6 lg:right-auto z-10">
+        <div className="bg-white/90 backdrop-blur-md border border-gray-100 p-4 rounded-3xl shadow-xl flex items-center gap-4 max-w-xs">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+            <Maximize2 size={20} />
+          </div>
+          <div>
+            <p className="text-gray-900 font-bold text-sm leading-tight">
+              {title}
+            </p>
+            <p className="text-gray-500 text-[11px] font-medium mt-0.5 uppercase tracking-tight">
+              {address}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
