@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 // Partner type
 type Partner = {
@@ -22,33 +23,76 @@ const partnersRow2: Partner[] = [
   { name: "BAU Hospital", type: "text" },
   { name: "Adjara Textile", type: "text" },
   { name: "BTM Textile", type: "text" },
-  
 ];
 
 const LogoCard = ({ logo, name, type }: Partner) => {
   const isTextLogo = type === "text" || !logo;
 
   return (
-    <Card className="flex items-center justify-center min-w-[180px] md:min-w-[220px] h-[100px] bg-white border-none rounded-[24px] shadow-sm hover:shadow-md transition-all duration-300 mx-3 p-6 group cursor-default">
-      {isTextLogo ? (
-        /* Changed text-gray-800 to text-blue-600 for initial state */
-        <span className="text-xl font-bold text-black transition-colors duration-500">
-          {name}
-        </span>
-      ) : (
-        <img
-          src={logo}
-          alt={name}
-          className="h-20 w-20  transition-transform duration-500 group-hover:scale-110"
-        />
-      )}
-    </Card>
+    <motion.div
+      whileHover={{ scale: 1.05, y: -4 }}
+      transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
+    >
+      <Card className="flex items-center my-2 justify-center min-w-[180px] md:min-w-[220px] h-[100px] bg-white border-none rounded-[24px] shadow-sm hover:shadow-md transition-all duration-300 mx-3 p-6 group cursor-default">
+        {isTextLogo ? (
+          <motion.span
+            className="text-xl font-bold text-black transition-colors duration-500"
+            whileHover={{
+              scale: 1.1,
+              color: "#2563eb",
+              transition: { duration: 0.3 },
+            }}
+          >
+            {name}
+          </motion.span>
+        ) : (
+          <motion.img
+            src={logo}
+            alt={name}
+            className="h-20 w-20 transition-transform duration-500"
+            whileHover={{
+              scale: 1.15,
+              rotate: [0, -5, 5, 0],
+              transition: { duration: 0.4 },
+            }}
+          />
+        )}
+      </Card>
+    </motion.div>
   );
 };
 
 export default function PartnersSection() {
+  // Header animation variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
+      },
+    },
+  };
+
+  // Marquee row variants - fade in and slide
+  const marqueeRowVariants = {
+    hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.7,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
+      },
+    },
+  };
+
   return (
-    <section className="relative z-10 bg-[#f3f5f4] pt-24 pb-28 px-6 overflow-hidden">
+    <section className="relative z-10 bg-[#f3f5f4] py-16 px-6 overflow-hidden">
       <style jsx global>{`
         @keyframes scrollLeft {
           0% {
@@ -72,44 +116,116 @@ export default function PartnersSection() {
         .animate-marquee-right {
           animation: scrollRight 35s linear infinite;
         }
-        /* Removed the pause-on-hover logic entirely to keep it infinite */
       `}</style>
 
-      <div className="max-w-7xl mx-auto mb-16 text-center">
+      {/* Header with animations */}
+      <motion.div
+        className="max-w-7xl mx-auto mb-16 text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={headerVariants}
+      >
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <motion.div
+            className="w-8 h-0.5 bg-blue-600"
+            initial={{ scaleX: 0, originX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.6,
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94] as const,
+            }}
+          />
+          <span className="text-sm font-medium uppercase tracking-widest text-gray-500">
+            Trusted By
+          </span>
+          <motion.div
+            className="w-8 h-0.5 bg-blue-600"
+            initial={{ scaleX: 0, originX: 1 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.6,
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94] as const,
+            }}
+          />
+        </div>
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
           Our <span className="text-blue-600">Partners</span>
         </h2>
-      </div>
+      </motion.div>
 
-      {/* Removed 'pause-hover-container' to ensure continuous movement */}
-      <div className="relative space-y-6">
+      {/* Marquee rows with staggered entrance */}
+      <motion.div
+        className="relative space-y-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+      >
         {/* Row 1: Left to Right movement */}
-        <div className="flex overflow-hidden relative">
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10" />
+        <motion.div
+          className="flex overflow-hidden relative"
+          variants={marqueeRowVariants}
+        >
+          <motion.div
+            className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
+          <motion.div
+            className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
 
           <div className="flex animate-marquee-left whitespace-nowrap">
-            {/* Doubling or Tripling items to ensure seamless infinite loop */}
             {[...partnersRow1, ...partnersRow1, ...partnersRow1].map((p, i) => (
               <LogoCard key={`r1-${i}`} {...p} />
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Row 2: Right to Left movement */}
-        <div className="flex overflow-hidden relative">
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10" />
+        <motion.div
+          className="flex overflow-hidden relative"
+          variants={marqueeRowVariants}
+        >
+          <motion.div
+            className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
+          <motion.div
+            className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
 
           <div className="flex animate-marquee-right whitespace-nowrap">
             {[...partnersRow2, ...partnersRow2, ...partnersRow2].map((p, i) => (
               <LogoCard key={`r2-${i}`} {...p} />
             ))}
           </div>
-        </div>
-      </div>
-
-      
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

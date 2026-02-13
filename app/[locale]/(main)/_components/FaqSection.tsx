@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { motion } from "framer-motion";
 
 const faqs = [
   {
@@ -29,55 +30,219 @@ const faqs = [
 ];
 
 export default function FAQSection() {
+  // Section container animation - dramatic jump up effect
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 100, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as const,
+        opacity: { duration: 0.6 },
+        y: {
+          type: "spring" as const,
+          stiffness: 80,
+          damping: 12,
+          mass: 1,
+        },
+        scale: { duration: 0.7 },
+      },
+    },
+  };
+
+  // Header animation variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.7,
+        delay: 0.3,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
+      },
+    },
+  };
+
+  // Accordion container variants for staggered children
+  const accordionContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.5,
+      },
+    },
+  };
+
+  // Individual FAQ item variants
+  const faqItemVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
+      },
+    },
+  };
+
+  // Glowing orb animation variants
+  const orbVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.2,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
+      },
+    },
+  };
+
   return (
-    // Lighter background color #0a1a3f instead of #061232
-    <section className="relative w-full rounded-t-[60px] -mt-10  bg-[#0a1a3f] pt-24 pb-32 px-5 overflow-hidden">
+    <motion.section
+      className="relative w-full rounded-t-[60px] -mt-10 bg-[#0a1a3f] pt-24 pb-32 px-5 overflow-hidden"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={sectionVariants}
+    >
       {/* 1. BACKGROUND IMAGE: Reduced opacity for a 'lighter' feel */}
-      <div
+      <motion.div
         className="absolute inset-0 z-0 opacity-40 mix-blend-overlay"
         style={{
           backgroundImage: `url('/background.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.4 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
       />
 
-      {/* 2. OPTIMIZED GLOWING ORBS: Increased brightness, removed blur where possible */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/30 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-400/20 rounded-full blur-[80px] pointer-events-none" />
+      {/* 2. OPTIMIZED GLOWING ORBS: Animated entrance and floating effect */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/30 rounded-full blur-[100px] pointer-events-none"
+        variants={orbVariants}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.4, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut" as const,
+        }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-400/20 rounded-full blur-[80px] pointer-events-none"
+        variants={orbVariants}
+        animate={{
+          scale: [1, 1.15, 1],
+          opacity: [0.2, 0.3, 0.2],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut" as const,
+          delay: 1,
+        }}
+      />
 
-      {/* 3. LIGHTER OVERLAY: Less aggressive vignette */}
+      {/* 3. LIGHTER OVERLAY */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#0a1a3f_90%)] z-0" />
 
       <div className="mx-auto max-w-4xl relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+        {/* Header with animation */}
+        <motion.div className="text-center mb-16" variants={headerVariants}>
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4,
+              ease: [0.25, 0.46, 0.45, 0.94] as const,
+            }}
+          >
             Frequently Asked <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200">
-              Questions
-            </span>
-          </h2>
-        </div>
-
-        <Accordion type="single" collapsible className="space-y-4">
-          {faqs.map((faq) => (
-            <AccordionItem
-              key={faq.id}
-              value={faq.id}
-              // OPTIMIZATION: Removed backdrop-blur-xl and used a flat semi-transparent hex
-              // This prevents the GPU from recalculating pixels behind the card during animation
-              className="group rounded-2xl border border-white/10 bg-[#16254a]/80 px-2 transition-colors duration-200 hover:border-blue-400/50"
+            <motion.span
+              className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.7,
+                delay: 0.6,
+                ease: [0.25, 0.46, 0.45, 0.94] as const,
+              }}
             >
-              <AccordionTrigger className="px-4 py-6 text-left text-white font-medium hover:no-underline text-lg transition-none">
-                <span className="flex items-center gap-4">{faq.question}</span>
-              </AccordionTrigger>
-              <AccordionContent className="px-4 pb-6 text-blue-100/80 text-base leading-relaxed overflow-hidden">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+              Questions
+            </motion.span>
+          </motion.h2>
+        </motion.div>
+
+        {/* Accordion with staggered animations */}
+        <motion.div variants={accordionContainerVariants}>
+          <Accordion type="single" collapsible className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div key={faq.id} variants={faqItemVariants}>
+                <motion.div
+                  whileHover={{
+                    scale: 1.02,
+                    transition: {
+                      type: "spring" as const,
+                      stiffness: 400,
+                      damping: 25,
+                    },
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <AccordionItem
+                    value={faq.id}
+                    className="group rounded-2xl border border-white/10 bg-[#16254a]/80 px-2 transition-all duration-300 hover:border-blue-400/50 hover:bg-[#16254a]/90 hover:shadow-lg hover:shadow-blue-500/10"
+                  >
+                    <AccordionTrigger className="px-4 py-6 text-left text-white font-medium hover:no-underline text-lg transition-none">
+                      <motion.span
+                        className="flex items-center gap-4"
+                        whileHover={{ x: 4 }}
+                        transition={{
+                          type: "spring" as const,
+                          stiffness: 400,
+                          damping: 25,
+                        }}
+                      >
+                        {faq.question}
+                      </motion.span>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-6 text-blue-100/80 text-base leading-relaxed overflow-hidden">
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.3,
+                          ease: [0.25, 0.46, 0.45, 0.94] as const,
+                        }}
+                      >
+                        {faq.answer}
+                      </motion.div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </motion.div>
+              </motion.div>
+            ))}
+          </Accordion>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
