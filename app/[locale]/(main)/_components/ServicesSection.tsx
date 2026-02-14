@@ -37,7 +37,7 @@ const services: Service[] = [
     ),
     contentTitle: "პროფესიონალური აუდიტორული მომსახურება",
     description:
-      "სრული ფინანსური აუდიტი საერთაშორისო სტანდარტების მიხედვით. ჩვენი გამოცდილი სპეციალისტები უზრუნველყოფენ თქვენი ბიზნესის ფინანსური მდგომარეობის სრულ და ობიექტურ შეფასებას.",
+      "ჩვენი გამოცდილი სპეციალისტები უზრუნველყოფენ თქვენი ბიზნესის ფინანსური მდგომარეობის სრულ და ობიექტურ შეფასებას.",
     features: [
       "საერთაშორისო სტანდარტების შესაბამისი აუდიტი",
       "დეტალური ფინანსური ანგარიშგების შემოწმება",
@@ -181,355 +181,210 @@ const services: Service[] = [
 
 export default function ServicesSection() {
   const [activeService, setActiveService] = useState(0);
-  const [prevService, setPrevService] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const direction = activeService > prevService ? 1 : -1;
-
-  // Ladder Effect Variants for the Container
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.8,
-        staggerChildren: 0.18,
-      },
-    },
-  };
-
-  // Variants for each Item (Ladder steps) - FIXED with proper typing
-  const itemVariants = {
-    hidden: { opacity: 0, x: -40, filter: "blur(6px)" },
-    visible: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-      transition: {
-        type: "spring" as const,
-        stiffness: 200,
-        damping: 22,
-        mass: 1,
-      },
-    },
-  };
-
-  // Card Slide Variants - entire card slides in from right
-  const cardVariants = {
-    initial: { opacity: 0, x: 80, filter: "blur(6px)" },
-    animate: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.4,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-    exit: {
-      opacity: 0,
-      x: -40,
-      filter: "blur(4px)",
-      transition: {
-        duration: 0.2,
-        ease: [0.55, 0.085, 0.68, 0.53] as const,
-      },
-    },
-  };
-
-  // Staggered feature list variants
-  const featureContainerVariants = {
-    animate: {
-      transition: {
-        staggerChildren: 0.06,
-        delayChildren: 0.15,
-      },
-    },
-  };
-
-  const featureItemVariants = {
-    initial: { opacity: 0, x: -10 },
-    animate: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.25,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-  };
-
   const handleServiceSelect = (index: number) => {
-    setPrevService(activeService);
     setActiveService(index);
     setIsMobileMenuOpen(false);
   };
 
   return (
-    <section className="relative z-50 -mt-18 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] py-20 px-6 overflow-hidden pb-24 md:pb-16 lg:pb-16 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
+    <section
+      className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-20 px-6 overflow-hidden shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]"
+      style={{ fontFamily: "'DM Sans', sans-serif" }}
+    >
+      <div className="max-w-[2000px] mx-auto 2xl:px-32 lg:px-20">
         <motion.div
-          className="flex items-center gap-1 mb-12"
-          initial={{ opacity: 0, y: -10 }}
+          className="flex items-center gap-3 mb-10 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.2,
-            ease: [0.25, 0.46, 0.45, 0.94] as const,
-          }}
+          viewport={{ once: true }}
         >
-          <motion.div
-            className="w-8 h-0.5 bg-blue-600"
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.5,
-              delay: 0.5,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
-            }}
-          />
-          <span className="text-sm font-medium uppercase tracking-widest text-gray-500">
+          <div className="flex items-center">
+            <div className="rounded-full bg-blue-600 w-1 h-1" />
+            <div className="bg-blue-600/30 w-8 md:w-12 h-[1px]" />
+          </div>
+          <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
             Our Services
           </span>
-          <motion.div
-            className="w-8 h-0.5 bg-blue-600"
-            initial={{ scaleX: 0, originX: 1 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.5,
-              delay: 0.5,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
-            }}
-          />
         </motion.div>
 
-        {/* Mobile Dropdown */}
-        <div className="lg:hidden mb-8">
+        <div className="lg:hidden mb-8 relative">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-full flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-200"
+            className="w-full flex items-center justify-between p-5 bg-white rounded-2xl shadow-sm border border-gray-100 z-30 relative"
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-full text-white flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-lg text-white">
                 {services[activeService].icon}
               </div>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-base font-bold text-gray-900 text-left">
                 {services[activeService].title}
               </h3>
             </div>
             <ChevronDown
-              className={`w-5 h-5 text-gray-500 transition-transform ${
-                isMobileMenuOpen ? "rotate-180" : ""
-              }`}
+              className={`w-5 h-5 transition-transform duration-300 ${isMobileMenuOpen ? "rotate-180" : ""}`}
             />
           </button>
 
           <AnimatePresence>
             {isMobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mt-2 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden"
-              >
-                {services.map((service, index) => (
-                  <button
-                    key={service.id}
-                    onClick={() => handleServiceSelect(index)}
-                    className={`w-full flex items-center gap-4 p-4 text-left border-b border-gray-100 last:border-b-0 ${
-                      activeService === index
-                        ? "bg-blue-50"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-full text-white flex items-center justify-center flex-shrink-0">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-base font-semibold text-gray-900">
-                      {service.title}
-                    </h3>
-                  </button>
-                ))}
-              </motion.div>
+              <>
+                <div
+                  className="fixed inset-0 z-10"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                />
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-40 overflow-hidden"
+                >
+                  {services.map((service, index) => (
+                    <button
+                      key={service.id}
+                      onClick={() => handleServiceSelect(index)}
+                      className={`w-full flex items-center gap-4 p-5 text-left border-b last:border-0 ${activeService === index ? "bg-blue-50" : "active:bg-gray-50"}`}
+                    >
+                      <div className="w-6 h-6 text-blue-600 shrink-0">
+                        {service.icon}
+                      </div>
+                      <span
+                        className={`font-bold text-sm ${activeService === index ? "text-blue-700" : "text-gray-700"}`}
+                      >
+                        {service.title}
+                      </span>
+                    </button>
+                  ))}
+                </motion.div>
+              </>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-6 items-stretch">
-          {/* Left Navigation: Ladder Effect */}
-          <motion.div
-            className="lg:col-span-5 flex flex-col gap-3 lg:gap-3 h-full"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
-          >
+        <div className="hidden lg:grid lg:grid-cols-12 gap-8 xl:gap-12 items-stretch">
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-3 h-[580px]">
             {services.map((service, index) => (
-              <motion.button
+              <button
                 key={service.id}
-                variants={itemVariants}
-                onClick={() => {
-                  setPrevService(activeService);
-                  setActiveService(index);
-                }}
-                whileHover={{ scale: 1.015, x: 4 }}
-                whileTap={{ scale: 0.985 }}
-                transition={{
-                  type: "spring" as const,
-                  stiffness: 400,
-                  damping: 25,
-                }}
-                className={`relative flex text-left p-4 rounded-2xl items-center gap-4 shadow-sm min-h-[72px] border ${
+                onClick={() => setActiveService(index)}
+                className={`group relative flex items-center gap-4 px-5 rounded-2xl transition-all duration-300 border flex-1 ${
                   activeService === index
-                    ? "bg-blue-50 border-blue-200"
-                    : "bg-white hover:bg-gray-50 border-transparent"
+                    ? "bg-white border-blue-100 shadow-lg translate-x-2"
+                    : "bg-white/60 border-gray-200/50 hover:bg-white hover:shadow-md hover:border-gray-300"
                 }`}
               >
+                <div
+                  className={`w-10 h-10 p-2.5 rounded-xl transition-colors shrink-0 ${
+                    activeService === index
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-600"
+                  }`}
+                >
+                  {service.icon}
+                </div>
+                <h3
+                  className={`text-sm xl:text-base font-bold transition-colors text-left leading-tight ${
+                    activeService === index
+                      ? "text-gray-900"
+                      : "text-gray-600 group-hover:text-gray-900"
+                  }`}
+                >
+                  {service.title}
+                </h3>
                 {activeService === index && (
                   <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute inset-0 rounded-2xl bg-blue-50 border border-blue-200"
-                    style={{ originX: 0.5, originY: 0.5 }}
-                    initial={false}
-                    animate={{
-                      x: [direction * -20, 0],
-                      y: [direction * -14, 0],
-                      scale: [0.97, 1],
-                    }}
-                    transition={{
-                      layout: {
-                        type: "spring" as const,
-                        stiffness: 300,
-                        damping: 28,
-                        mass: 0.9,
-                      },
-                      x: {
-                        type: "spring" as const,
-                        stiffness: 250,
-                        damping: 22,
-                      },
-                      y: {
-                        type: "spring" as const,
-                        stiffness: 250,
-                        damping: 22,
-                      },
-                      scale: {
-                        type: "spring" as const,
-                        stiffness: 350,
-                        damping: 25,
-                      },
-                    }}
+                    layoutId="activeSideBar"
+                    className="absolute left-0 w-1 h-1/2 bg-blue-600 rounded-full"
                   />
                 )}
-                <div className="relative z-10 flex items-center gap-4">
-                  <motion.div
-                    className="w-10 h-10 p-2.5 bg-blue-600 rounded-full text-white flex items-center justify-center flex-shrink-0"
-                    animate={{
-                      scale: activeService === index ? 1.08 : 1,
-                    }}
-                    transition={{
-                      type: "spring" as const,
-                      stiffness: 400,
-                      damping: 20,
-                    }}
-                  >
-                    {service.icon}
-                  </motion.div>
-                  <h3 className="text-base font-semibold text-gray-900 leading-tight">
-                    {service.title}
-                  </h3>
-                </div>
-              </motion.button>
+              </button>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Right Content: Animate the entire Card */}
-          <div className="lg:col-span-7 h-full">
+          <div className="lg:col-span-7 xl:col-span-8 h-[580px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeService}
-                variants={cardVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.3 }}
+                className="h-full"
               >
-                <Card className="bg-white border-none rounded-3xl py-0 shadow-sm overflow-hidden h-full">
-                  <div className="flex flex-col lg:flex-row h-full">
-                    <div className="lg:w-1/2 relative min-h-[500px]  bg-gray-100 overflow-hidden">
-                      <motion.div
-                        key={`img-${activeService}`}
-                        initial={{ scale: 1.08, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{
-                          duration: 0.5,
-                          ease: [0.25, 0.46, 0.45, 0.94] as const,
-                        }}
-                        className="absolute inset-0"
-                      >
-                        <Image
-                          src={services[activeService].image}
-                          alt={services[activeService].title}
-                          fill
-                          className="object-cover"
-                        />
-                      </motion.div>
-                    </div>
+                <Card className="bg-white py-0 border-none rounded-[40px] shadow-xl overflow-hidden h-full flex flex-col xl:flex-row">
+                  <div className="xl:w-1/2 relative h-full min-h-[200px] xl:min-h-full">
+                    <Image
+                      src={services[activeService].image}
+                      alt={services[activeService].title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-                    <div className="lg:w-1/2 px-8 py-4 flex flex-col justify-center">
-                      <motion.h4
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: 0.05,
-                          ease: [0.25, 0.46, 0.45, 0.94] as const,
-                        }}
-                        className="text-xl font-bold mb-5 text-gray-900"
-                      >
-                        {services[activeService].contentTitle}
-                      </motion.h4>
-                      <motion.p
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: 0.1,
-                          ease: [0.25, 0.46, 0.45, 0.94] as const,
-                        }}
-                        className="text-gray-600 mb-3 text-md leading-relaxed"
-                      >
-                        {services[activeService].description}
-                      </motion.p>
-                      <motion.ul
-                        className="space-y-4"
-                        variants={featureContainerVariants}
-                        initial="initial"
-                        animate="animate"
-                      >
-                        {services[activeService].features.map(
-                          (feature, idx) => (
-                            <motion.li
-                              key={idx}
-                              variants={featureItemVariants}
-                              className="flex items-start text-sm gap-1 text-gray-700"
-                            >
-                              <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                              <span>{feature}</span>
-                            </motion.li>
-                          ),
-                        )}
-                      </motion.ul>
-                    </div>
+                  <div className="xl:w-1/2 p-8 xl:p-12 flex flex-col justify-center overflow-y-auto">
+                    <h4 className="text-2xl xl:text-3xl font-bold hidden xl:block text-gray-900 mb-4 leading-tight">
+                      {services[activeService].contentTitle}
+                    </h4>
+                    <p className="text-gray-600 text-sm xl:text-base mb-6 leading-relaxed">
+                      {services[activeService].description}
+                    </p>
+                    <ul className="space-y-3">
+                      {services[activeService].features.map((feature, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-3 text-gray-700 font-medium"
+                        >
+                          <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                          <span className="text-xs xl:text-sm leading-snug">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </Card>
               </motion.div>
             </AnimatePresence>
           </div>
+        </div>
+
+        <div className="lg:hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeService}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="bg-white border-none py-0 rounded-3xl shadow-lg overflow-hidden">
+                <div className="relative h-60">
+                  <Image
+                    src={services[activeService].image}
+                    alt="Service Image"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-8 pt-0">
+                  <p className="text-gray-600 text-sm mb-6 leading-relaxed">
+                    {services[activeService].description}
+                  </p>
+                  <ul className="space-y-4">
+                    {services[activeService].features.map((feature, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-gray-700"
+                      >
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                        <span className="text-sm font-semibold">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Card>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
