@@ -64,7 +64,7 @@ const teamMembers: TeamMember[] = [
 ];
 
 interface TeamCardProps extends TeamMember {
-  id?: string; // Optional ID for linking to CV page
+  id?: string;
 }
 
 export const TeamCard = React.memo(
@@ -76,12 +76,11 @@ export const TeamCard = React.memo(
         transition={{ type: "spring" as const, stiffness: 300, damping: 25 }}
       >
         <motion.div
-          className="bg-white rounded-[24px] shadow-sm overflow-hidden transition-all duration-500 border border-white"
+          className="bg-white rounded-[20px] md:rounded-[24px] shadow-sm overflow-hidden transition-all duration-500 border border-white"
           whileHover={{
             boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
           }}
         >
-          {/* Image Container with "Filled" approach - reduced aspect ratio */}
           <div className="relative aspect-[4/4.5] overflow-hidden">
             <motion.img
               src={image}
@@ -94,7 +93,6 @@ export const TeamCard = React.memo(
                 ease: [0.25, 0.46, 0.45, 0.94] as const,
               }}
             />
-            {/* Subtle overlay gradient */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
               initial={{ opacity: 0 }}
@@ -103,8 +101,7 @@ export const TeamCard = React.memo(
             />
           </div>
 
-          {/* Content Area - reduced padding and spacing */}
-          <div className="p-5 text-center space-y-2">
+          <div className="p-4 md:p-5 text-center space-y-2">
             <motion.div
               className="flex justify-center mb-1.5"
               whileHover={{ scale: 1.05 }}
@@ -119,7 +116,7 @@ export const TeamCard = React.memo(
               </span>
             </motion.div>
             <motion.h3
-              className="text-lg font-bold text-gray-900 group-hover:text-[#2563eb] transition-colors duration-300"
+              className="text-base md:text-lg font-bold text-gray-900 group-hover:text-[#2563eb] transition-colors duration-300"
               whileHover={{ scale: 1.05 }}
               transition={{
                 type: "spring" as const,
@@ -137,7 +134,6 @@ export const TeamCard = React.memo(
       </motion.div>
     );
 
-    // If ID exists, wrap in Link, otherwise just return the card
     if (id) {
       return (
         <Link href={`/team/${id}`} className="block h-full">
@@ -153,7 +149,6 @@ export const TeamCard = React.memo(
 TeamCard.displayName = "TeamCard";
 
 export default function TeamSection() {
-  // Header animation variants
   const headerVariants = {
     hidden: { opacity: 0, y: -20, filter: "blur(6px)" },
     visible: {
@@ -167,7 +162,6 @@ export default function TeamSection() {
     },
   };
 
-  // Carousel container variants
   const carouselVariants = {
     hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
     visible: {
@@ -183,8 +177,8 @@ export default function TeamSection() {
   };
 
   return (
-    <section className="bg-[#f3f5f4] pt-16 pb-28 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-[#f3f5f4] py-16">
+      <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -197,15 +191,13 @@ export default function TeamSection() {
             }}
             className="w-full"
           >
-            {/* Header Container */}
             <motion.div
-              className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6"
+              className="flex flex-col md:flex-row items-center justify-between mb-10 md:mb-12 gap-6"
               variants={headerVariants}
             >
-              {/* Left: Section Label */}
               <div className="flex items-center gap-3">
                 <motion.div
-                  className="w-8 h-0.5 bg-[#2563eb]"
+                  className="w-8 md:w-10 h-0.5 bg-[#2563eb]"
                   initial={{ scaleX: 0, originX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -215,11 +207,11 @@ export default function TeamSection() {
                     ease: [0.25, 0.46, 0.45, 0.94] as const,
                   }}
                 />
-                <span className="text-sm font-medium uppercase tracking-[2px] text-gray-500 font-['DM_Sans']">
+                <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500 font-['DM_Sans']">
                   Our Team
                 </span>
                 <motion.div
-                  className="w-8 h-0.5 bg-[#2563eb]"
+                  className="w-8 md:w-10 h-0.5 bg-[#2563eb]"
                   initial={{ scaleX: 0, originX: 1 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -231,9 +223,8 @@ export default function TeamSection() {
                 />
               </div>
 
-              {/* Right: Button and Arrows aligned together */}
               <motion.div
-                className="flex items-center gap-4"
+                className="flex items-center gap-3 md:gap-4"
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -254,7 +245,7 @@ export default function TeamSection() {
                 >
                   <Link
                     href="/team"
-                    className="px-6 py-2.5 text-sm font-semibold text-white bg-[#2563eb] rounded-full hover:bg-[#1d4ed8] transition-all duration-300 shadow-sm hover:shadow-md whitespace-nowrap"
+                    className="px-5 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-semibold text-white bg-[#2563eb] rounded-full hover:bg-[#1d4ed8] transition-all duration-300 shadow-sm hover:shadow-md whitespace-nowrap"
                   >
                     View All Team
                   </Link>
@@ -288,11 +279,11 @@ export default function TeamSection() {
             </motion.div>
 
             <motion.div variants={carouselVariants}>
-              <CarouselContent className="-ml-4 md:-ml-6">
+              <CarouselContent className="-ml-3 sm:-ml-4 md:-ml-6">
                 {teamMembers.map((member, index) => (
                   <CarouselItem
                     key={index}
-                    className="pl-4 md:pl-6 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                    className="pl-3 sm:pl-4 md:pl-6 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                   >
                     <motion.div
                       initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}

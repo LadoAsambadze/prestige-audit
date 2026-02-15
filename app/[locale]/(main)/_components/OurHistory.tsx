@@ -73,12 +73,9 @@ const OurIdentity: React.FC = () => {
   };
 
   return (
-    <section
-      className="py-16 -mt-10 rounded-t-[80px] lg:py-24"
-      style={{ backgroundColor: "#F3F5F4" }}
-    >
-      <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col lg:flex-row lg:gap-20 items-center">
+    <section className="py-10 md:py-16 " style={{ backgroundColor: "#F3F5F4" }}>
+      <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32">
+        <div className="flex flex-col lg:flex-row lg:gap-16 xl:gap-20 items-center">
           {/* Left Content Section */}
           <motion.div
             className="lg:w-[47%] w-full mb-12 lg:mb-0"
@@ -93,7 +90,7 @@ const OurIdentity: React.FC = () => {
               variants={fadeUpVariants}
             >
               <motion.div
-                className="w-8 h-0.5"
+                className="w-8 md:w-10 h-0.5"
                 style={{ backgroundColor: "#2563eb" }}
                 initial={{ scaleX: 0, originX: 0 }}
                 whileInView={{ scaleX: 1 }}
@@ -105,7 +102,7 @@ const OurIdentity: React.FC = () => {
                 }}
               />
               <span
-                className="text-sm font-medium uppercase tracking-wider"
+                className="text-xs md:text-sm font-medium uppercase tracking-wider"
                 style={{
                   color: "#6B7280",
                   fontFamily: "'DM Sans', sans-serif",
@@ -115,7 +112,7 @@ const OurIdentity: React.FC = () => {
                 History
               </span>
               <motion.div
-                className="w-8 h-0.5"
+                className="w-8 md:w-10 h-0.5"
                 style={{ backgroundColor: "#2563eb" }}
                 initial={{ scaleX: 0, originX: 1 }}
                 whileInView={{ scaleX: 1 }}
@@ -130,7 +127,7 @@ const OurIdentity: React.FC = () => {
 
             {/* Subtitle - Experience */}
             <motion.p
-              className="text-2xl font-semibold mb-6"
+              className="text-xl sm:text-2xl md:text-3xl font-semibold mb-6"
               style={{
                 color: "#2563eb",
                 fontFamily: "'DM Sans', sans-serif",
@@ -142,7 +139,7 @@ const OurIdentity: React.FC = () => {
 
             {/* Description */}
             <motion.p
-              className="text-lg mb-10 leading-relaxed"
+              className="text-base md:text-lg mb-8 md:mb-10 leading-relaxed"
               style={{
                 color: "#6B7280",
                 fontFamily: "'DM Sans', sans-serif",
@@ -156,7 +153,7 @@ const OurIdentity: React.FC = () => {
 
             {/* Feature Items */}
             <motion.div
-              className="space-y-6 mb-12"
+              className="space-y-5 md:space-y-6 mb-8 md:mb-12"
               variants={containerVariants}
             >
               {/* Licensed & Certified */}
@@ -171,7 +168,7 @@ const OurIdentity: React.FC = () => {
                 }}
               >
                 <motion.div
-                  className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300"
+                  className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-all duration-300"
                   style={{ backgroundColor: "#2563eb" }}
                   whileHover={{
                     scale: 1.1,
@@ -180,7 +177,7 @@ const OurIdentity: React.FC = () => {
                   }}
                 >
                   <svg
-                    className="w-8 h-8 fill-current text-white"
+                    className="w-7 h-7 md:w-8 md:h-8 fill-current text-white"
                     viewBox="0 0 50 50"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -189,7 +186,7 @@ const OurIdentity: React.FC = () => {
                 </motion.div>
                 <div>
                   <h4
-                    className="text-xl font-semibold mb-2"
+                    className="text-lg md:text-xl font-semibold mb-2"
                     style={{
                       color: "#111827",
                       fontFamily: "'DM Sans', sans-serif",
@@ -199,7 +196,7 @@ const OurIdentity: React.FC = () => {
                     Licensed & Certified
                   </h4>
                   <p
-                    className="leading-relaxed"
+                    className="text-sm md:text-base leading-relaxed"
                     style={{
                       color: "#6B7280",
                       fontFamily: "'DM Sans', sans-serif",
@@ -223,7 +220,7 @@ const OurIdentity: React.FC = () => {
                 }}
               >
                 <motion.div
-                  className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300"
+                  className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-all duration-300"
                   style={{ backgroundColor: "#2563eb" }}
                   whileHover={{
                     scale: 1.1,
@@ -232,7 +229,7 @@ const OurIdentity: React.FC = () => {
                   }}
                 >
                   <svg
-                    className="w-8 h-8 fill-current text-white"
+                    className="w-7 h-7 md:w-8 md:h-8 fill-current text-white"
                     viewBox="0 0 50 50"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -241,7 +238,7 @@ const OurIdentity: React.FC = () => {
                 </motion.div>
                 <div>
                   <h4
-                    className="text-xl font-semibold mb-2"
+                    className="text-lg md:text-xl font-semibold mb-2"
                     style={{
                       color: "#111827",
                       fontFamily: "'DM Sans', sans-serif",
@@ -251,7 +248,7 @@ const OurIdentity: React.FC = () => {
                     Professional Team
                   </h4>
                   <p
-                    className="leading-relaxed"
+                    className="text-sm md:text-base leading-relaxed"
                     style={{
                       color: "#6B7280",
                       fontFamily: "'DM Sans', sans-serif",
@@ -313,7 +310,7 @@ const OurIdentity: React.FC = () => {
 
               {/* ACCA Logo container */}
               <motion.div className="relative z-10" variants={imageVariants}>
-                <div className="relative aspect-square max-w-md mx-auto">
+                <div className="relative aspect-square max-w-[280px] sm:max-w-[350px] md:max-w-md mx-auto">
                   {/* Background circle */}
                   <motion.div
                     className="absolute inset-0 rounded-full"
@@ -334,7 +331,7 @@ const OurIdentity: React.FC = () => {
                     }}
                   />
                   <motion.div
-                    className="relative rounded-full overflow-hidden w-full h-full border-8 border-white shadow-2xl bg-white"
+                    className="relative rounded-full overflow-hidden w-full h-full border-4 sm:border-6 md:border-8 border-white md:shadow-2xl bg-white"
                     whileHover={{
                       scale: 1.05,
                       rotate: [0, 5, -5, 0],

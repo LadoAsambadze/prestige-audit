@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star, Apple } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import React from "react";
 
 interface Testimonial {
@@ -62,14 +62,14 @@ const allMobileTestimonials: Testimonial[] = [
 
 const TestimonialCard = React.memo(
   ({ quote, name, title, image }: Testimonial) => (
-    <Card className="bg-white border-none rounded-[24px] p-6 mb-5 shadow-sm group hover:shadow-md transition-shadow">
+    <Card className="bg-white border-none rounded-[20px] md:rounded-[24px] p-5 md:p-6 mb-4 md:mb-5 shadow-sm group hover:shadow-md transition-shadow">
       <CardContent className="p-0">
         <div className="flex gap-0.5 mb-3">
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="w-3 h-3 fill-[#2563eb] text-[#2563eb]" />
           ))}
         </div>
-        <p className="text-gray-600 text-[13.5px] leading-relaxed mb-5">
+        <p className="text-gray-600 text-[13px] md:text-[13.5px] leading-relaxed mb-4 md:mb-5">
           "{quote}"
         </p>
         <div className="flex items-center gap-3">
@@ -91,13 +91,7 @@ TestimonialCard.displayName = "TestimonialCard";
 
 export default function ReviewsSection() {
   return (
-    /* Key Fixes: 
-       1. Changed absolute to relative 
-       2. -mt-20 pulls it UP
-       3. rounded-t-[80px] creates the curve
-       4. z-10 ensures it stays above the previous section
-    */
-    <section className="relative z-10 -mt-20 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] pt-20 pb-0 px-6 overflow-hidden    shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
+    <section className="relative z-10 -mt-10 md:-mt-20 z-[99999999999] bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] pt-16 md:pt-20 pb-0 overflow-hidden shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
       <style jsx global>{`
         @keyframes scrollUp {
           0% {
@@ -125,30 +119,25 @@ export default function ReviewsSection() {
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto pt-10">
-        {" "}
-        {/* Added pt-10 to give space from the curve */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* LEFT COLUMN: CTA */}
+      <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 pt-8 md:pt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
           <div className="lg:col-span-3">
-            <Card className="rounded-[40px] p-10 border-none shadow-sm h-full flex flex-col justify-center bg-white">
-              <h2 className="text-3xl font-bold leading-tight mb-6 text-gray-900">
+            <Card className="rounded-[30px] md:rounded-[40px] p-8 md:p-10 border-none shadow-sm h-full flex flex-col justify-center bg-white">
+              <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-4 md:mb-6 text-gray-900">
                 Trusted By Over 1300 Loyal Clients
               </h2>
-              <p className="text-gray-500 mb-8 text-sm leading-relaxed">
+              <p className="text-gray-500 mb-6 md:mb-8 text-sm leading-relaxed">
                 Ad litora torquent per conubia nostra inceptos himenaeos.
               </p>
-              <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-6 px-8 w-fit flex items-center gap-2 group transition-all">
+              <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-5 md:py-6 px-6 md:px-8 w-fit flex items-center gap-2 group transition-all text-sm md:text-base">
                 Contact Us
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Card>
           </div>
 
-          {/* MIDDLE COLUMN: AUTOMATIC SCROLLING CARDS */}
           <div className="lg:col-span-6 relative">
-            <div className="hidden lg:grid grid-cols-2 gap-6 h-[600px] overflow-hidden relative">
-              {/* Gradients to fade out the top and bottom edges */}
+            <div className="hidden lg:grid grid-cols-2 gap-4 md:gap-6 h-[600px] overflow-hidden relative">
               <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#f3f5f4] to-transparent z-20 pointer-events-none" />
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#f3f5f4] to-transparent z-20 pointer-events-none" />
 
@@ -165,8 +154,7 @@ export default function ReviewsSection() {
               </div>
             </div>
 
-            {/* Mobile View */}
-            <div className="block lg:hidden relative h-[420px] overflow-hidden rounded-[32px]">
+            <div className="block lg:hidden relative h-[380px] sm:h-[420px] overflow-hidden rounded-[28px] md:rounded-[32px]">
               <div className="animate-scroll-up pause-on-hover flex flex-col">
                 {[...allMobileTestimonials, ...allMobileTestimonials].map(
                   (t, i) => (
@@ -177,10 +165,9 @@ export default function ReviewsSection() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: STATS */}
-          <div className="lg:col-span-3 flex flex-col gap-6">
-            <Card className="rounded-[40px] p-8 text-center border-none bg-white shadow-sm flex-1 flex flex-col justify-center">
-              <div className="text-5xl font-bold mb-2">4.80</div>
+          <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6">
+            <Card className="rounded-[30px] md:rounded-[40px] p-6 md:p-8 text-center border-none bg-white shadow-sm flex-1 flex flex-col justify-center">
+              <div className="text-4xl md:text-5xl font-bold mb-2">4.80</div>
               <div className="flex justify-center gap-1 mb-2">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -189,11 +176,13 @@ export default function ReviewsSection() {
                   />
                 ))}
               </div>
-              <p className="text-gray-400 text-xs mb-6">2,568 Reviews</p>
+              <p className="text-gray-400 text-xs mb-4 md:mb-6">
+                2,568 Reviews
+              </p>
             </Card>
 
-            <Card className="rounded-[40px] p-8 bg-[#dbeafe] border-none relative overflow-hidden flex-1 flex flex-col justify-center">
-              <h4 className="font-bold text-lg mb-4 text-gray-800">
+            <Card className="rounded-[30px] md:rounded-[40px] p-6 md:p-8 bg-[#dbeafe] border-none relative overflow-hidden flex-1 flex flex-col justify-center">
+              <h4 className="font-bold text-base md:text-lg mb-3 md:mb-4 text-gray-800">
                 Group Cooperation
               </h4>
               <div className="flex -space-x-3">

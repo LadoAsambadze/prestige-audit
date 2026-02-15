@@ -64,7 +64,7 @@ const services: Service[] = [
     ),
     contentTitle: "საგადასახადო დაგეგმვა და კონსულტაცია",
     description:
-      "ყოვლისმომცველი საგადასახადო მომსახურება ფიზიკური და იურიდიული პირებისთვის. ჩვენ დაგეხმარებით გადასახადების ოპტიმიზაციაში და მოქმედი კანონმდებლობის დაცვაში.",
+      "ყოვლისმომცველი საგადასახადო მომსახურება ფიზიკური და იურიდიული პირებისთვის. ჩვენ დაგეხმარებით გადასახადების ოპტიმიზაციაში.",
     features: [
       "საგადასახადო დეკლარაციების მომზადება",
       "საგადასახადო დაგეგმვა და ოპტიმიზაცია",
@@ -93,11 +93,11 @@ const services: Service[] = [
     ),
     contentTitle: "სრული საბუღალტრო აღრიცხვა",
     description:
-      "სრული ციკლის საბუღალტრო მომსახურება, მათ შორის ბუღალტრული აღრიცხვა და ფინანსური ანგარიშგება. ჩვენ უზრუნველვყოფთ თქვენი ბიზნესის ფინანსური ინფორმაციის სიზუსტეს.",
+      "სრული ციკლის საბუღალტრო მომსახურება, მათ შორის ბუღალტრული აღრიცხვა და ფინანსური ანგარიშგება.",
     features: [
-      "ყოველდღიური ბუღალტრული ოპერაციების აღრიცხვა",
+      "ყოველდღიური ბუღალტრული ოპერაციები",
       "ფინანსური ანგარიშგების მომზადება",
-      "ხელფასების დამუშავება და კალკულაცია",
+      "ხელფასების დამუშავება",
     ],
     image: "/Service1.jpg",
   },
@@ -119,11 +119,11 @@ const services: Service[] = [
     ),
     contentTitle: "ექსპერტული შეფასების მომსახურება",
     description:
-      "უძრავი ქონების და ბიზნესის პროფესიონალური შეფასება. ჩვენი ექსპერტები უზრუნველყოფენ ობიექტურ და საბაზრო ფასებზე დაფუძნებულ შეფასებას.",
+      "უძრავი ქონების და ბიზნესის პროფესიონალური შეფასება ობიექტურ საბაზრო ფასებზე დაყრდნობით.",
     features: [
-      "უძრავი ქონების ბაზრის ღირებულების შეფასება",
+      "უძრავი ქონების შეფასება",
       "ბიზნესის შეფასება და ანალიზი",
-      "საინვესტიციო პროექტების ეკონომიკური შეფასება",
+      "საინვესტიციო პროექტების შეფასება",
     ],
     image: "/Office.jpg",
   },
@@ -138,7 +138,7 @@ const services: Service[] = [
         fill="currentColor"
       >
         <path d="M15,6a9,9,0,1,0,9.05,9A9,9,0,0,0,15,6ZM14,13.4a4.75,4.75,0,0,0,1.48.71c.36.13.73.27,1.14.46a2.78,2.78,0,0,1,1.5,1.67,3.13,3.13,0,0,1-.21,2.45,2.94,2.94,0,0,1-2,1.45V21a.91.91,0,1,1-1.81,0v-.87a2.87,2.87,0,0,1-2.37-2.62.91.91,0,1,1,1.81,0c0,.47.7.93,1.43.93a1.22,1.22,0,0,0,1.4-1.61,1,1,0,0,0-.54-.6c-.34-.15-.68-.28-1-.4a6.34,6.34,0,0,1-2-1,2.83,2.83,0,0,1-.75-3.33,2.86,2.86,0,0,1,2-1.58V9a.91.91,0,0,1,1.81,0v.87a2.89,2.89,0,0,1,2.37,2.63.91.91,0,0,1-1.81,0c0-.48-.72-.94-1.44-.94-1,0-1.26.49-1.34.65A1,1,0,0,0,14,13.4Z" />
-        <path d="M30,27.32a2.69,2.69,0,0,1-5.37,0,2.79,2.79,0,0,1,.25-1.13L22.1,23.4a11.4,11.4,0,0,0,1.3-1.3l2.79,2.78a2.78,2.78,0,0,1,1.12-.25A2.68,2.68,0,0,1,30,27.32Z" />
+        <path d="M30,27.32a2.69,2.69,0,0,1-5.37,0,2.79,2.79,0,0,1,.25-1.13L22.1,23.4a11.4,11.4,0,0,0,1.3-1.3l2.79,2.78a2.78,2.78,0,1,1,1.12-.25A2.68,2.68,0,0,1,30,27.32Z" />
         <path d="M30,2.69a2.69,2.69,0,0,1-2.69,2.69,2.6,2.6,0,0,1-1.12-.26L23.4,7.91A10.72,10.72,0,0,0,22.1,6.6l2.78-2.78a2.87,2.87,0,0,1-.25-1.13,2.69,2.69,0,1,1,5.37,0Z" />
         <path d="M7.9,6.6A10.56,10.56,0,0,0,6.61,7.9L3.82,5.12a2.71,2.71,0,0,1-1.13.26A2.69,2.69,0,1,1,5.37,2.69a2.7,2.7,0,0,1-.25,1.13L7.9,6.61Z" />
         <path d="M5.12,26.19a2.64,2.64,0,0,1,.25,1.13,2.69,2.69,0,1,1-2.68-2.69,2.87,2.87,0,0,1,1.13.25L6.61,22.1A10.56,10.56,0,0,0,7.9,23.4Z" />
@@ -146,10 +146,10 @@ const services: Service[] = [
     ),
     contentTitle: "სრული იურიდიული მხარდაჭერა",
     description:
-      "სრული იურიდიული მხარდაჭერა და კონსულტაცია თქვენი ბიზნესის ყველა საჭიროებისთვის. ჩვენი გამოცდილი იურისტები დაგეხმარებიან სამართლებრივ საკითხებში.",
+      "სრული იურიდიული მხარდაჭერა და კონსულტაცია თქვენი ბიზნესის ყველა საჭიროებისთვის.",
     features: [
-      "ხელშეკრულებების მომზადება და შემოწმება",
-      "კორპორატიული მართვის კონსულტაცია",
+      "ხელშეკრულებების მომზადება",
+      "კორპორატიული მართვა",
       "სამართლებრივი რისკების მართვა",
     ],
     image: "/Office.jpg",
@@ -169,12 +169,8 @@ const services: Service[] = [
     ),
     contentTitle: "სტრატეგიული ბიზნეს კონსულტაცია",
     description:
-      "სტრატეგიული ბიზნეს კონსულტაცია თქვენი კომპანიის ზრდისა და ოპტიმიზაციისთვის. ჩვენ დაგეხმარებით ბიზნეს პროცესების გაუმჯობესებასა და ეფექტურობის ამაღლებაში.",
-    features: [
-      "ბიზნეს სტრატეგიის შემუშავება",
-      "ოპერაციული პროცესების ოპტიმიზაცია",
-      "ბაზრის ანალიზი და კვლევა",
-    ],
+      "სტრატეგიული ბიზნეს კონსულტაცია თქვენი კომპანიის ზრდისა და ოპტიმიზაციისთვის.",
+    features: ["ბიზნეს სტრატეგია", "პროცესების ოპტიმიზაცია", "ბაზრის ანალიზი"],
     image: "/Office.jpg",
   },
 ];
@@ -190,13 +186,13 @@ export default function ServicesSection() {
 
   return (
     <section
-      className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-20 px-6 overflow-hidden shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]"
+      className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-16 overflow-hidden"
       style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
-      <div className="max-w-[2000px] mx-auto 2xl:px-32 lg:px-20">
+      <div className="max-w-[2000px] mx-auto px-6  2xl:px-32 lg:px-20">
         <motion.div
           className="flex items-center gap-3 mb-10 md:mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
@@ -209,21 +205,21 @@ export default function ServicesSection() {
           </span>
         </motion.div>
 
-        <div className="lg:hidden mb-8 relative">
+        <div className="lg:hidden mb-6 relative">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-full flex items-center justify-between p-5 bg-white rounded-2xl shadow-sm border border-gray-100 z-30 relative"
+            className="w-full flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-100 z-30 relative"
           >
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-lg text-white">
                 {services[activeService].icon}
               </div>
-              <h3 className="text-base font-bold text-gray-900 text-left">
+              <h3 className="text-base font-bold text-gray-900">
                 {services[activeService].title}
               </h3>
             </div>
             <ChevronDown
-              className={`w-5 h-5 transition-transform duration-300 ${isMobileMenuOpen ? "rotate-180" : ""}`}
+              className={`w-5 h-5 transition-transform duration-200 ${isMobileMenuOpen ? "rotate-180" : ""}`}
             />
           </button>
 
@@ -235,10 +231,11 @@ export default function ServicesSection() {
                   onClick={() => setIsMobileMenuOpen(false)}
                 />
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-40 overflow-hidden"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-40 overflow-hidden will-change-transform"
                 >
                   {services.map((service, index) => (
                     <button
@@ -263,7 +260,7 @@ export default function ServicesSection() {
         </div>
 
         <div className="hidden lg:grid lg:grid-cols-12 gap-8 xl:gap-12 items-stretch">
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-3 h-[580px]">
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 h-[550px]">
             {services.map((service, index) => (
               <button
                 key={service.id}
@@ -271,49 +268,39 @@ export default function ServicesSection() {
                 className={`group relative flex items-center gap-4 px-5 rounded-2xl transition-all duration-300 border flex-1 ${
                   activeService === index
                     ? "bg-white border-blue-100 shadow-lg translate-x-2"
-                    : "bg-white/60 border-gray-200/50 hover:bg-white hover:shadow-md hover:border-gray-300"
+                    : "bg-white/60 border-gray-200/50 hover:bg-white"
                 }`}
               >
                 <div
                   className={`w-10 h-10 p-2.5 rounded-xl transition-colors shrink-0 ${
                     activeService === index
                       ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-600"
+                      : "bg-gray-200 text-gray-600"
                   }`}
                 >
                   {service.icon}
                 </div>
                 <h3
-                  className={`text-sm xl:text-base font-bold transition-colors text-left leading-tight ${
-                    activeService === index
-                      ? "text-gray-900"
-                      : "text-gray-600 group-hover:text-gray-900"
-                  }`}
+                  className={`text-sm xl:text-base font-bold text-left leading-tight ${activeService === index ? "text-gray-900" : "text-gray-600"}`}
                 >
                   {service.title}
                 </h3>
-                {activeService === index && (
-                  <motion.div
-                    layoutId="activeSideBar"
-                    className="absolute left-0 w-1 h-1/2 bg-blue-600 rounded-full"
-                  />
-                )}
               </button>
             ))}
           </div>
 
-          <div className="lg:col-span-7 xl:col-span-8 h-[580px]">
+          <div className="lg:col-span-7 xl:col-span-8 h-[550px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeService}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.2 }}
                 className="h-full"
               >
-                <Card className="bg-white py-0 border-none rounded-[40px] shadow-xl overflow-hidden h-full flex flex-col xl:flex-row">
-                  <div className="xl:w-1/2 relative h-full min-h-[200px] xl:min-h-full">
+                <Card className="bg-white border-none rounded-[40px] py-0 shadow-xl overflow-hidden h-full flex flex-col xl:flex-row">
+                  <div className="xl:w-1/2 relative h-full min-h-[200px]">
                     <Image
                       src={services[activeService].image}
                       alt={services[activeService].title}
@@ -321,12 +308,11 @@ export default function ServicesSection() {
                       className="object-cover"
                     />
                   </div>
-
-                  <div className="xl:w-1/2 p-8 xl:p-12 flex flex-col justify-center overflow-y-auto">
-                    <h4 className="text-2xl xl:text-3xl font-bold hidden xl:block text-gray-900 mb-4 leading-tight">
+                  <div className="xl:w-1/2 p-8 xl:p-12 flex flex-col justify-center">
+                    <h4 className="text-2xl xl:text-3xl font-bold text-gray-900 mb-4">
                       {services[activeService].contentTitle}
                     </h4>
-                    <p className="text-gray-600 text-sm xl:text-base mb-6 leading-relaxed">
+                    <p className="text-gray-600 text-sm xl:text-base mb-6">
                       {services[activeService].description}
                     </p>
                     <ul className="space-y-3">
@@ -335,10 +321,8 @@ export default function ServicesSection() {
                           key={idx}
                           className="flex items-start gap-3 text-gray-700 font-medium"
                         >
-                          <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                          <span className="text-xs xl:text-sm leading-snug">
-                            {feature}
-                          </span>
+                          <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                          <span className="text-xs xl:text-sm">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -353,20 +337,23 @@ export default function ServicesSection() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeService}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="will-change-transform"
             >
-              <Card className="bg-white border-none py-0 rounded-3xl shadow-lg overflow-hidden">
-                <div className="relative h-60">
+              <Card className="bg-white border-none  py-0 rounded-3xl shadow-lg overflow-hidden">
+                <div className="relative h-56 w-full">
                   <Image
                     src={services[activeService].image}
-                    alt="Service Image"
+                    alt="Service"
                     fill
+                    priority
                     className="object-cover"
                   />
                 </div>
-                <div className="p-8 pt-0">
+                <div className="p-6">
                   <p className="text-gray-600 text-sm mb-6 leading-relaxed">
                     {services[activeService].description}
                   </p>

@@ -12,9 +12,9 @@ export default function Page() {
     <div>
       <HeroSection />
       <ServicesSection />
-      <OurIdentity />
-      <PartnersSection />
       <TeamSection />
+      <PartnersSection />
+      <OurIdentity />
       <FAQSection />
       <ReviewsSection />
       <BlogSection />
