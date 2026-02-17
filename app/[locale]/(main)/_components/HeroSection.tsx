@@ -103,7 +103,7 @@ export default function HeroCarousel(): JSX.Element {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="text-white font-semibold leading-[1.1] 
-                             text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-[68px] 2xl:text-[75px]"
+                             text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[68px] 2xl:text-[75px]"
                 >
                   <span className="block md:inline whitespace-nowrap">
                     The Best <span className="text-[#2563eb]">Audit</span>
@@ -123,7 +123,7 @@ export default function HeroCarousel(): JSX.Element {
                 >
                   <a
                     href="/contact"
-                    className="group relative inline-flex items-center gap-4 bg-[#2563eb] text-white font-semibold rounded-lg px-9 py-5 md:px-12 md:py-6 text-base transition-all duration-300 hover:shadow-[0_10px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:scale-95"
+                    className="group relative inline-flex items-center gap-4 bg-[#2563eb] text-white font-semibold rounded-full px-9 py-5 md:px-12 md:py-6 text-base transition-all duration-300 hover:shadow-[0_10px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:scale-95"
                   >
                     <span className="z-10">Book Consultation</span>
                     <svg

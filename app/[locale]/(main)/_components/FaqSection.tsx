@@ -109,6 +109,7 @@ export default function FAQSection() {
       viewport={{ once: true, amount: 0.1 }}
       variants={sectionVariants}
     >
+      {/* Background texture — matches AboutParallax overlay style */}
       <motion.div
         className="absolute inset-0 z-0 opacity-40 mix-blend-overlay"
         style={{
@@ -122,6 +123,7 @@ export default function FAQSection() {
         transition={{ duration: 1 }}
       />
 
+      {/* Ambient orbs — same blue-500/30 and cyan-400/20 as before, kept consistent */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-blue-500/30 rounded-full blur-[80px] md:blur-[100px] pointer-events-none"
         variants={orbVariants}
@@ -150,16 +152,36 @@ export default function FAQSection() {
         }}
       />
 
+      {/* Radial vignette — identical to original */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#0a1a3f_90%)] z-0" />
 
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 relative z-10">
         <div className="max-w-4xl mx-auto">
+          {/* Header — mirrors AboutParallax badge + headline pattern */}
           <motion.div
             className="text-center mb-12 md:mb-16"
             variants={headerVariants}
           >
+            {/* Badge row — same style as "Trusted Excellence" in AboutParallax */}
+            <motion.div
+              className="inline-flex items-center gap-3 mb-6 justify-center"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <span className="h-px w-10 bg-blue-400/40" />
+              <span
+                style={{ letterSpacing: "4px", fontFamily: "sans-serif" }}
+                className="text-[10px] font-semibold uppercase text-blue-300"
+              >
+                Support
+              </span>
+              <span className="h-px w-10 bg-blue-400/40" />
+            </motion.div>
+
             <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 tracking-tight leading-[1.1]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -169,9 +191,9 @@ export default function FAQSection() {
                 ease: [0.25, 0.46, 0.45, 0.94] as const,
               }}
             >
-              Frequently Asked <br />
+              Frequently Asked{" "}
               <motion.span
-                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200"
+                className="italic text-blue-300"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -186,13 +208,14 @@ export default function FAQSection() {
             </motion.h2>
           </motion.div>
 
+          {/* Accordion — card style matches the glass card in AboutParallax */}
           <motion.div variants={accordionContainerVariants}>
             <Accordion
               type="single"
               collapsible
               className="space-y-3 md:space-y-4"
             >
-              {faqs.map((faq, index) => (
+              {faqs.map((faq) => (
                 <motion.div key={faq.id} variants={faqItemVariants}>
                   <motion.div
                     whileHover={{
@@ -207,9 +230,18 @@ export default function FAQSection() {
                   >
                     <AccordionItem
                       value={faq.id}
-                      className="group rounded-xl md:rounded-2xl border border-white/10 bg-[#16254a]/80 px-2 transition-all duration-300 hover:border-blue-400/50 hover:bg-[#16254a]/90 hover:shadow-lg hover:shadow-blue-500/10"
+                      className="
+                        group rounded-xl md:rounded-2xl
+                        border border-white/20
+                        bg-white/[0.07] backdrop-blur-lg
+                        px-2
+                        transition-all duration-300
+                        hover:border-blue-400/40
+                        hover:bg-white/[0.10]
+                        hover:shadow-lg hover:shadow-blue-500/10
+                      "
                     >
-                      <AccordionTrigger className="px-3 md:px-4 py-4 md:py-6 text-left text-white font-medium hover:no-underline text-sm md:text-base lg:text-lg transition-none">
+                      <AccordionTrigger className="px-3 md:px-4 py-4 md:py-6 text-left text-white font-semibold hover:no-underline text-sm md:text-base lg:text-lg transition-none">
                         <motion.span
                           className="flex items-center gap-3 md:gap-4"
                           whileHover={{ x: 4 }}
@@ -219,11 +251,19 @@ export default function FAQSection() {
                             damping: 25,
                           }}
                         >
+                          {/* Dot accent — matches the divider dots in AboutParallax */}
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
                           {faq.question}
                         </motion.span>
                       </AccordionTrigger>
-                      <AccordionContent className="px-3 md:px-4 pb-4 md:pb-6 text-blue-100/80 text-sm md:text-base leading-relaxed overflow-hidden">
+
+                      <AccordionContent className="px-3 md:px-4 pb-4 md:pb-6 text-white/60 text-sm md:text-base leading-relaxed overflow-hidden">
+                        {/* Thin divider before answer — same blue-400/30 as AboutParallax separators */}
+                        <div className="flex items-center gap-3 mb-3 ml-[18px]">
+                          <span className="h-px flex-1 bg-blue-400/20" />
+                        </div>
                         <motion.div
+                          className="pl-[18px]"
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{

@@ -80,16 +80,7 @@ export default function Footer() {
             <h3 className="text-2xl font-bold text-white">
               Register For Our Updates!
             </h3>
-            <div className="relative flex items-center group">
-              <Input
-                type="email"
-                placeholder="Enter your email address"
-                className="bg-white/5 border-white/10 text-white placeholder:text-white/20 h-16 rounded-2xl pr-16 focus:border-green-400/50 transition-all"
-              />
-              <Button className="absolute right-1.5 top-1.5 bottom-1.5 bg-green-400 hover:bg-green-500 text-black rounded-xl px-5 transition-transform active:scale-95">
-                <Send size={22} />
-              </Button>
-            </div>
+
             <div className="flex items-center space-x-3">
               <Checkbox
                 id="terms"

@@ -1,10 +1,8 @@
 "use client";
 
-import React from "react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
-// Partner type
 type Partner = {
   name: string;
   logo?: string;
@@ -63,7 +61,6 @@ const LogoCard = ({ logo, name, type }: Partner) => {
 };
 
 export default function PartnersSection() {
-  // Header animation variants
   const headerVariants = {
     hidden: { opacity: 0, y: -20, filter: "blur(8px)" },
     visible: {
@@ -77,7 +74,6 @@ export default function PartnersSection() {
     },
   };
 
-  // Marquee row variants - fade in and slide
   const marqueeRowVariants = {
     hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
     visible: {
@@ -92,7 +88,7 @@ export default function PartnersSection() {
   };
 
   return (
-    <section className="relative z-10 bg-[#f3f5f4] py-16 px-6 overflow-hidden">
+    <section className="relative z-10 bg-[#f3f5f4] py-10 md:py-16 overflow-hidden">
       <style jsx global>{`
         @keyframes scrollLeft {
           0% {
@@ -118,47 +114,26 @@ export default function PartnersSection() {
         }
       `}</style>
 
-      {/* Header with animations */}
+      {/* CENTERED HEADER SECTION */}
       <motion.div
-        className="max-w-7xl mx-auto mb-16 text-center"
+        className="max-w-7xl mx-auto mb-12 flex flex-col items-center text-center"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={headerVariants}
       >
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <motion.div
-            className="w-8 h-0.5 bg-blue-600"
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.6,
-              delay: 0.3,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
-            }}
-          />
-          <span className="text-sm font-medium uppercase tracking-widest text-gray-500">
+        <div className="flex items-center justify-center w-full gap-3 mb-3">
+          <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
+          <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
             Trusted By
           </span>
-          <motion.div
-            className="w-8 h-0.5 bg-blue-600"
-            initial={{ scaleX: 0, originX: 1 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.6,
-              delay: 0.3,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
-            }}
-          />
+          <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
         </div>
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
           Our <span className="text-blue-600">Partners</span>
         </h2>
       </motion.div>
 
-      {/* Marquee rows with staggered entrance */}
       <motion.div
         className="relative space-y-6"
         initial="hidden"
@@ -172,26 +147,13 @@ export default function PartnersSection() {
           },
         }}
       >
-        {/* Row 1: Left to Right movement */}
+        {/* Row 1 */}
         <motion.div
           className="flex overflow-hidden relative"
           variants={marqueeRowVariants}
         >
-          <motion.div
-            className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          />
-          <motion.div
-            className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          />
-
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10" />
           <div className="flex animate-marquee-left whitespace-nowrap">
             {[...partnersRow1, ...partnersRow1, ...partnersRow1].map((p, i) => (
               <LogoCard key={`r1-${i}`} {...p} />
@@ -199,26 +161,13 @@ export default function PartnersSection() {
           </div>
         </motion.div>
 
-        {/* Row 2: Right to Left movement */}
+        {/* Row 2 */}
         <motion.div
           className="flex overflow-hidden relative"
           variants={marqueeRowVariants}
         >
-          <motion.div
-            className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          />
-          <motion.div
-            className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          />
-
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10" />
           <div className="flex animate-marquee-right whitespace-nowrap">
             {[...partnersRow2, ...partnersRow2, ...partnersRow2].map((p, i) => (
               <LogoCard key={`r2-${i}`} {...p} />

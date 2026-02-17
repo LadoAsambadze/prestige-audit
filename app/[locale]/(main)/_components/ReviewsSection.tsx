@@ -34,7 +34,7 @@ const testimonialsLeft: Testimonial[] = [
   },
 ];
 
-const testimonialsRight: Testimonial[] = [
+const testimonialsMiddle: Testimonial[] = [
   {
     quote: "Viverra ac tincidunt nam porta elementum a enim euismod.",
     name: "Arnold Willy",
@@ -55,8 +55,30 @@ const testimonialsRight: Testimonial[] = [
   },
 ];
 
+const testimonialsRight: Testimonial[] = [
+  {
+    quote: "Sapien pellentesque habitant morbi tristique senectus et netus.",
+    name: "Elena Rossi",
+    title: "Designer",
+    image: "https://i.pravatar.cc/150?u=7",
+  },
+  {
+    quote: "Porttitor massa id neque aliquam vestibulum morbi blandit.",
+    name: "Marcus Aurelius",
+    title: "Marketing",
+    image: "https://i.pravatar.cc/150?u=8",
+  },
+  {
+    quote: "Amet dictum sit amet justo donec enim diam vulputate.",
+    name: "Sarah Jenkins",
+    title: "COO",
+    image: "https://i.pravatar.cc/150?u=9",
+  },
+];
+
 const allMobileTestimonials: Testimonial[] = [
   ...testimonialsLeft,
+  ...testimonialsMiddle,
   ...testimonialsRight,
 ];
 
@@ -86,12 +108,9 @@ const TestimonialCard = React.memo(
     </Card>
   ),
 );
-
-TestimonialCard.displayName = "TestimonialCard";
-
 export default function ReviewsSection() {
   return (
-    <section className="relative z-10 -mt-10 md:-mt-20 z-[99999999999] bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] pt-16 md:pt-20 pb-0 overflow-hidden shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]">
+    <section className="relative z-10 -mt-10 md:-mt-20 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] pt-16 md:pt-20 pb-0 overflow-hidden">
       <style jsx global>{`
         @keyframes scrollUp {
           0% {
@@ -110,97 +129,91 @@ export default function ReviewsSection() {
           }
         }
         .animate-scroll-up {
-          animation: scrollUp 25s linear infinite;
+          animation: scrollUp 30s linear infinite;
           will-change: transform;
         }
         .animate-scroll-down {
-          animation: scrollDown 25s linear infinite;
+          animation: scrollDown 30s linear infinite;
           will-change: transform;
+        }
+        .pause-on-hover:hover {
+          animation-play-state: paused;
         }
       `}</style>
 
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 pt-8 md:pt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
+          {/* Left Side CTA Card */}
           <div className="lg:col-span-3">
-            <Card className="rounded-[30px] md:rounded-[40px] p-8 md:p-10 border-none shadow-sm h-full flex flex-col justify-center bg-white">
-              <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-4 md:mb-6 text-gray-900">
-                Trusted By Over 1300 Loyal Clients
-              </h2>
-              <p className="text-gray-500 mb-6 md:mb-8 text-sm leading-relaxed">
-                Ad litora torquent per conubia nostra inceptos himenaeos.
-              </p>
-              <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-5 md:py-6 px-6 md:px-8 w-fit flex items-center gap-2 group transition-all text-sm md:text-base">
-                Contact Us
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+            <Card
+              className="relative rounded-[30px] md:rounded-[40px] p-8 md:p-10 border-none shadow-sm h-full flex flex-col overflow-hidden bg-cover bg-center"
+              style={{
+                backgroundImage: `url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80')`,
+              }}
+            >
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/40 z-0" />
+
+              <div className="relative z-10 h-full flex flex-col">
+                {/* Text moved to the TOP (mb-auto pushes everything else down) */}
+                <div className="mb-auto">
+                  <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-4 text-white">
+                    Trusted By Over 1300 Loyal Clients
+                  </h2>
+                  <p className="text-white/80 text-sm leading-relaxed max-w-[240px]">
+                    Ad litora torquent per conubia nostra inceptos himenaeos.
+                  </p>
+                </div>
+
+                {/* Button moved to the BOTTOM */}
+                <div className="mt-8">
+                  <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-5 md:py-6 px-6 md:px-8 w-fit flex items-center gap-2 group transition-all text-sm md:text-base">
+                    Contact Us
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </div>
             </Card>
           </div>
 
-          <div className="lg:col-span-6 relative">
-            <div className="hidden lg:grid grid-cols-2 gap-4 md:gap-6 h-[600px] overflow-hidden relative">
+          {/* Scrolling Reviews - 3 Columns */}
+          <div className="lg:col-span-9 relative">
+            <div className="hidden lg:grid grid-cols-3 gap-4 md:gap-6 h-[600px] overflow-hidden relative">
               <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#f3f5f4] to-transparent z-20 pointer-events-none" />
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#f3f5f4] to-transparent z-20 pointer-events-none" />
 
+              {/* Track 1 */}
               <div className="animate-scroll-up pause-on-hover flex flex-col">
                 {[...testimonialsLeft, ...testimonialsLeft].map((t, i) => (
                   <TestimonialCard key={`l-${i}`} {...t} />
                 ))}
               </div>
 
+              {/* Track 2 */}
               <div className="animate-scroll-down pause-on-hover flex flex-col">
+                {[...testimonialsMiddle, ...testimonialsMiddle].map((t, i) => (
+                  <TestimonialCard key={`m-${i}`} {...t} />
+                ))}
+              </div>
+
+              {/* Track 3 */}
+              <div className="animate-scroll-up pause-on-hover flex flex-col">
                 {[...testimonialsRight, ...testimonialsRight].map((t, i) => (
                   <TestimonialCard key={`r-${i}`} {...t} />
                 ))}
               </div>
             </div>
 
+            {/* Mobile View */}
             <div className="block lg:hidden relative h-[380px] sm:h-[420px] overflow-hidden rounded-[28px] md:rounded-[32px]">
               <div className="animate-scroll-up pause-on-hover flex flex-col">
                 {[...allMobileTestimonials, ...allMobileTestimonials].map(
                   (t, i) => (
-                    <TestimonialCard key={`m-${i}`} {...t} />
+                    <TestimonialCard key={`mob-${i}`} {...t} />
                   ),
                 )}
               </div>
             </div>
-          </div>
-
-          <div className="lg:col-span-3 flex flex-col gap-4 md:gap-6">
-            <Card className="rounded-[30px] md:rounded-[40px] p-6 md:p-8 text-center border-none bg-white shadow-sm flex-1 flex flex-col justify-center">
-              <div className="text-4xl md:text-5xl font-bold mb-2">4.80</div>
-              <div className="flex justify-center gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <p className="text-gray-400 text-xs mb-4 md:mb-6">
-                2,568 Reviews
-              </p>
-            </Card>
-
-            <Card className="rounded-[30px] md:rounded-[40px] p-6 md:p-8 bg-[#dbeafe] border-none relative overflow-hidden flex-1 flex flex-col justify-center">
-              <h4 className="font-bold text-base md:text-lg mb-3 md:mb-4 text-gray-800">
-                Group Cooperation
-              </h4>
-              <div className="flex -space-x-3">
-                {[1, 2, 3].map((i) => (
-                  <Avatar
-                    key={i}
-                    className="border-2 border-[#dbeafe] w-10 h-10"
-                  >
-                    <AvatarImage
-                      src={`https://i.pravatar.cc/150?u=${i + 20}`}
-                    />
-                  </Avatar>
-                ))}
-                <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center font-bold text-xs">
-                  +12
-                </div>
-              </div>
-            </Card>
           </div>
         </div>
       </div>

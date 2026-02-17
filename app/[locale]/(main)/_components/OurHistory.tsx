@@ -5,7 +5,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const OurIdentity: React.FC = () => {
-  // Container variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -17,7 +16,6 @@ const OurIdentity: React.FC = () => {
     },
   };
 
-  // Fade up animation for text elements
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
     visible: {
@@ -31,7 +29,6 @@ const OurIdentity: React.FC = () => {
     },
   };
 
-  // Slide in from left for feature items
   const slideInLeftVariants = {
     hidden: { opacity: 0, x: -40, filter: "blur(4px)" },
     visible: {
@@ -45,7 +42,6 @@ const OurIdentity: React.FC = () => {
     },
   };
 
-  // Scale and fade for image
   const imageVariants = {
     hidden: { opacity: 0, scale: 0.85, filter: "blur(10px)" },
     visible: {
@@ -59,7 +55,6 @@ const OurIdentity: React.FC = () => {
     },
   };
 
-  // Decorative elements fade in
   const decorativeVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
@@ -73,18 +68,16 @@ const OurIdentity: React.FC = () => {
   };
 
   return (
-    <section className="py-10 md:py-16 " style={{ backgroundColor: "#F3F5F4" }}>
+    <section className="py-16 md:py-16 " style={{ backgroundColor: "#F3F5F4" }}>
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32">
         <div className="flex flex-col lg:flex-row lg:gap-16 xl:gap-20 items-center">
-          {/* Left Content Section */}
           <motion.div
-            className="lg:w-[47%] w-full mb-12 lg:mb-0"
+            className="lg:w-[47%] w-full mb-6 lg:mb-0"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            {/* Subtitle */}
             <motion.div
               className="flex items-center gap-3 mb-4"
               variants={fadeUpVariants}
@@ -125,7 +118,6 @@ const OurIdentity: React.FC = () => {
               />
             </motion.div>
 
-            {/* Subtitle - Experience */}
             <motion.p
               className="text-xl sm:text-2xl md:text-3xl font-semibold mb-6"
               style={{
@@ -137,7 +129,6 @@ const OurIdentity: React.FC = () => {
               with 20 years of experience
             </motion.p>
 
-            {/* Description */}
             <motion.p
               className="text-base md:text-lg mb-8 md:mb-10 leading-relaxed"
               style={{
@@ -151,12 +142,10 @@ const OurIdentity: React.FC = () => {
               licenses and permits to conduct an audit in Georgia.
             </motion.p>
 
-            {/* Feature Items */}
             <motion.div
               className="space-y-5 md:space-y-6 mb-8 md:mb-12"
               variants={containerVariants}
             >
-              {/* Licensed & Certified */}
               <motion.div
                 className="flex items-start gap-4 group"
                 variants={slideInLeftVariants}
@@ -208,7 +197,6 @@ const OurIdentity: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* Professional Team */}
               <motion.div
                 className="flex items-start gap-4 group"
                 variants={slideInLeftVariants}
@@ -263,7 +251,6 @@ const OurIdentity: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Image Section - ACCA Logo */}
           <motion.div
             className="lg:w-[53%] w-full flex items-center justify-center lg:justify-end relative"
             initial="hidden"
@@ -271,7 +258,6 @@ const OurIdentity: React.FC = () => {
             viewport={{ once: true, amount: 0.3 }}
           >
             <div className="relative w-full max-w-[600px]">
-              {/* Decorative background circles with blue gradient */}
               <motion.div
                 className="absolute -left-12 top-1/2 -translate-y-1/2 w-64 h-96 opacity-20 rounded-[50%] blur-3xl hidden lg:block"
                 style={{
@@ -308,10 +294,8 @@ const OurIdentity: React.FC = () => {
                 }}
               />
 
-              {/* ACCA Logo container */}
               <motion.div className="relative z-10" variants={imageVariants}>
                 <div className="relative aspect-square max-w-[280px] sm:max-w-[350px] md:max-w-md mx-auto">
-                  {/* Background circle */}
                   <motion.div
                     className="absolute inset-0 rounded-full"
                     style={{
@@ -363,7 +347,6 @@ const OurIdentity: React.FC = () => {
         </div>
       </div>
 
-      {/* Add keyframes for oscillating rotation animation */}
       <style jsx>{`
         @keyframes oscillateRotation {
           0% {

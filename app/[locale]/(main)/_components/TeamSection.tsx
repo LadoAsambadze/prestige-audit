@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -10,12 +10,15 @@ import {
 } from "@/components/ui/carousel";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 interface TeamMember {
   name: string;
   title: string;
   department: string;
   image: string;
+  id?: string;
 }
 
 const teamMembers: TeamMember[] = [
@@ -24,289 +27,155 @@ const teamMembers: TeamMember[] = [
     title: "CEO",
     department: "Leadership",
     image: "3.png",
+    id: "1",
   },
   {
     name: "James Anderson",
     title: "CTO",
     department: "Technology",
     image: "4.jpeg",
+    id: "2",
   },
   {
     name: "Emily Rodriguez",
     title: "Head of Design",
     department: "Creative",
     image: "5.jpeg",
+    id: "3",
   },
   {
     name: "Michael Chen",
     title: "VP Engineering",
     department: "Technology",
     image: "6.jpeg",
+    id: "4",
   },
   {
     name: "Sophia Williams",
     title: "Head of Marketing",
     department: "Marketing",
     image: "1.png",
+    id: "5",
   },
   {
     name: "David Thompson",
     title: "CFO",
     department: "Finance",
     image: "2.png",
-  },
-  {
-    name: "David Thompson",
-    title: "CFO",
-    department: "Finance",
-    image: "7.png",
+    id: "6",
   },
 ];
 
-interface TeamCardProps extends TeamMember {
-  id?: string;
-}
-
 export const TeamCard = React.memo(
-  ({ name, title, department, image, id }: TeamCardProps) => {
-    const CardContent = (
-      <motion.div
-        className="group h-full cursor-pointer"
-        whileHover={{ y: -8 }}
-        transition={{ type: "spring" as const, stiffness: 300, damping: 25 }}
-      >
-        <motion.div
-          className="bg-white rounded-[20px] md:rounded-[24px] shadow-sm overflow-hidden transition-all duration-500 border border-white"
-          whileHover={{
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
-          }}
-        >
-          <div className="relative aspect-[4/4.5] overflow-hidden">
-            <motion.img
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              whileHover={{ scale: 1.1 }}
-              transition={{
-                duration: 0.7,
-                ease: [0.25, 0.46, 0.45, 0.94] as const,
-              }}
-            />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
+  ({ name, title, department, image, id }: TeamMember) => {
+    return (
+      <div className="group relative aspect-[4/5] w-full cursor-pointer overflow-hidden rounded-[24px] bg-gray-200">
+        <img
+          src={image}
+          alt={name}
+          className="h-full w-full object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
+          loading="eager"
+        />
 
-          <div className="p-4 md:p-5 text-center space-y-2">
-            <motion.div
-              className="flex justify-center mb-1.5"
-              whileHover={{ scale: 1.05 }}
-              transition={{
-                type: "spring" as const,
-                stiffness: 400,
-                damping: 20,
-              }}
-            >
-              <span className="px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-[#2563eb] bg-blue-50 rounded-full">
-                {department}
-              </span>
-            </motion.div>
-            <motion.h3
-              className="text-base md:text-lg font-bold text-gray-900 group-hover:text-[#2563eb] transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              transition={{
-                type: "spring" as const,
-                stiffness: 400,
-                damping: 20,
-              }}
-            >
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-end md:justify-center p-6 
+                      bg-black/20 md:bg-black/0 
+                      md:opacity-0 md:group-hover:opacity-100 
+                      md:backdrop-blur-md 
+                      transition-all duration-500 ease-in-out"
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:hidden" />
+
+          <div className="relative z-10 flex flex-col items-center">
+            <span className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/80">
+              {department}
+            </span>
+            <h3 className="text-center text-xl font-bold text-white leading-tight">
               {name}
-            </motion.h3>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            </h3>
+            <p className="mt-1 text-[11px] font-medium uppercase tracking-widest text-white/90">
               {title}
             </p>
+
+            <Link
+              href={`/team/gogita-baramidze`}
+              className="mt-4 md:mt-6 w-full opacity-0 md:group-hover:opacity-100 transition-opacity delay-100"
+            >
+              <div className="flex w-full items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-2 text-xs font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-black">
+                View Profile
+                <ArrowRight className="h-3 w-3" />
+              </div>
+            </Link>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     );
-
-    if (id) {
-      return (
-        <Link href={`/team/${id}`} className="block h-full">
-          {CardContent}
-        </Link>
-      );
-    }
-
-    return CardContent;
   },
 );
 
 TeamCard.displayName = "TeamCard";
 
 export default function TeamSection() {
-  const headerVariants = {
-    hidden: { opacity: 0, y: -20, filter: "blur(6px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-  };
+  const [isMobile, setIsMobile] = useState(false);
 
-  const carouselVariants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.7,
-        delay: 0.2,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-  };
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
-    <section className="bg-[#f3f5f4] py-16">
-      <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
+    <section className="bg-[#f3f5f4] py-10 md:py-16 overflow-hidden">
+      <div className="max-w-[1440px] mx-auto">
+        <div className="px-6 lg:px-16 flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
+            <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
+              Our Team
+            </span>
+            <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
+          </div>
+
+          <Link href="/team" className="hidden md:block">
+            <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold px-8 py-2.5 h-auto rounded-full text-sm transition-all group">
+              View All Members
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+
+        <div className="relative px-0 md:px-16">
           <Carousel
             opts={{
               align: "start",
               loop: true,
             }}
-            className="w-full"
+            className="w-full relative"
           >
-            <motion.div
-              className="flex flex-col md:flex-row items-center justify-between mb-10 md:mb-12 gap-6"
-              variants={headerVariants}
-            >
-              <div className="flex items-center gap-3">
-                <motion.div
-                  className="w-8 md:w-10 h-0.5 bg-[#2563eb]"
-                  initial={{ scaleX: 0, originX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.3,
-                    ease: [0.25, 0.46, 0.45, 0.94] as const,
-                  }}
-                />
-                <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500 font-['DM_Sans']">
-                  Our Team
-                </span>
-                <motion.div
-                  className="w-8 md:w-10 h-0.5 bg-[#2563eb]"
-                  initial={{ scaleX: 0, originX: 1 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.3,
-                    ease: [0.25, 0.46, 0.45, 0.94] as const,
-                  }}
-                />
-              </div>
+            <div className="hidden md:block">
+              <CarouselPrevious className="absolute -left-12 lg:-left-14 top-1/2 -translate-y-1/2 h-11 w-11 border-gray-200 bg-white text-gray-900 shadow-sm z-10 hover:bg-[#2563eb] hover:text-white transition-colors" />
+              <CarouselNext className="absolute -right-12 lg:-right-14 top-1/2 -translate-y-1/2 h-11 w-11 border-gray-200 bg-white text-gray-900 shadow-sm z-10 hover:bg-[#2563eb] hover:text-white transition-colors" />
+            </div>
 
-              <motion.div
-                className="flex items-center gap-3 md:gap-4"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.4,
-                  ease: [0.25, 0.46, 0.45, 0.94] as const,
-                }}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{
-                    type: "spring" as const,
-                    stiffness: 400,
-                    damping: 25,
-                  }}
+            <CarouselContent className="ml-0 md:-ml-6 px-4 md:px-0 py-1">
+              {teamMembers.map((member, index) => (
+                <CarouselItem
+                  key={index}
+                  className=" pl-6 basis-[90%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
-                  <Link
-                    href="/team"
-                    className="px-5 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-semibold text-white bg-[#2563eb] rounded-full hover:bg-[#1d4ed8] transition-all duration-300 shadow-sm hover:shadow-md whitespace-nowrap"
-                  >
-                    View All Team
-                  </Link>
-                </motion.div>
-
-                <div className="hidden md:flex items-center gap-2">
-                  <motion.div
-                    whileHover={{ scale: 1.1, x: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{
-                      type: "spring" as const,
-                      stiffness: 400,
-                      damping: 25,
-                    }}
-                  >
-                    <CarouselPrevious className="static translate-y-0 h-10 w-10 border-gray-300 hover:bg-white hover:text-[#2563eb]" />
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.1, x: 2 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{
-                      type: "spring" as const,
-                      stiffness: 400,
-                      damping: 25,
-                    }}
-                  >
-                    <CarouselNext className="static translate-y-0 h-10 w-10 border-gray-300 hover:bg-white hover:text-[#2563eb]" />
-                  </motion.div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            <motion.div variants={carouselVariants}>
-              <CarouselContent className="-ml-3 sm:-ml-4 md:-ml-6">
-                {teamMembers.map((member, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="pl-3 sm:pl-4 md:pl-6 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-                  >
-                    <motion.div
-                      initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
-                      whileInView={{
-                        opacity: 1,
-                        y: 0,
-                        filter: "blur(0px)",
-                      }}
-                      viewport={{ once: true, amount: 0.2 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: index * 0.1,
-                        ease: [0.25, 0.46, 0.45, 0.94] as const,
-                      }}
-                    >
-                      <TeamCard {...member} />
-                    </motion.div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </motion.div>
+                  <TeamCard {...member} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
           </Carousel>
-        </motion.div>
+        </div>
+
+        <div className="px-6 mt-8 md:hidden">
+          <Button className="px-5 w-full md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-semibold text-white bg-[#2563eb] rounded-full hover:bg-[#1d4ed8] transition-all duration-300 shadow-sm hover:shadow-md whitespace-nowrap">
+            View All Services
+          </Button>
+        </div>
       </div>
     </section>
   );
