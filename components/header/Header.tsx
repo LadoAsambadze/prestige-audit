@@ -18,6 +18,7 @@ export default function Header() {
     { name: "Home", href: "/" },
     { name: "Team", href: "/team" },
     { name: "News", href: "/news" },
+    { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -88,24 +89,6 @@ export default function Header() {
           </nav>
 
           {/* Action Buttons */}
-          <div
-            className="flex items-center justify-end gap-4"
-            style={{ width: "25%" }}
-          >
-            <button
-              className="p-3 rounded-xl text-white transition-all duration-300 hover:bg-white/10 border border-white/10"
-              aria-label="Search"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-
-            <button
-              className="p-3 rounded-xl text-white transition-all duration-300 hover:bg-[#2563eb] border border-white/10 bg-white/5"
-              aria-label="Menu"
-            >
-              <LayoutGrid className="w-5 h-5" />
-            </button>
-          </div>
         </div>
       </div>
     </header>

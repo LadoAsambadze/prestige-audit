@@ -40,7 +40,7 @@ export default function AboutParallax() {
       </div>
 
       {/* ── PARALLAX IMAGE WRAPPER ── */}
-      <div className="relative overflow-hidden min-h-[650px] md:min-h-[800px]">
+      <div className="relative overflow-hidden bg-[#f3f5f4] min-h-[650px] md:min-h-[800px]">
         {/* The 'inset' is larger than 0 to ensure the image 
             doesn't 'run out' during the parallax translation.
         */}

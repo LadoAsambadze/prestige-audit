@@ -5,7 +5,7 @@ import MapboxMap from "./_components/MapBox";
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f3f5f4]">
       {/* 1. Form Slide Up */}
       <motion.div
         initial={{ opacity: 0, y: 60 }}

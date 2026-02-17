@@ -192,10 +192,7 @@ export default function TeamPage() {
           </motion.div>
 
           {/* 4-Column Grid with clickable cards */}
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-            variants={gridVariants}
-          >
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {teamMembers.map((member) => (
               <motion.div key={member.id} variants={itemVariants}>
                 <TeamCard {...member} />
