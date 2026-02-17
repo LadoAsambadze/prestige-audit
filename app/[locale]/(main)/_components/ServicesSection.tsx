@@ -1,10 +1,16 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { CheckCircle2, ChevronDown } from "lucide-react";
-import React, { useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import { CheckCircle2, ArrowRight } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface Service {
   id: string;
@@ -19,7 +25,7 @@ interface Service {
 const services: Service[] = [
   {
     id: "financial-audit",
-    title: "ფინანსური აუდიტი",
+    title: "Financial Audit",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -35,19 +41,19 @@ const services: Service[] = [
         <path d="M29.73,28.43,27,25.68a5.11,5.11,0,0,0-7.82-6.52A5.11,5.11,0,0,0,25.68,27l2.75,2.75a.92.92,0,0,0,1.3,0A.92.92,0,0,0,29.73,28.43Zm-9.27-3.34a3.27,3.27,0,0,1,0-4.63,3.32,3.32,0,0,1,2.32-1,3.28,3.28,0,1,1-2.32,5.59Z" />
       </svg>
     ),
-    contentTitle: "პროფესიონალური აუდიტორული მომსახურება",
+    contentTitle: "Professional Audit Services",
     description:
-      "ჩვენი გამოცდილი სპეციალისტები უზრუნველყოფენ თქვენი ბიზნესის ფინანსური მდგომარეობის სრულ და ობიექტურ შეფასებას.",
+      "Our experienced specialists provide a full and objective assessment of your business's financial health.",
     features: [
-      "საერთაშორისო სტანდარტების შესაბამისი აუდიტი",
-      "დეტალური ფინანსური ანგარიშგების შემოწმება",
-      "რისკების იდენტიფიცირება და შეფასება",
+      "International Standard Audits",
+      "Detailed Financial Reporting",
+      "Risk Identification & Assessment",
     ],
     image: "/Service1.jpg",
   },
   {
     id: "tax-services",
-    title: "საგადასახადო მომსახურება",
+    title: "Tax Services",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -62,19 +68,19 @@ const services: Service[] = [
         <path d="M19.05,27.52a12.85,12.85,0,0,1-4.05.64,13.09,13.09,0,0,1-9.11-3.67l2,.61a.92.92,0,0,0,.54-1.76l-5-1.54a1,1,0,0,0-.9.21.91.91,0,0,0-.26.88L3.42,28a.9.9,0,0,0,.89.71.75.75,0,0,0,.21,0,.91.91,0,0,0,.69-1.1L4.85,26a15,15,0,0,0,14.77,3.24.93.93,0,0,0-.57-1.76Z" />
       </svg>
     ),
-    contentTitle: "საგადასახადო დაგეგმვა და კონსულტაცია",
+    contentTitle: "Tax Planning & Consulting",
     description:
-      "ყოვლისმომცველი საგადასახადო მომსახურება ფიზიკური და იურიდიული პირებისთვის. ჩვენ დაგეხმარებით გადასახადების ოპტიმიზაციაში.",
+      "Comprehensive tax services for individuals and corporations. We help optimize your tax liability.",
     features: [
-      "საგადასახადო დეკლარაციების მომზადება",
-      "საგადასახადო დაგეგმვა და ოპტიმიზაცია",
-      "საგადასახადო კანონმდებლობასთან შესაბამისობა",
+      "Preparation of Tax Returns",
+      "Tax Planning & Optimization",
+      "Legal Tax Compliance",
     ],
     image: "/Office.jpg",
   },
   {
     id: "accounting",
-    title: "საბუღალტრო მომსახურება",
+    title: "Accounting Services",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -91,19 +97,19 @@ const services: Service[] = [
         <path d="M29.08,30H.92A.92.92,0,0,1,0,29.08v-7a.92.92,0,0,1,1.84,0v6.1H28.16v-6.1a.92.92,0,1,1,1.84,0v7a.92.92,0,0,1-.92.92Z" />
       </svg>
     ),
-    contentTitle: "სრული საბუღალტრო აღრიცხვა",
+    contentTitle: "Full Cycle Accounting",
     description:
-      "სრული ციკლის საბუღალტრო მომსახურება, მათ შორის ბუღალტრული აღრიცხვა და ფინანსური ანგარიშგება.",
+      "End-to-end accounting services, including bookkeeping and professional financial reporting.",
     features: [
-      "ყოველდღიური ბუღალტრული ოპერაციები",
-      "ფინანსური ანგარიშგების მომზადება",
-      "ხელფასების დამუშავება",
+      "Daily Bookkeeping Operations",
+      "Financial Statement Preparation",
+      "Payroll Management",
     ],
     image: "/Service1.jpg",
   },
   {
     id: "valuation",
-    title: "საშემფასებლო მომსახურება",
+    title: "Valuation Services",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -117,19 +123,19 @@ const services: Service[] = [
         <path d="M15,16.09a7,7,0,1,0,7,7A7,7,0,0,0,15,16.09Zm-.76,5.79a3.4,3.4,0,0,0,1.08.52c.27.1.55.21.84.34A2.07,2.07,0,0,1,17.25,24a2.3,2.3,0,0,1-.15,1.78,2.1,2.1,0,0,1-1.45,1.06v.63a.65.65,0,1,1-1.3,0v-.65a2.1,2.1,0,0,1-1.74-1.91.66.66,0,0,1,.66-.65.65.65,0,0,1,.65.65c0,.36.52.7,1.06.7a1,1,0,0,0,1-.44.94.94,0,0,0,.07-.75.75.75,0,0,0-.41-.45c-.24-.11-.49-.2-.73-.29a4.66,4.66,0,0,1-1.47-.75,2,2,0,0,1-.54-2.42,2.07,2.07,0,0,1,1.49-1.16v-.62a.66.66,0,1,1,1.31,0v.64a2.11,2.11,0,0,1,1.73,1.91.66.66,0,0,1-.66.65.65.65,0,0,1-.65-.65c0-.36-.52-.69-1.06-.69-.76,0-.93.36-1,.47a.74.74,0,0,0,.2.87Z" />
       </svg>
     ),
-    contentTitle: "ექსპერტული შეფასების მომსახურება",
+    contentTitle: "Expert Valuation Services",
     description:
-      "უძრავი ქონების და ბიზნესის პროფესიონალური შეფასება ობიექტურ საბაზრო ფასებზე დაყრდნობით.",
+      "Professional appraisal of real estate and business assets based on objective market values.",
     features: [
-      "უძრავი ქონების შეფასება",
-      "ბიზნესის შეფასება და ანალიზი",
-      "საინვესტიციო პროექტების შეფასება",
+      "Real Estate Valuation",
+      "Business Analysis & Appraisal",
+      "Investment Project Assessment",
     ],
     image: "/Office.jpg",
   },
   {
     id: "legal",
-    title: "სრული იურიდიული მომსახურება",
+    title: "Legal Support",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -144,19 +150,19 @@ const services: Service[] = [
         <path d="M5.12,26.19a2.64,2.64,0,0,1,.25,1.13,2.69,2.69,0,1,1-2.68-2.69,2.87,2.87,0,0,1,1.13.25L6.61,22.1A10.56,10.56,0,0,0,7.9,23.4Z" />
       </svg>
     ),
-    contentTitle: "სრული იურიდიული მხარდაჭერა",
+    contentTitle: "Full Legal Support",
     description:
-      "სრული იურიდიული მხარდაჭერა და კონსულტაცია თქვენი ბიზნესის ყველა საჭიროებისთვის.",
+      "Complete legal support and strategic consultation for all your business needs.",
     features: [
-      "ხელშეკრულებების მომზადება",
-      "კორპორატიული მართვა",
-      "სამართლებრივი რისკების მართვა",
+      "Contract Preparation",
+      "Corporate Governance",
+      "Legal Risk Management",
     ],
     image: "/Office.jpg",
   },
   {
     id: "consulting",
-    title: "ბიზნეს კონსულტაციები",
+    title: "Business Consulting",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -167,211 +173,137 @@ const services: Service[] = [
         <path d="M15,0A15,15,0,1,0,30,15,15,15,0,0,0,15,0Zm8.06,7a.79.79,0,0,1-.2.52A55.39,55.39,0,0,0,13.19,23a1.24,1.24,0,0,1-2.25.11,35.8,35.8,0,0,0-4.25-6.49,1.78,1.78,0,0,1,2.66-2.36,32.86,32.86,0,0,1,2.82,3.45,0,0,0,0,0,0,0A46.22,46.22,0,0,1,21.8,6.44.76.76,0,0,1,23.06,7Z" />
       </svg>
     ),
-    contentTitle: "სტრატეგიული ბიზნეს კონსულტაცია",
+    contentTitle: "Strategic Business Consulting",
     description:
-      "სტრატეგიული ბიზნეს კონსულტაცია თქვენი კომპანიის ზრდისა და ოპტიმიზაციისთვის.",
-    features: ["ბიზნეს სტრატეგია", "პროცესების ოპტიმიზაცია", "ბაზრის ანალიზი"],
+      "Strategic business consulting aimed at your company's growth and operational optimization.",
+    features: ["Business Strategy", "Process Optimization", "Market Analysis"],
     image: "/Office.jpg",
   },
 ];
 
-export default function ServicesSection() {
-  const [activeService, setActiveService] = useState(0);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const [isMobile, setIsMobile] = useState(false);
 
-  const handleServiceSelect = (index: number) => {
-    setActiveService(index);
-    setIsMobileMenuOpen(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const getInitialProps = () => {
+    if (isMobile) return { opacity: 1, x: 0, y: 0 };
+
+    const colPosition = index % 3;
+    if (colPosition === 0) return { opacity: 0, x: -30 };
+    if (colPosition === 2) return { opacity: 0, x: 30 };
+    return { opacity: 0, y: 30 };
   };
 
   return (
-    <section
-      className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-16 overflow-hidden"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
+    <motion.div
+      initial={isMobile ? false : getInitialProps()}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={
+        isMobile
+          ? { duration: 0 }
+          : {
+              duration: 0.8,
+              delay: (index % 3) * 0.1,
+              ease: [0.16, 1, 0.3, 1],
+            }
+      }
+      className="h-full relative"
     >
-      <div className="max-w-[2000px] mx-auto px-6  2xl:px-32 lg:px-20">
-        <motion.div
-          className="flex items-center gap-3 mb-10 md:mb-16"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex items-center">
-            <div className="rounded-full bg-blue-600 w-1 h-1" />
-            <div className="bg-blue-600/30 w-8 md:w-12 h-[1px]" />
-          </div>
-          <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
-            Our Services
-          </span>
-        </motion.div>
-
-        <div className="lg:hidden mb-6 relative">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-full flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border border-gray-100 z-30 relative"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 p-2.5 bg-blue-600 rounded-lg text-white">
-                {services[activeService].icon}
-              </div>
-              <h3 className="text-base font-bold text-gray-900">
-                {services[activeService].title}
-              </h3>
+      <Card className="group relative h-[420px] md:h-[380px] my-1 border-none rounded-[32px] bg-white p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+        <div className="flex flex-col h-full">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-12 p-3 bg-blue-600 text-white rounded-2xl shadow-lg shadow-blue-100 flex-shrink-0 md:group-hover:scale-105 transition-transform duration-500">
+              {service.icon}
             </div>
-            <ChevronDown
-              className={`w-5 h-5 transition-transform duration-200 ${isMobileMenuOpen ? "rotate-180" : ""}`}
-            />
-          </button>
+            <h3 className="text-xl font-bold text-gray-900 leading-tight">
+              {service.title}
+            </h3>
+          </div>
 
-          <AnimatePresence>
-            {isMobileMenuOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-10"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                />
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-40 overflow-hidden will-change-transform"
-                >
-                  {services.map((service, index) => (
-                    <button
-                      key={service.id}
-                      onClick={() => handleServiceSelect(index)}
-                      className={`w-full flex items-center gap-4 p-5 text-left border-b last:border-0 ${activeService === index ? "bg-blue-50" : "active:bg-gray-50"}`}
-                    >
-                      <div className="w-6 h-6 text-blue-600 shrink-0">
-                        {service.icon}
-                      </div>
-                      <span
-                        className={`font-bold text-sm ${activeService === index ? "text-blue-700" : "text-gray-700"}`}
-                      >
-                        {service.title}
-                      </span>
-                    </button>
-                  ))}
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
-        </div>
+          <p className="text-gray-600 text-[15px] leading-relaxed mb-6 line-clamp-3">
+            {service.description}
+          </p>
 
-        <div className="hidden lg:grid lg:grid-cols-12 gap-8 xl:gap-12 items-stretch">
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 h-[550px]">
-            {services.map((service, index) => (
-              <button
-                key={service.id}
-                onClick={() => setActiveService(index)}
-                className={`group relative flex items-center gap-4 px-5 rounded-2xl transition-all duration-300 border flex-1 ${
-                  activeService === index
-                    ? "bg-white border-blue-100 shadow-lg translate-x-2"
-                    : "bg-white/60 border-gray-200/50 hover:bg-white"
-                }`}
-              >
-                <div
-                  className={`w-10 h-10 p-2.5 rounded-xl transition-colors shrink-0 ${
-                    activeService === index
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-600"
-                  }`}
-                >
-                  {service.icon}
-                </div>
-                <h3
-                  className={`text-sm xl:text-base font-bold text-left leading-tight ${activeService === index ? "text-gray-900" : "text-gray-600"}`}
-                >
-                  {service.title}
-                </h3>
-              </button>
+          <ul className="space-y-3 mb-auto">
+            {service.features.map((feature, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-gray-700">
+                <CheckCircle2 className="w-[18px] h-[18px] text-blue-600 shrink-0 mt-0.5" />
+                <span className="text-[13px] font-medium">{feature}</span>
+              </li>
             ))}
+          </ul>
+
+          <div className="mt-auto">
+            <Link
+              href={`/services/${service.id}`}
+              className="inline-flex items-center gap-2 group/link"
+            >
+              <span className="relative text-sm font-bold text-gray-900 uppercase tracking-wider">
+                Learn More
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 md:group-hover/link:w-full" />
+              </span>
+              <ArrowRight className="w-4 h-4 text-blue-600 transition-transform duration-300 md:group-hover/link:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  );
+}
+
+export default function ServicesSection() {
+  return (
+    <section className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-10 md:py-16 overflow-hidden">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between mb-10 md:mb-12 gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
+            <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
+              Our Services
+            </span>
+            <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
           </div>
 
-          <div className="lg:col-span-7 xl:col-span-8 h-[550px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeService}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.2 }}
-                className="h-full"
-              >
-                <Card className="bg-white border-none rounded-[40px] py-0 shadow-xl overflow-hidden h-full flex flex-col xl:flex-row">
-                  <div className="xl:w-1/2 relative h-full min-h-[200px]">
-                    <Image
-                      src={services[activeService].image}
-                      alt={services[activeService].title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="xl:w-1/2 p-8 xl:p-12 flex flex-col justify-center">
-                    <h4 className="text-2xl xl:text-3xl font-bold text-gray-900 mb-4">
-                      {services[activeService].contentTitle}
-                    </h4>
-                    <p className="text-gray-600 text-sm xl:text-base mb-6">
-                      {services[activeService].description}
-                    </p>
-                    <ul className="space-y-3">
-                      {services[activeService].features.map((feature, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-3 text-gray-700 font-medium"
-                        >
-                          <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
-                          <span className="text-xs xl:text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Card>
-              </motion.div>
-            </AnimatePresence>
+          <Link href="/news" className="hidden md:block">
+            <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold px-8 py-2.5 h-auto rounded-full text-sm transition-all group">
+              View All Services
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+
+        <div className="block md:hidden">
+          <Carousel opts={{ align: "start", loop: false }} className="w-full">
+            <CarouselContent className="-ml-0 mr-6">
+              {services.map((service, index) => (
+                <CarouselItem
+                  key={service.id}
+                  className="pl-6 basis-[85%] sm:basis-[70%]"
+                >
+                  <ServiceCard service={service} index={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+
+          <div className="px-6 mt-8">
+            <Button className="px-5 w-full md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-semibold text-white bg-[#2563eb] rounded-full hover:bg-[#1d4ed8] transition-all duration-300 shadow-sm hover:shadow-md whitespace-nowrap">
+              View All Services
+            </Button>
           </div>
         </div>
 
-        <div className="lg:hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeService}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="will-change-transform"
-            >
-              <Card className="bg-white border-none  py-0 rounded-3xl shadow-lg overflow-hidden">
-                <div className="relative h-56 w-full">
-                  <Image
-                    src={services[activeService].image}
-                    alt="Service"
-                    fill
-                    priority
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-                    {services[activeService].description}
-                  </p>
-                  <ul className="space-y-4">
-                    {services[activeService].features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-3 text-gray-700"
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
-                        <span className="text-sm font-semibold">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Card>
-            </motion.div>
-          </AnimatePresence>
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
+          {services.map((service, index) => (
+            <ServiceCard key={service.id} service={service} index={index} />
+          ))}
         </div>
       </div>
     </section>
