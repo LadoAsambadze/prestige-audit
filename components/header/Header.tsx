@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-import { Search, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -48,14 +46,17 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center transition-opacity hover:opacity-80"
-            style={{ width: "25%" }}
+            className="flex items-center justify-center transition-opacity hover:opacity-80 relative"
+            style={{
+              width: "160px",
+              // Adding a subtle white pill background behind the logo
+              backgroundColor: "rgba(255, 255, 255, 0.85)",
+              padding: "8px 4px",
+              borderRadius: "16px",
+              boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
+            }}
           >
-            <img
-              src="/test.png"
-              alt="Logo"
-              className="max-w-[200px] md:max-w-[240px] h-auto object-contain"
-            />
+            <span>LOGO</span>
           </Link>
 
           {/* Desktop Navigation */}
