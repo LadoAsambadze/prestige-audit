@@ -2,16 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // Added this
-import {
-  Send,
-  Twitter,
-  Youtube,
-  Instagram,
-  Globe,
-  ArrowUp,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Twitter, Youtube, Instagram, Globe, ArrowUp } from "lucide-react";
+
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Footer() {

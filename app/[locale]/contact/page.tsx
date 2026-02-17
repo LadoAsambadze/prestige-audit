@@ -1,15 +1,38 @@
+"use client";
+import { motion } from "framer-motion";
 import ContactForm from "./_components/ContactForm";
 import MapboxMap from "./_components/MapBox";
 
 export default function Page() {
   return (
     <div className="min-h-screen bg-background">
-      <ContactForm />
+      {/* 1. Form Slide Up */}
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <ContactForm />
+      </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+      {/* 2. Map Section Slide Up */}
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
+      >
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center space-x-2 mb-3">
-            <div className="w-8 sm:w-10 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 40 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600"
+            />
             <span className="text-blue-700 dark:text-blue-400 font-semibold tracking-wider uppercase text-xs">
               Find Us
             </span>
@@ -21,8 +44,7 @@ export default function Page() {
             </span>
           </h2>
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
-            We're located in the heart of the financial district. Stop by during
-            business hours or schedule an appointment.
+            We're located in the heart of the financial district.
           </p>
         </div>
 
@@ -36,9 +58,9 @@ export default function Page() {
           defaultView="3d"
           markerColor="#3b82f6"
           showDirections={true}
-          className="w-full h-[350px] sm:h-[450px] lg:h-[500px]"
+          className="w-full h-[350px] sm:h-[450px] lg:h-[500px] rounded-3xl overflow-hidden"
         />
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -4,9 +4,9 @@ import { useState, useEffect, JSX } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const backgroundImages: string[] = [
-  "bg2.jpg",
-  "b3.jpg",
-  "b4.jpg",
+  "/bg2.jpg",
+  "/b3.jpg",
+  "/b4.jpg",
   "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-01.jpg",
   "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-02.jpg",
 ];
