@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar } from "lucide-react";
 import { useLocale } from "next-intl";
 
@@ -68,11 +67,45 @@ export const BlogCard = React.memo(
               </p>
             )}
 
-            <div className="mt-auto flex items-center gap-2 text-[#2563eb] font-bold text-[10px] uppercase tracking-[0.2em]">
-              <span className="border-b-2 border-transparent group-hover:border-[#2563eb] transition-all">
-                Read Report
+            {/* ── READ REPORT BUTTON ── */}
+            <div className="mt-auto pt-2">
+              <span
+                className="
+                  group/btn inline-flex items-center gap-2.5
+                  relative overflow-hidden
+                  px-4 py-2 rounded-full
+                  border border-blue-200/80
+                  bg-gradient-to-r from-blue-50 to-indigo-50
+                  text-blue-700
+                  text-[11px] font-bold uppercase tracking-[0.15em]
+                  shadow-sm
+                  transition-all duration-300
+                  hover:shadow-md hover:shadow-blue-200/60
+                  hover:border-transparent
+                  hover:scale-[1.02]
+                "
+              >
+                {/* Gradient fill on hover */}
+                <span
+                  className="
+                    absolute inset-0 rounded-full
+                    bg-gradient-to-r from-blue-600 to-indigo-600
+                    opacity-0 group-hover/btn:opacity-100
+                    transition-opacity duration-300
+                  "
+                />
+                <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300">
+                  Read Report
+                </span>
+                <ArrowRight
+                  className="
+                    relative z-10 w-3 h-3
+                    text-blue-700 group-hover/btn:text-white
+                    transition-all duration-300
+                    group-hover/btn:translate-x-1
+                  "
+                />
               </span>
-              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
         </div>
@@ -110,7 +143,7 @@ export default function BlogCarouselSection() {
   return (
     <section className="bg-[#f3f5f4] py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1440px] mx-auto">
-        {/* Header from Team Section Style */}
+        {/* Header */}
         <div className="px-6 lg:px-16 flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -121,33 +154,62 @@ export default function BlogCarouselSection() {
             </div>
           </div>
 
+          {/* ── VIEW ALL NEWS BUTTON (desktop) ── */}
           <Link href="/news" className="hidden md:block">
-            <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold px-8 py-2.5 h-auto rounded-full text-sm transition-all group">
-              View All News
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <button
+              className="
+                group relative inline-flex items-center gap-2.5
+                overflow-hidden
+                px-8 py-3 rounded-full
+                bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
+                text-white font-semibold text-sm
+                shadow-md shadow-blue-200/60
+                transition-all duration-300
+                hover:shadow-xl hover:shadow-blue-300/50
+                hover:scale-[1.03]
+                active:scale-[0.98]
+              "
+            >
+              {/* Shimmer sweep */}
+              <span
+                className="
+                  absolute inset-0
+                  bg-gradient-to-r from-transparent via-white/20 to-transparent
+                  -translate-x-full group-hover:translate-x-full
+                  transition-transform duration-700 ease-in-out
+                "
+              />
+              {/* Brighter gradient on hover */}
+              <span
+                className="
+                  absolute inset-0 rounded-full
+                  bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600
+                  opacity-0 group-hover:opacity-100
+                  transition-opacity duration-300
+                "
+              />
+              <span className="relative z-10">View All News</span>
+              <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
           </Link>
         </div>
 
-        {/* Carousel Logic */}
+        {/* Carousel */}
         <div className="relative px-6 md:px-16">
           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
+            opts={{ align: "start", loop: true }}
             className="w-full relative"
           >
             <div className="hidden md:block">
-              <CarouselPrevious className="absolute -left-6 lg:-left-10 top-1/2 -translate-y-1/2 h-12 w-12 border-none bg-white text-gray-900 shadow-xl z-10 hover:bg-[#2563eb] hover:text-white transition-all" />
-              <CarouselNext className="absolute -right-6 lg:-right-10 top-1/2 -translate-y-1/2 h-12 w-12 border-none bg-white text-gray-900 shadow-xl z-10 hover:bg-[#2563eb] hover:text-white transition-all" />
+              <CarouselPrevious className="absolute -left-6 lg:-left-10 top-1/2 -translate-y-1/2 h-12 w-12 border-none bg-white text-gray-900 shadow-xl z-10 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white transition-all duration-300" />
+              <CarouselNext className="absolute -right-6 lg:-right-10 top-1/2 -translate-y-1/2 h-12 w-12 border-none bg-white text-gray-900 shadow-xl z-10 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white transition-all duration-300" />
             </div>
 
             <CarouselContent className="-ml-4 md:-ml-6 py-4">
               {blogPosts.map((post) => (
                 <CarouselItem
                   key={post.id}
-                  className="pl-4 md:pl-6 basis-[85%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                  className="pl-4 md:pl-6 basis-[85%] sm:basis-1/2 lg:basis-1/3 "
                 >
                   <BlogCard {...post} />
                 </CarouselItem>
@@ -156,11 +218,34 @@ export default function BlogCarouselSection() {
           </Carousel>
         </div>
 
-        {/* Mobile Button */}
+        {/* ── VIEW ALL NEWS BUTTON (mobile) ── */}
         <div className="px-6 mt-10 md:hidden">
-          <Button className="w-full py-6 text-sm font-bold text-white bg-[#2563eb] rounded-full">
-            View All Perspectives
-          </Button>
+          <Link href="/news" className="block">
+            <button
+              className="
+                group relative w-full inline-flex items-center justify-center gap-2.5
+                overflow-hidden
+                px-6 py-4 rounded-full
+                bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
+                text-white font-semibold text-sm
+                shadow-md shadow-blue-200/60
+                transition-all duration-300
+                hover:shadow-xl hover:shadow-blue-300/50
+                active:scale-[0.98]
+              "
+            >
+              <span
+                className="
+                  absolute inset-0
+                  bg-gradient-to-r from-transparent via-white/20 to-transparent
+                  -translate-x-full group-hover:translate-x-full
+                  transition-transform duration-700 ease-in-out
+                "
+              />
+              <span className="relative z-10">View All News</span>
+              <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -31,8 +32,8 @@ export default function Header() {
           className="absolute inset-0"
           style={{
             backgroundColor: "rgba(10, 26, 63, 0.15)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
+            backdropFilter: "blur(15px)",
+            WebkitBackdropFilter: "blur(15px)",
             border: "1px solid rgba(255, 255, 255, 0.1)",
             borderRadius: "24px",
           }}
@@ -44,20 +45,15 @@ export default function Header() {
           style={{ height: "80px" }}
         >
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center justify-center transition-opacity hover:opacity-80 relative"
-            style={{
-              width: "160px",
-              // Adding a subtle white pill background behind the logo
-              backgroundColor: "rgba(255, 255, 255, 0.85)",
-              padding: "8px 4px",
-              borderRadius: "16px",
-              boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
-            }}
-          >
-            <span>LOGO</span>
-          </Link>
+
+          <Image
+            src="/PrestigeLogo.png"
+            alt="Logo"
+            width={280}
+            height={280}
+            style={{ objectFit: "contain" }}
+            className="cursor-pointer mt-2 w-56  -ml-12 md:ml-0 h-56 md:w-72 md:h-72"
+          />
 
           {/* Desktop Navigation */}
           <nav

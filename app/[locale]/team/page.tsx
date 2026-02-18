@@ -2,8 +2,109 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Users } from "lucide-react";
-import { TeamCard } from "../(main)/_components/TeamSection";
+import { ArrowRight, Link, Users } from "lucide-react";
+
+interface TeamMember {
+  name: string;
+  title: string;
+  department: string;
+  image: string;
+  id?: string;
+}
+
+const teamMembers: TeamMember[] = [
+  {
+    name: "Sarah Mitchell",
+    title: "CEO",
+    department: "Leadership",
+    image: "3.png",
+    id: "1",
+  },
+  {
+    name: "James Anderson",
+    title: "CTO",
+    department: "Technology",
+    image: "4.jpeg",
+    id: "2",
+  },
+  {
+    name: "Emily Rodriguez",
+    title: "Head of Design",
+    department: "Creative",
+    image: "5.jpeg",
+    id: "3",
+  },
+  {
+    name: "Michael Chen",
+    title: "VP Engineering",
+    department: "Technology",
+    image: "6.jpeg",
+    id: "4",
+  },
+  {
+    name: "Sophia Williams",
+    title: "Head of Marketing",
+    department: "Marketing",
+    image: "1.png",
+    id: "5",
+  },
+  {
+    name: "David Thompson",
+    title: "CFO",
+    department: "Finance",
+    image: "2.png",
+    id: "6",
+  },
+];
+
+export const TeamCard = React.memo(
+  ({ name, title, department, image, id }: TeamMember) => {
+    return (
+      <div className="group relative aspect-[4/5] w-full cursor-pointer overflow-hidden rounded-[24px] bg-gray-200">
+        <img
+          src={image}
+          alt={name}
+          className="h-full w-full object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
+          loading="eager"
+        />
+
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-end md:justify-center p-6 
+                      bg-black/20 md:bg-black/0 
+                      md:opacity-0 md:group-hover:opacity-100 
+                      md:backdrop-blur-md 
+                      transition-all duration-500 ease-in-out"
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:hidden" />
+
+          <div className="relative z-10 flex flex-col items-center">
+            <span className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/80">
+              {department}
+            </span>
+            <h3 className="text-center text-xl font-bold text-white leading-tight">
+              {name}
+            </h3>
+            <p className="mt-1 text-[11px] font-medium uppercase tracking-widest text-white/90">
+              {title}
+            </p>
+
+            <Link
+              href={`/team/gogita-baramidze`}
+              className="mt-4 md:mt-6 w-full opacity-0 md:group-hover:opacity-100 transition-opacity delay-100"
+            >
+              <div className="flex w-full items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-2 text-xs font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-black">
+                View Profile
+                <ArrowRight className="h-3 w-3" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  },
+);
+
+TeamCard.displayName = "TeamCard";
 
 interface TeamMemberWithId {
   id: string; // URL-friendly ID for routing
@@ -12,58 +113,6 @@ interface TeamMemberWithId {
   department: string;
   image: string;
 }
-
-const teamMembers: TeamMemberWithId[] = [
-  {
-    id: "gogita-baramidze",
-    name: "გოგიტა ბარამიძე",
-    title: "Senior Auditor",
-    department: "Audit",
-    image: "/5.jpeg",
-  },
-  {
-    id: "gogita-baramidze",
-    name: "Sarah Mitchell",
-    title: "CEO",
-    department: "Leadership",
-    image: "/3.png",
-  },
-  {
-    id: "gogita-baramidze",
-    name: "James Anderson",
-    title: "CTO",
-    department: "Technology",
-    image: "/4.jpeg",
-  },
-  {
-    id: "gogita-baramidze",
-    name: "Emily Rodriguez",
-    title: "Head of Design",
-    department: "Creative",
-    image: "/5.jpeg",
-  },
-  {
-    id: "gogita-baramidze",
-    name: "Michael Chen",
-    title: "VP Engineering",
-    department: "Technology",
-    image: "/6.jpeg",
-  },
-  {
-    id: "gogita-baramidze",
-    name: "Sophia Williams",
-    title: "Head of Marketing",
-    department: "Marketing",
-    image: "/1.png",
-  },
-  {
-    id: "gogita-baramidze",
-    name: "David Thompson",
-    title: "CFO",
-    department: "Finance",
-    image: "/2.png",
-  },
-];
 
 export default function TeamPage() {
   // Section animation - FIXED

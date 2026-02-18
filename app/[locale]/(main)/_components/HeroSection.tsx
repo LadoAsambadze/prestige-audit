@@ -3,13 +3,7 @@
 import { useState, useEffect, JSX } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const backgroundImages: string[] = [
-  "/bg2.jpg",
-  "/b3.jpg",
-  "/b4.jpg",
-  "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-01.jpg",
-  "https://wdtbullish.wpengine.com/wp-content/uploads/2025/07/home-01-slider-img-02.jpg",
-];
+const backgroundImages: string[] = ["/bg2.jpg", "/b3.jpg", "/b4.jpg"];
 
 export default function HeroCarousel(): JSX.Element {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -75,7 +69,6 @@ export default function HeroCarousel(): JSX.Element {
                 }}
               />
 
-              {/* Space-y increased for Desktop (lg:space-y-16) to increase margin bottoms */}
               <div className="relative z-10 space-y-10 md:space-y-12 lg:space-y-16">
                 {/* Badge */}
                 <motion.div
@@ -97,7 +90,7 @@ export default function HeroCarousel(): JSX.Element {
                   </div>
                 </motion.div>
 
-                {/* Heading: Decreased LG/XL sizes, but kept 2-row logic */}
+                {/* Heading */}
                 <motion.h1
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -111,11 +104,11 @@ export default function HeroCarousel(): JSX.Element {
                   <br className="hidden md:block" />
                   <span className="block md:inline whitespace-nowrap">
                     {" "}
-                    Firm in Batumi
+                    Company in Batumi
                   </span>
                 </motion.h1>
 
-                {/* Button: Increased pt to add more margin above the button */}
+                {/* ── BOOK CONSULTATION BUTTON ── */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -123,13 +116,43 @@ export default function HeroCarousel(): JSX.Element {
                 >
                   <a
                     href="/contact"
-                    className="group relative inline-flex items-center gap-4 bg-[#2563eb] text-white font-semibold rounded-full px-9 py-5 md:px-12 md:py-6 text-base transition-all duration-300 hover:shadow-[0_10px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:scale-95"
+                    className="
+                      group relative inline-flex items-center gap-4
+                      overflow-hidden
+                      rounded-full
+                      px-9 py-5 md:px-12 md:py-6
+                      text-base font-semibold text-white
+                      bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
+                      shadow-lg shadow-blue-600/30
+                      transition-all duration-300
+                      hover:shadow-2xl hover:shadow-blue-500/50
+                      hover:-translate-y-1
+                      active:scale-95
+                    "
                   >
-                    <span className="z-10">Book Consultation</span>
+                    {/* Shimmer sweep */}
+                    <span
+                      className="
+                        absolute inset-0
+                        bg-gradient-to-r from-transparent via-white/25 to-transparent
+                        -translate-x-full group-hover:translate-x-full
+                        transition-transform duration-700 ease-in-out
+                      "
+                    />
+                    {/* Brighter gradient on hover */}
+                    <span
+                      className="
+                        absolute inset-0 rounded-full
+                        bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600
+                        opacity-0 group-hover:opacity-100
+                        transition-opacity duration-300
+                      "
+                    />
+                    <span className="relative z-10">Book Consultation</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 27.7 18"
-                      className="w-5 h-3.5 fill-current z-10 transition-transform group-hover:translate-x-1"
+                      className="relative z-10 w-5 h-3.5 fill-current transition-transform duration-300 group-hover:translate-x-1"
                     >
                       <path d="M12.1,18V10.6H0V7.4H12.1V0L27.7,9Z" />
                     </svg>
@@ -152,7 +175,9 @@ export default function HeroCarousel(): JSX.Element {
           >
             <div
               className={`absolute inset-0 rounded-full transition-all duration-300 ${
-                currentSlide === index ? "bg-[#2563eb]" : "bg-white/30"
+                currentSlide === index
+                  ? "bg-gradient-to-r from-blue-500 to-indigo-600"
+                  : "bg-white/30 group-hover:bg-white/60"
               }`}
             />
           </button>
