@@ -182,7 +182,7 @@ export default function AboutParallax() {
 
                     <div className="grid grid-cols-3 gap-8 pt-8 border-t border-white/10">
                       {[
-                        { value: "20+", label: "Years" },
+                        { value: "25+", label: "Years" },
                         { value: "1000+", label: "Clients" },
                         { value: "99%", label: "Accuracy" },
                       ].map((stat) => (

@@ -7,6 +7,7 @@ import AboutParallax from "./_components/AboutParallax";
 import ClientssSection from "./_components/ClientsSection";
 import PartnersSection from "./_components/PartnersSection";
 import TeamSection from "./_components/TeamSection";
+import VideoSection from "./_components/VideoSection";
 
 export default function Page() {
   return (
@@ -19,7 +20,7 @@ export default function Page() {
       <ClientssSection />
 
       <FAQSection />
-      <BlogSection />
+      <VideoSection />
     </div>
   );
 }

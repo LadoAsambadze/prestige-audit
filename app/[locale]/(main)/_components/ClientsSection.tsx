@@ -17,7 +17,7 @@ const partnersRow1: Clients[] = [
 ];
 
 const partnersRow2: Clients[] = [
-  { name: "Rogo", logo: "./Clientss/Rogo.jpg" },
+  { name: "Rogo", logo: "./partners/Rogo.jpg" },
   { name: "BAU Hospital", type: "text" },
   { name: "Adjara Textile", type: "text" },
   { name: "BTM Textile", type: "text" },
@@ -88,7 +88,7 @@ export default function ClientssSection() {
   };
 
   return (
-    <section className="relative z-10 bg-[#f3f5f4] py-10 md:pt-16 pb-24 overflow-hidden">
+    <section className="relative z-10 bg-[#f3f5f4] py-10 md:pt-16 pb-32 overflow-hidden">
       <style jsx global>{`
         @keyframes scrollLeft {
           0% {
