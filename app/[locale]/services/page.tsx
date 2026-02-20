@@ -1,18 +1,12 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import { Users } from "lucide-react";
+import { Briefcase } from "lucide-react";
 import ServicesSection from "../(main)/_components/ServicesSection";
 
- 
- 
-export default function TeamPage() {
-
-
+export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* HERO SECTION */}
       <motion.section
         className="relative w-full bg-[#0a1a3f] pt-40 pb-40 px-5 overflow-hidden text-center"
         initial={{ opacity: 0 }}
@@ -40,7 +34,7 @@ export default function TeamPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Users size={14} /> Meet the Experts
+            <Briefcase size={14} /> Our Services
           </motion.div>
           <motion.h1
             className="text-4xl md:text-5xl font-bold text-white leading-[1.1]"
@@ -48,14 +42,13 @@ export default function TeamPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            The Talent Behind <br />
+            Comprehensive Solutions <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200">
-              Our Success
+              Tailored for Your Business
             </span>
           </motion.h1>
         </div>
       </motion.section>
-
       <ServicesSection />
     </div>
   );

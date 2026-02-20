@@ -14,18 +14,26 @@ import {
 } from "@/components/ui/carousel";
 
 const departments = [
-  { label: "Audit", href: "/team/audit", cta: "View Audit Team" },
-  { label: "Tax", href: "/team/tax", cta: "View Tax Team" },
+  {
+    label: "Audit",
+    href: "/team?team=financial-audit",
+    cta: "View Audit Team",
+  },
+  { label: "Tax", href: "/team?team=tax-services", cta: "View Tax Team" },
   {
     label: "Accounting",
-    href: "/team/accounting",
+    href: "/team?team=accounting-services",
     cta: "View Accounting Team",
   },
-  { label: "Valuation", href: "/team/valuation", cta: "View Valuation Team" },
-  { label: "Legal", href: "/team/legal", cta: "View Legal Team" },
+  {
+    label: "Valuation",
+    href: "/team?team=valuation-services",
+    cta: "View Valuation Team",
+  },
+  { label: "Legal", href: "/team?team=legal-support", cta: "View Legal Team" },
   {
     label: "Consulting",
-    href: "/team/consulting",
+    href: "/team?team=business-consulting",
     cta: "View Consulting Team",
   },
 ];
@@ -114,7 +122,6 @@ const cardThemes = [
   },
 ];
 
-// ── Mobile-only carousel ───────────────────────────────────────────────────
 function MobileCarousel({ isInView }: { isInView: boolean }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -157,7 +164,6 @@ function MobileCarousel({ isInView }: { isInView: boolean }) {
         <CarouselNext className="right-1 bg-white/90 backdrop-blur border-slate-200 hover:bg-white shadow-lg" />
       </Carousel>
 
-      {/* Dot indicators */}
       <div className="flex justify-center gap-2 mt-5">
         {departments.map((_, i) => (
           <button
@@ -177,7 +183,6 @@ function MobileCarousel({ isInView }: { isInView: boolean }) {
   );
 }
 
-// ── Main section ───────────────────────────────────────────────────────────
 export default function TeamSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mainDotRef = useRef<HTMLDivElement>(null);
@@ -252,9 +257,7 @@ export default function TeamSection() {
         }
       `}</style>
 
-      {/* ══════════ MOBILE ══════════ */}
       <div className="lg:hidden flex flex-col items-center px-6 gap-8">
-        {/* Header */}
         <motion.div
           className="flex flex-col items-center text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -278,23 +281,8 @@ export default function TeamSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
             />
           </div>
-          <h2 className="text-3xl font-black text-slate-800 tracking-tight">
-            Meet the{" "}
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Experts
-              </span>
-              <motion.span
-                className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"
-                initial={{ width: 0 }}
-                animate={isInView ? { width: "100%" } : {}}
-                transition={{ duration: 0.5, delay: 0.9 }}
-              />
-            </span>
-          </h2>
         </motion.div>
 
-        {/* CEO photo */}
         <motion.div
           className="relative"
           initial={{ opacity: 0, scale: 0.88, y: 30 }}
@@ -332,13 +320,10 @@ export default function TeamSection() {
           </div>
         </motion.div>
 
-        {/* Carousel */}
         <MobileCarousel isInView={isInView} />
       </div>
 
-      {/* ══════════ DESKTOP ══════════ */}
       <div className="hidden lg:block">
-        {/* Header */}
         <motion.div
           className="max-w-7xl mx-auto mb-16 flex flex-col items-center text-center px-6"
           initial={{ opacity: 0, y: -30, filter: "blur(12px)" }}
@@ -367,28 +352,8 @@ export default function TeamSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
             />
           </div>
-          <motion.h2
-            className="text-5xl font-black text-slate-800 tracking-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            Meet the{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Experts
-              </span>
-              <motion.span
-                className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"
-                initial={{ width: 0 }}
-                animate={isInView ? { width: "100%" } : {}}
-                transition={{ duration: 0.6, delay: 1.0 }}
-              />
-            </span>
-          </motion.h2>
         </motion.div>
 
-        {/* Tree layout */}
         <div
           ref={containerRef}
           className="relative w-full max-w-7xl mx-auto px-6"
@@ -500,7 +465,6 @@ export default function TeamSection() {
             </div>
           </div>
 
-          {/* SVG lines */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
             style={{ zIndex: 1 }}
@@ -531,7 +495,6 @@ export default function TeamSection() {
             )}
           </svg>
 
-          {/* Bottom 4 cards */}
           <div className="grid grid-cols-4 gap-6 z-20 relative">
             {departments.slice(2).map((dept, i) => (
               <DeptCard
@@ -551,7 +514,6 @@ export default function TeamSection() {
   );
 }
 
-// ── DeptCard ───────────────────────────────────────────────────────────────
 function DeptCard({
   dept,
   theme,

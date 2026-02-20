@@ -19,18 +19,16 @@ export default function VideoSection() {
           {/* LEFT — Video */}
           <motion.div
             className="w-full lg:w-[58%]"
-            initial={{ opacity: 0, x: -40, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: "easeOut" as const }}
           >
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.12)] border-3 border-white">
-              {/* Subtle blue glow behind */}
               <div className="absolute -inset-4 bg-blue-600/10 rounded-[3rem] blur-2xl -z-10" />
-
               <video
                 ref={videoRef}
-                src="/MyVideo.mp4"
+                src="/Video.mp4"
                 poster="/Video.png"
                 autoPlay
                 muted
@@ -38,8 +36,6 @@ export default function VideoSection() {
                 playsInline
                 className="w-full h-full object-cover aspect-[4/3]"
               />
-
-              {/* Gradient overlay at bottom */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent pointer-events-none" />
             </div>
           </motion.div>
@@ -47,26 +43,25 @@ export default function VideoSection() {
           {/* RIGHT — Text */}
           <motion.div
             className="w-full lg:w-[42%] flex flex-col justify-center"
-            initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, amount: 0.3 }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{
-              duration: 0.7,
-              delay: 0.15,
-              ease: [0.25, 0.46, 0.45, 0.94],
+              duration: 0.55,
+              delay: 0.12,
+              ease: "easeOut" as const,
             }}
           >
-            {/* Big number badge */}
             <div className="flex items-end gap-4 mb-6">
               <motion.span
                 className="text-[7rem] lg:text-[9rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-indigo-500 select-none"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
-                  duration: 0.6,
-                  delay: 0.3,
-                  ease: [0.25, 0.46, 0.45, 0.94],
+                  duration: 0.5,
+                  delay: 0.22,
+                  ease: "easeOut" as const,
                 }}
               >
                 25
@@ -81,27 +76,43 @@ export default function VideoSection() {
               </div>
             </div>
 
-            {/* Divider */}
             <div className="w-16 h-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-500 mb-6" />
 
-            {/* Headline */}
-            <h2 className="text-3xl lg:text-4xl font-black text-slate-900 leading-tight mb-5">
+            <motion.h2
+              className="text-3xl lg:text-4xl font-black text-slate-900 leading-tight mb-5"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.5,
+                delay: 0.28,
+                ease: "easeOut" as const,
+              }}
+            >
               Prestige Audit has been{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">
                 setting the standard
               </span>{" "}
               for a quarter century.
-            </h2>
+            </motion.h2>
 
-            {/* Body */}
-            <p className="text-base text-slate-500 leading-relaxed mb-8 max-w-md">
+            <motion.p
+              className="text-base text-slate-500 leading-relaxed mb-8 max-w-md"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.5,
+                delay: 0.36,
+                ease: "easeOut" as const,
+              }}
+            >
               Since our founding, we have helped hundreds of businesses across
               Georgia and beyond navigate complex financial landscapes with
               clarity, integrity, and precision. Twenty-five years of trust —
               built one client at a time.
-            </p>
+            </motion.p>
 
-            {/* Stats row */}
             <div className="flex gap-8">
               {[
                 { value: "500+", label: "Clients Served" },
@@ -110,10 +121,14 @@ export default function VideoSection() {
                 <motion.div
                   key={i}
                   className="flex flex-col"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: 0.42 + i * 0.09,
+                    ease: "easeOut" as const,
+                  }}
                 >
                   <span className="text-2xl font-black text-blue-600">
                     {stat.value}

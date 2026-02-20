@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const backgroundImages: string[] = ["/bg2.jpg", "/b3.jpg", "/b4.jpg"];
 
+const FADE = { duration: 0.5, ease: "easeOut" as const };
+
 export default function HeroCarousel(): JSX.Element {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
@@ -33,7 +35,7 @@ export default function HeroCarousel(): JSX.Element {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                  transition={{ duration: 0.9, ease: "easeInOut" }}
                   className="absolute inset-0"
                   style={{
                     backgroundImage: `url("${img}")`,
@@ -53,28 +55,11 @@ export default function HeroCarousel(): JSX.Element {
         <div className="py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40">
           <div className="flex flex-col items-start">
             <div className="relative w-full">
-              {/* Background Glow */}
-              <motion.div
-                animate={{ opacity: [0.2, 0.3, 0.2], scale: [1, 1.05, 1] }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute pointer-events-none -left-20 -top-20 w-full h-full max-h-[500px]"
-                style={{
-                  background:
-                    "radial-gradient(at center center, #2563eb33 0%, #F2295B00 70%)",
-                  zIndex: 0,
-                }}
-              />
-
               <div className="relative z-10 space-y-10 md:space-y-12 lg:space-y-16">
-                {/* Badge */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ ...FADE, delay: 0.1 }}
                   className="flex items-center gap-3 lg:mb-4"
                 >
                   <div className="flex items-center">
@@ -90,13 +75,11 @@ export default function HeroCarousel(): JSX.Element {
                   </div>
                 </motion.div>
 
-                {/* Heading */}
                 <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="text-white font-semibold leading-[1.1] 
-                             text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[68px] 2xl:text-[75px]"
+                  transition={{ ...FADE, delay: 0.25 }}
+                  className="text-white font-semibold leading-[1.1] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[68px] 2xl:text-[75px]"
                 >
                   <span className="block md:inline whitespace-nowrap">
                     The Best <span className="text-[#2563eb]">Audit</span>
@@ -108,46 +91,17 @@ export default function HeroCarousel(): JSX.Element {
                   </span>
                 </motion.h1>
 
-                {/* ── BOOK CONSULTATION BUTTON ── */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
+                  transition={{ ...FADE, delay: 0.45 }}
                 >
                   <a
                     href="/contact"
-                    className="
-                      group relative inline-flex items-center gap-4
-                      overflow-hidden
-                      rounded-full
-                      px-9 py-5 md:px-12 md:py-6
-                      text-base font-semibold text-white
-                      bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
-                      shadow-lg shadow-blue-600/30
-                      transition-all duration-300
-                      hover:shadow-2xl hover:shadow-blue-500/50
-                      hover:-translate-y-1
-                      active:scale-95
-                    "
+                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-9 py-5 md:px-12 md:py-6 text-base font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
                   >
-                    {/* Shimmer sweep */}
-                    <span
-                      className="
-                        absolute inset-0
-                        bg-gradient-to-r from-transparent via-white/25 to-transparent
-                        -translate-x-full group-hover:translate-x-full
-                        transition-transform duration-700 ease-in-out
-                      "
-                    />
-                    {/* Brighter gradient on hover */}
-                    <span
-                      className="
-                        absolute inset-0 rounded-full
-                        bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600
-                        opacity-0 group-hover:opacity-100
-                        transition-opacity duration-300
-                      "
-                    />
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative z-10">Book Consultation</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +118,6 @@ export default function HeroCarousel(): JSX.Element {
         </div>
       </div>
 
-      {/* Pagination Controls */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-4">
         {backgroundImages.map((_, index) => (
           <button

@@ -21,7 +21,6 @@ interface Service {
   image: string;
 }
 
-// Unique light gradient per card — background, icon bg, check color, accent line
 const cardThemes = [
   {
     bg: "from-blue-50 via-indigo-50 to-white",
@@ -36,7 +35,6 @@ const cardThemes = [
     learnMoreText: "text-blue-700",
     learnMoreBg: "from-blue-50 to-indigo-50",
     learnMoreBorder: "border-blue-200/80",
-    learnMoreHoverGlow: "group-hover/link:shadow-blue-300/50",
   },
   {
     bg: "from-emerald-50 via-teal-50 to-white",
@@ -51,7 +49,6 @@ const cardThemes = [
     learnMoreText: "text-emerald-700",
     learnMoreBg: "from-emerald-50 to-teal-50",
     learnMoreBorder: "border-emerald-200/80",
-    learnMoreHoverGlow: "group-hover/link:shadow-emerald-300/50",
   },
   {
     bg: "from-violet-50 via-purple-50 to-white",
@@ -66,7 +63,6 @@ const cardThemes = [
     learnMoreText: "text-violet-700",
     learnMoreBg: "from-violet-50 to-purple-50",
     learnMoreBorder: "border-violet-200/80",
-    learnMoreHoverGlow: "group-hover/link:shadow-violet-300/50",
   },
   {
     bg: "from-amber-50 via-yellow-50 to-white",
@@ -81,7 +77,6 @@ const cardThemes = [
     learnMoreText: "text-amber-700",
     learnMoreBg: "from-amber-50 to-orange-50",
     learnMoreBorder: "border-amber-200/80",
-    learnMoreHoverGlow: "group-hover/link:shadow-amber-300/50",
   },
   {
     bg: "from-rose-50 via-pink-50 to-white",
@@ -96,7 +91,6 @@ const cardThemes = [
     learnMoreText: "text-rose-700",
     learnMoreBg: "from-rose-50 to-pink-50",
     learnMoreBorder: "border-rose-200/80",
-    learnMoreHoverGlow: "group-hover/link:shadow-rose-300/50",
   },
   {
     bg: "from-cyan-50 via-sky-50 to-white",
@@ -111,7 +105,6 @@ const cardThemes = [
     learnMoreText: "text-cyan-700",
     learnMoreBg: "from-cyan-50 to-sky-50",
     learnMoreBorder: "border-cyan-200/80",
-    learnMoreHoverGlow: "group-hover/link:shadow-cyan-300/50",
   },
 ];
 
@@ -274,39 +267,34 @@ const services: Service[] = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" as const },
+  }),
+};
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
+
 function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const [isMobile, setIsMobile] = useState(false);
   const theme = cardThemes[index % cardThemes.length];
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const getInitialProps = () => {
-    if (isMobile) return { opacity: 1, x: 0, y: 0 };
-    const colPosition = index % 3;
-    if (colPosition === 0) return { opacity: 0, x: -30 };
-    if (colPosition === 2) return { opacity: 0, x: 30 };
-    return { opacity: 0, y: 30 };
-  };
 
   return (
     <motion.div
-      initial={isMobile ? false : getInitialProps()}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-20px" }}
-      transition={
-        isMobile
-          ? { duration: 0 }
-          : {
-              duration: 0.8,
-              delay: (index % 3) * 0.1,
-              ease: [0.16, 1, 0.3, 1],
-            }
-      }
+      custom={index % 3}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-30px" }}
       className="h-full relative"
     >
       <Card
@@ -319,22 +307,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           transition-all duration-500 overflow-hidden
         `}
       >
-        {/* Subtle decorative orb */}
         <div
-          className={`
-            absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl
-            ${theme.iconBg}
-          `}
+          className={`absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl ${theme.iconBg}`}
         />
 
         <div className="flex flex-col h-full relative z-10">
           <div className="flex items-center gap-4 mb-6">
             <div
-              className={`
-                w-12 h-12 p-3 ${theme.iconBg} text-white rounded-2xl
-                shadow-lg ${theme.iconShadow} flex-shrink-0
-                md:group-hover:scale-105 transition-transform duration-500
-              `}
+              className={`w-12 h-12 p-3 ${theme.iconBg} text-white rounded-2xl shadow-lg ${theme.iconShadow} flex-shrink-0 md:group-hover:scale-105 transition-transform duration-500`}
             >
               {service.icon}
             </div>
@@ -358,7 +338,6 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             ))}
           </ul>
 
-          {/* ── LEARN MORE BUTTON ── */}
           <div className="mt-auto pt-4">
             <Link
               href={`/services/${service.id}`}
@@ -377,25 +356,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
                 hover:scale-[1.02]
               `}
             >
-              {/* Gradient fill on hover — slides in from left */}
               <span
-                className={`
-                  absolute inset-0 rounded-full
-                  bg-gradient-to-r ${theme.learnMoreGradient}
-                  opacity-0 group-hover/link:opacity-100
-                  transition-opacity duration-300
-                `}
+                className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.learnMoreGradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
               />
               <span className="relative z-10 group-hover/link:text-white transition-colors duration-300">
                 Learn More
               </span>
               <ArrowRight
-                className={`
-                  relative z-10 w-4 h-4
-                  ${theme.learnMoreText} group-hover/link:text-white
-                  transition-all duration-300
-                  group-hover/link:translate-x-1
-                `}
+                className={`relative z-10 w-4 h-4 ${theme.learnMoreText} group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1`}
               />
             </Link>
           </div>
@@ -409,56 +377,22 @@ export default function ServicesSection() {
   return (
     <section className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-10 md:py-16 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between mb-10 md:mb-12 gap-6">
-          <div className="flex items-center gap-3">
+        <div className="px-6 lg:px-12 flex justify-center mb-10 md:mb-12">
+          <motion.div
+            variants={headerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex items-center gap-3"
+          >
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
             <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
               Our Services
             </span>
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
-          </div>
-
-          {/* ── VIEW ALL SERVICES BUTTON (desktop) ── */}
-          <Link href="/news" className="hidden md:block">
-            <button
-              className="
-                group relative inline-flex cursor-pointer items-center gap-2.5
-                overflow-hidden
-                px-8 py-3 rounded-full
-                bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
-                text-white font-semibold text-sm
-                shadow-md shadow-blue-200/60
-                transition-all duration-300
-                hover:shadow-xl hover:shadow-blue-300/50
-                hover:scale-[1.03]
-                active:scale-[0.98]
-              "
-            >
-              {/* Shimmer sweep on hover */}
-              <span
-                className="
-                  absolute inset-0
-                  bg-gradient-to-r from-transparent via-white/20 to-transparent
-                  -translate-x-full group-hover:translate-x-full
-                  transition-transform duration-700 ease-in-out
-                "
-              />
-              {/* Brighter gradient layer on hover */}
-              <span
-                className="
-                  absolute inset-0 rounded-full
-                  bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600
-                  opacity-0 group-hover:opacity-100
-                  transition-opacity duration-300
-                "
-              />
-              <span className="relative z-10">View All Services</span>
-              <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-          </Link>
+          </motion.div>
         </div>
 
-        {/* Mobile carousel */}
         <div className="block md:hidden">
           <Carousel opts={{ align: "start", loop: false }} className="w-full">
             <CarouselContent className="-ml-0 mr-6">
@@ -472,40 +406,8 @@ export default function ServicesSection() {
               ))}
             </CarouselContent>
           </Carousel>
-
-          {/* ── VIEW ALL SERVICES BUTTON (mobile) ── */}
-          <div className="px-6 mt-8">
-            <Link href="/news" className="block">
-              <button
-                className="
-                  group relative w-full cursor-pointer inline-flex items-center justify-center gap-2.5
-                  overflow-hidden
-                  px-6 py-3 rounded-full
-                  bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
-                  text-white font-semibold text-sm
-                  shadow-md shadow-blue-200/60
-                  transition-all duration-300
-                  hover:shadow-xl hover:shadow-blue-300/50
-                  active:scale-[0.98]
-                "
-              >
-                {/* Shimmer sweep */}
-                <span
-                  className="
-                    absolute inset-0 cursor-pointer
-                    bg-gradient-to-r from-transparent via-white/20 to-transparent
-                    -translate-x-full group-hover:translate-x-full
-                    transition-transform duration-700 ease-in-out
-                  "
-                />
-                <span className="relative z-10">View All Services</span>
-                <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </Link>
-          </div>
         </div>
 
-        {/* Desktop grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
           {services.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />

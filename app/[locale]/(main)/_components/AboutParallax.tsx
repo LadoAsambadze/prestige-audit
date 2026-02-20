@@ -5,6 +5,13 @@ import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5, delay, ease: "easeOut" as const },
+});
+
 export default function AboutParallax() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -21,7 +28,6 @@ export default function AboutParallax() {
       className="relative w-full overflow-hidden bg-[#f3f5f4]"
       style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
-      {/* ── TOP ANGLED CUT ── */}
       <div
         className="absolute top-0 left-0 w-full z-20 pointer-events-none"
         style={{ height: "80px" }}
@@ -35,7 +41,6 @@ export default function AboutParallax() {
         </svg>
       </div>
 
-      {/* ── PARALLAX IMAGE WRAPPER ── */}
       <div className="relative overflow-hidden bg-[#f3f5f4] min-h-[600px] md:min-h-[800px]">
         <motion.div
           style={{
@@ -51,17 +56,12 @@ export default function AboutParallax() {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-900/35 to-slate-950/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent" />
 
-        {/* ── GRID CONTENT ── */}
         <div className="relative z-10 flex items-center min-h-[600px] md:min-h-[800px] py-28 md:py-36">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-24 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* ── LEFT: Copy ── */}
               <div className="text-white">
                 <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  {...fadeUp(0)}
                   className="flex items-center gap-3 mb-5"
                 >
                   <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
@@ -75,10 +75,7 @@ export default function AboutParallax() {
                 </motion.div>
 
                 <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+                  {...fadeUp(0.12)}
                   className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold mb-7 leading-[1.1] tracking-tight"
                 >
                   Your <span className="italic text-blue-300">Strategic</span>{" "}
@@ -86,10 +83,7 @@ export default function AboutParallax() {
                 </motion.h2>
 
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+                  {...fadeUp(0.22)}
                   className="text-base md:text-lg text-white/70 mb-10 max-w-[480px] leading-relaxed"
                 >
                   Over a decade of trusted financial expertise, delivering
@@ -97,42 +91,13 @@ export default function AboutParallax() {
                   Georgia.
                 </motion.p>
 
-                {/* ── LEARN MORE BUTTON ── */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
+                <motion.div {...fadeUp(0.32)}>
                   <a
                     href="/about"
-                    className="
-                      group relative inline-flex items-center gap-4
-                      overflow-hidden rounded-full
-                      px-8 py-4 md:px-12 md:py-5
-                      text-sm md:text-base font-semibold text-white
-                      bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700
-                      shadow-lg shadow-blue-600/30
-                      transition-all duration-300
-                      hover:shadow-2xl hover:shadow-blue-500/50
-                      hover:-translate-y-1 active:scale-95
-                    "
+                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-8 py-4 md:px-12 md:py-5 text-sm md:text-base font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
                   >
-                    <span
-                      className="
-                        absolute inset-0
-                        bg-gradient-to-r from-transparent via-white/25 to-transparent
-                        -translate-x-full group-hover:translate-x-full
-                        transition-transform duration-700 ease-in-out
-                      "
-                    />
-                    <span
-                      className="
-                        absolute inset-0 rounded-full
-                        bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600
-                        opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                      "
-                    />
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative z-10">Learn More About Us</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -145,20 +110,29 @@ export default function AboutParallax() {
                 </motion.div>
               </div>
 
-              {/* ── RIGHT: Company Identity Panel ── */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="hidden lg:flex justify-center"
-              >
+              <div className="hidden lg:flex justify-center">
                 <div className="relative group">
-                  <div className="relative px-12 py-14 border border-white/20 rounded-sm bg-white/[0.07] backdrop-blur-lg shadow-2xl shadow-black/50 overflow-hidden">
-                    {/* Animated Shine */}
+                  <div
+                    className="relative px-12 py-14 border border-white/20 rounded-sm bg-white/[0.07] shadow-2xl shadow-black/50 overflow-hidden"
+                    style={{
+                      backdropFilter: "blur(16px)",
+                      WebkitBackdropFilter: "blur(16px)",
+                    }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 z-20 pointer-events-none"
+                      style={{ background: "rgba(10,26,63,0.9)" }}
+                      initial={{ opacity: 1 }}
+                      whileInView={{ opacity: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.18,
+                        ease: "easeOut" as const,
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
-                    {/* Logo PNG */}
                     <div className="flex justify-center mb-8">
                       <Image
                         src="/PrestigeLogo.png"
@@ -185,26 +159,36 @@ export default function AboutParallax() {
                         { value: "25+", label: "Years" },
                         { value: "1000+", label: "Clients" },
                         { value: "99%", label: "Accuracy" },
-                      ].map((stat) => (
-                        <div key={stat.label} className="text-center">
+                      ].map((stat, i) => (
+                        <motion.div
+                          key={stat.label}
+                          className="text-center"
+                          initial={{ opacity: 0, y: 14 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{
+                            duration: 0.4,
+                            delay: 0.3 + i * 0.1,
+                            ease: "easeOut" as const,
+                          }}
+                        >
                           <div className="text-2xl font-bold text-blue-300 mb-1">
                             {stat.value}
                           </div>
                           <div className="text-[10px] uppercase text-white/40 tracking-widest">
                             {stat.label}
                           </div>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── BOTTOM ANGLED CUT ── */}
       <div
         className="absolute bottom-0 left-0 w-full z-20 pointer-events-none"
         style={{ height: "80px" }}

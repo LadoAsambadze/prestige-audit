@@ -61,32 +61,6 @@ const LogoCard = ({ logo, name, type }: Clients) => {
 };
 
 export default function ClientssSection() {
-  const headerVariants = {
-    hidden: { opacity: 0, y: -20, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-  };
-
-  const marqueeRowVariants = {
-    hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.7,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-  };
-
   return (
     <section className="relative z-10 bg-[#f3f5f4] py-10 md:pt-16 pb-32 overflow-hidden">
       <style jsx global>{`
@@ -114,13 +88,12 @@ export default function ClientssSection() {
         }
       `}</style>
 
-      {/* CENTERED HEADER SECTION */}
       <motion.div
         className="max-w-7xl mx-auto mb-12 flex flex-col items-center text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={headerVariants}
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, ease: "easeOut" as const }}
       >
         <div className="flex items-center justify-center w-full gap-3 mb-3">
           <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
@@ -131,23 +104,13 @@ export default function ClientssSection() {
         </div>
       </motion.div>
 
-      <motion.div
-        className="relative space-y-6"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={{
-          visible: {
-            transition: {
-              staggerChildren: 0.2,
-            },
-          },
-        }}
-      >
-        {/* Row 1 */}
+      <div className="relative space-y-6">
         <motion.div
           className="flex overflow-hidden relative"
-          variants={marqueeRowVariants}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" as const }}
         >
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10" />
           <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10" />
@@ -158,10 +121,12 @@ export default function ClientssSection() {
           </div>
         </motion.div>
 
-        {/* Row 2 */}
         <motion.div
           className="flex overflow-hidden relative"
-          variants={marqueeRowVariants}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" as const }}
         >
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f3f5f4] to-transparent z-10" />
           <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f3f5f4] to-transparent z-10" />
@@ -171,7 +136,7 @@ export default function ClientssSection() {
             ))}
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

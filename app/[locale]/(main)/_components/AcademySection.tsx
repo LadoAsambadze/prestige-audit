@@ -14,40 +14,14 @@ export default function AcademySection() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 100, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1] as const,
-        opacity: { duration: 0.6 },
-        y: { type: "spring" as const, stiffness: 80, damping: 12, mass: 1 },
-        scale: { duration: 0.7 },
-      },
-    },
-  };
-
-  const orbVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] as const },
-    },
-  };
-
   return (
     <motion.section
       className="relative w-full z-[9999999] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] -mt-10 bg-[#0a1a3f] pt-16 md:pt-20 lg:pt-24 pb-20 md:pb-28 lg:pb-38 overflow-hidden"
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
-      variants={sectionVariants}
+      transition={{ duration: 0.55, ease: "easeOut" as const }}
     >
-      {/* Background texture */}
       <motion.div
         className="absolute inset-0 z-0 opacity-40 mix-blend-overlay"
         style={{
@@ -58,48 +32,22 @@ export default function AcademySection() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.4 }}
         viewport={{ once: true }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.8 }}
       />
 
-      {/* Ambient orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-blue-500/30 rounded-full blur-[80px] md:blur-[100px] pointer-events-none"
-        variants={orbVariants}
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.4, 0.3] }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut" as const,
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] md:blur-[80px] pointer-events-none"
-        variants={orbVariants}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.3, 0.2] }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut" as const,
-          delay: 1,
-        }}
-      />
-
-      {/* Radial vignette */}
+      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-blue-500/30 rounded-full blur-[80px] md:blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] md:blur-[80px] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#0a1a3f_90%)] z-0" />
 
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 relative z-10">
-        {/* ── TOP SECTION: Image + CTA ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Academy image */}
           <motion.div
             className="relative"
-            initial={{ opacity: 0, x: -60, filter: "blur(8px)" }}
-            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.8,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
-            }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: "easeOut" as const }}
           >
             <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-900/40">
               <img
@@ -109,13 +57,16 @@ export default function AcademySection() {
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#0a1a3f]/80 via-transparent to-blue-500/10" />
 
-              {/* Floating stat chip */}
               <motion.div
                 className="absolute bottom-5 left-5 flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.3,
+                  ease: "easeOut" as const,
+                }}
               >
                 <div className="w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center">
                   <svg
@@ -142,13 +93,16 @@ export default function AcademySection() {
                 </div>
               </motion.div>
 
-              {/* Floating student count chip */}
               <motion.div
                 className="absolute top-5 right-5 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-3 py-2"
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.38,
+                  ease: "easeOut" as const,
+                }}
               >
                 <div className="flex -space-x-1.5">
                   {[0, 1, 2].map((i) => (
@@ -165,19 +119,18 @@ export default function AcademySection() {
             </div>
           </motion.div>
 
-          {/* Right: CTA copy + apply button */}
+          {/* Right: CTA copy */}
           <motion.div
             className="flex flex-col justify-center"
-            initial={{ opacity: 0, x: 60, filter: "blur(8px)" }}
-            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, amount: 0.3 }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{
-              duration: 0.8,
-              delay: 0.15,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
+              duration: 0.55,
+              delay: 0.12,
+              ease: "easeOut" as const,
             }}
           >
-            {/* Badge */}
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="h-px w-10 bg-blue-400/40" />
               <span
@@ -203,7 +156,6 @@ export default function AcademySection() {
               guiding you every step of the way.
             </p>
 
-            {/* Feature list */}
             <ul className="space-y-3 mb-10">
               {[
                 "Live lectures twice a week",
@@ -214,10 +166,14 @@ export default function AcademySection() {
                 <motion.li
                   key={i}
                   className="flex items-center gap-3 text-white/75 text-sm md:text-base"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 16 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: 0.3 + i * 0.1 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.2 + i * 0.09,
+                    ease: "easeOut" as const,
+                  }}
                 >
                   <span className="w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center shrink-0">
                     <svg
@@ -239,7 +195,6 @@ export default function AcademySection() {
               ))}
             </ul>
 
-            {/* CTA Button — opens modal */}
             <motion.button
               onClick={() => {
                 setFormSubmitted(false);
@@ -269,7 +224,6 @@ export default function AcademySection() {
         </div>
       </div>
 
-      {/* ── APPLICATION MODAL ── */}
       <Dialog
         open={modalOpen}
         onOpenChange={(open) => {
@@ -340,7 +294,7 @@ export default function AcademySection() {
               className="text-center py-8"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.4, ease: "easeOut" as const }}
             >
               <div className="w-14 h-14 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center mx-auto mb-5">
                 <svg
