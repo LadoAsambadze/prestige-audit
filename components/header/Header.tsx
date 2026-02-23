@@ -8,6 +8,7 @@ import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import LocaleSwitcher from "@/i18n/LocaleSwitcher";
 
 const services = [
   {
@@ -173,50 +174,64 @@ function ServicesMegaMenu({
   return (
     <div
       className={cn(
-        "absolute top-full left-1/2 -translate-x-1/2 mt-3 transition-all duration-200 origin-top",
+        "absolute top-full left-1/2 -translate-x-1/2 mt-4 transition-all duration-200 origin-top",
         isOpen
           ? "opacity-100 scale-100 pointer-events-auto"
           : "opacity-0 scale-95 pointer-events-none",
       )}
-      style={{ width: 680 }}
+      style={{ width: 720 }}
     >
       <div className="flex justify-center mb-[-1px] relative z-10">
         <div className="w-3 h-3 bg-white border-l border-t border-slate-200/80 rotate-45 shadow-sm" />
       </div>
 
       <div
-        className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden"
+        className="bg-white rounded-3xl border border-slate-200/60 overflow-hidden"
         style={{
           boxShadow:
-            "0 20px 60px -10px rgba(10,26,63,0.22), 0 4px 16px -4px rgba(10,26,63,0.10)",
+            "0 24px 64px -12px rgba(10,26,63,0.25), 0 4px 20px -4px rgba(10,26,63,0.10)",
         }}
       >
         <div className="flex">
-          <div className="w-[45%] flex flex-col border-r border-slate-100 bg-[#f8faff]">
-            <div className="flex-1 p-5 flex flex-col">
+          {/* Preview panel */}
+          <div className="w-[42%] flex flex-col border-r border-slate-100 bg-gradient-to-br from-[#f0f5ff] to-[#f8faff]">
+            <div className="flex-1 p-6 flex flex-col">
               <div
                 className={cn(
-                  "w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-4 transition-all duration-200",
+                  "w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-5 transition-all duration-300",
                   `bg-gradient-to-br ${active.color}`,
                 )}
-                style={{ boxShadow: `0 8px 24px ${active.accentColor}44` }}
+                style={{ boxShadow: `0 10px 30px ${active.accentColor}55` }}
               >
-                <span className="scale-[1.4] block">{active.icon}</span>
+                <span className="scale-[1.5] block">{active.icon}</span>
               </div>
-              <h3 className="text-[15px] font-bold text-[#0a1a3f] mb-2 leading-tight">
+              <h3 className="text-[15px] font-bold text-[#0a1a3f] mb-2.5 leading-tight">
                 {t(active.titleKey)}
               </h3>
               <p className="text-[12.5px] text-slate-500 leading-relaxed flex-1">
                 {t(active.descKey)}
               </p>
+              <div className="mt-5 pt-4 border-t border-slate-200/60">
+                <Link
+                  href={`/services/${active.id}`}
+                  className={cn(
+                    "inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-full text-white bg-gradient-to-r transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5",
+                    active.color,
+                  )}
+                  style={{ boxShadow: `0 4px 14px ${active.accentColor}44` }}
+                >
+                  {t("servicesLearnMore")}
+                  <ChevronRight size={12} />
+                </Link>
+              </div>
             </div>
           </div>
 
-          <div className="w-[55%] p-3 flex flex-col">
-            <p className="px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
+          <div className="w-[58%] p-4 flex flex-col">
+            <p className="px-3 pt-1 pb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
               {t("navOurServices")}
             </p>
-            <div className="flex flex-col gap-0.5 flex-1">
+            <div className="flex flex-col gap-1">
               {services.map((svc) => {
                 const isActive = pathname === `/services/${svc.id}`;
                 const isHovered = hovered === svc.id;
@@ -227,29 +242,27 @@ function ServicesMegaMenu({
                     onMouseEnter={() => setHovered(svc.id)}
                     onMouseLeave={() => setHovered(null)}
                     className={cn(
-                      "group flex items-center gap-0 rounded-xl transition-all duration-150 relative overflow-hidden",
+                      "group flex items-center rounded-2xl transition-all duration-150 relative overflow-hidden",
                       isActive ? "bg-blue-50" : isHovered ? "bg-slate-50" : "",
                     )}
                   >
                     {isActive && (
-                      <span className="absolute left-0 top-0 bottom-0 w-0.5 rounded-full bg-[#2563eb]" />
+                      <span className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full bg-[#2563eb]" />
                     )}
                     <div
                       className={cn(
-                        "self-stretch aspect-square flex items-center justify-center shrink-0 text-white transition-all duration-200 rounded-xl",
+                        "m-1.5 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white transition-all duration-200",
                         `bg-gradient-to-br ${svc.color}`,
                       )}
                       style={{
-                        width: "48px",
-                        margin: "4px",
                         boxShadow: isHovered
                           ? `0 4px 14px ${svc.accentColor}55`
                           : "none",
                       }}
                     >
-                      {svc.icon}
+                      <span className="scale-[0.8] block">{svc.icon}</span>
                     </div>
-                    <div className="flex-1 min-w-0 px-3 py-2.5">
+                    <div className="flex-1 min-w-0 px-3 py-2">
                       <p
                         className="text-[13px] font-semibold leading-tight truncate"
                         style={{
@@ -277,6 +290,18 @@ function ServicesMegaMenu({
               })}
             </div>
           </div>
+        </div>
+
+        <div className="border-t border-slate-100 px-5 py-3 bg-slate-50/50 flex items-center justify-between">
+          <p className="text-xs text-slate-400 font-medium">
+            {t("navAllServices")}
+          </p>
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            {t("navAllServices")} <ChevronRight size={12} />
+          </Link>
         </div>
       </div>
     </div>
@@ -334,7 +359,6 @@ export default function Header() {
     { name: t("navAbout"), href: "/about" },
     { name: t("navContact"), href: "/contact" },
   ];
-
   const navLinkClass =
     "group relative px-6 py-2 text-sm font-semibold transition-colors duration-300";
 
@@ -436,7 +460,12 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="lg:hidden">
+          <div className="hidden lg:block">
+            <LocaleSwitcher />
+          </div>
+
+          <div className="lg:hidden flex items-center gap-3">
+            <LocaleSwitcher />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <button
@@ -487,7 +516,7 @@ export default function Header() {
                         className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200"
                         style={mobileLinkStyle(isServicesActive)}
                       >
-                        <span className="flex items-center gap-0">
+                        <span className="flex items-center">
                           {isServicesActive && (
                             <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
                           )}

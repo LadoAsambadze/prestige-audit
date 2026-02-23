@@ -12,18 +12,16 @@ import { useLocale } from "next-intl";
 import Image from "next/image";
 import { locales, usePathname, useRouter } from "./routing";
 
-type Locale = "en" | "ka" | "ru";
+type Locale = "en" | "ka";
 
 const LanguageFlags: Record<Locale, { src: string; alt: string }> = {
   en: { src: "/svg/English.svg", alt: "English" },
   ka: { src: "/svg/Georgian.svg", alt: "Georgian" },
-  ru: { src: "/svg/Russian.svg", alt: "Russian" },
 };
 
 const languageNames: Record<Locale, string> = {
   en: "English",
   ka: "ქართული",
-  ru: "Русский",
 };
 
 export default function LocaleSwitcher() {
