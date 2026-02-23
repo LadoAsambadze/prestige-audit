@@ -4,6 +4,8 @@ import { useRef } from "react";
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -13,6 +15,8 @@ const fadeUp = (delay: number) => ({
 });
 
 export default function AboutParallax() {
+  const t = useTranslations("main");
+  const ty = useTypography();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -22,11 +26,16 @@ export default function AboutParallax() {
 
   const bgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
+  const stats = [
+    { value: t("aboutStat1Value"), label: t("aboutStat1Label") },
+    { value: t("aboutStat2Value"), label: t("aboutStat2Label") },
+    { value: t("aboutStat3Value"), label: t("aboutStat3Label") },
+  ];
+
   return (
     <section
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-[#f3f5f4]"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
       <div
         className="absolute top-0 left-0 w-full z-20 pointer-events-none"
@@ -37,7 +46,7 @@ export default function AboutParallax() {
           preserveAspectRatio="none"
           className="w-full h-full"
         >
-          <polygon points="0,0 1440,0 1440,0 720,80 0,0" fill="#f0f2f1" />
+          <polygon points="0,0 1440,0 1440,0 720,80 0,0" fill="#f3f5f4" />
         </svg>
       </div>
 
@@ -65,40 +74,42 @@ export default function AboutParallax() {
                   className="flex items-center gap-3 mb-5"
                 >
                   <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
-                  <span
-                    style={{ letterSpacing: "4px" }}
-                    className="text-[10px] font-semibold uppercase text-blue-300"
-                  >
-                    Prestige Audit
+                  <span className="text-blue-300" style={ty.aboutLabel}>
+                    {t("aboutLabel")}
                   </span>
                   <span className="flex-1 max-w-[60px] h-px bg-blue-400/40" />
                 </motion.div>
 
                 <motion.h2
                   {...fadeUp(0.12)}
-                  className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold mb-7 leading-[1.1] tracking-tight"
+                  className="mb-7 text-white"
+                  style={ty.aboutHeading}
                 >
-                  Your <span className="italic text-blue-300">Strategic</span>{" "}
-                  Partner.
+                  {t("aboutHeadingRegular")}{" "}
+                  <span className="italic text-blue-300">
+                    {t("aboutHeadingItalic")}
+                  </span>{" "}
+                  {t("aboutHeadingSuffix")}
                 </motion.h2>
 
                 <motion.p
                   {...fadeUp(0.22)}
-                  className="text-base md:text-lg text-white/70 mb-10 max-w-[480px] leading-relaxed"
+                  className="text-white/70 mb-10 max-w-[480px]"
+                  style={ty.aboutBody}
                 >
-                  Over a decade of trusted financial expertise, delivering
-                  precision, clarity, and confidence to businesses across
-                  Georgia.
+                  {t("aboutBody")}
                 </motion.p>
 
                 <motion.div {...fadeUp(0.32)}>
                   <a
+                    suppressHydrationWarning
                     href="/about"
-                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-8 py-4 md:px-12 md:py-5 text-sm md:text-base font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
+                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-8 py-4 md:px-12 md:py-5 text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
+                    style={ty.btn}
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
                     <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <span className="relative z-10">Learn More About Us</span>
+                    <span className="relative z-10">{t("aboutCta")}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 27.7 18"
@@ -150,16 +161,15 @@ export default function AboutParallax() {
                       <span className="h-px w-12 bg-blue-400/30" />
                     </div>
 
-                    <div className="text-center text-xs uppercase text-white/60 tracking-[4px] mb-10">
-                      Batumi, Georgia
+                    <div
+                      className="text-center text-white/60 mb-10"
+                      style={ty.aboutLocation}
+                    >
+                      {t("aboutLocation")}
                     </div>
 
                     <div className="grid grid-cols-3 gap-8 pt-8 border-t border-white/10">
-                      {[
-                        { value: "25+", label: "Years" },
-                        { value: "1000+", label: "Clients" },
-                        { value: "99%", label: "Accuracy" },
-                      ].map((stat, i) => (
+                      {stats.map((stat, i) => (
                         <motion.div
                           key={stat.label}
                           className="text-center"
@@ -172,10 +182,16 @@ export default function AboutParallax() {
                             ease: "easeOut" as const,
                           }}
                         >
-                          <div className="text-2xl font-bold text-blue-300 mb-1">
+                          <div
+                            className="text-blue-300 mb-1"
+                            style={ty.aboutStatValue}
+                          >
                             {stat.value}
                           </div>
-                          <div className="text-[10px] uppercase text-white/40 tracking-widest">
+                          <div
+                            className="text-white/40"
+                            style={ty.aboutStatLabel}
+                          >
                             {stat.label}
                           </div>
                         </motion.div>
@@ -198,7 +214,7 @@ export default function AboutParallax() {
           preserveAspectRatio="none"
           className="w-full h-full"
         >
-          <polygon points="0,80 720,0 1440,80 1440,80 0,80" fill="#f0f2f1" />
+          <polygon points="0,80 720,0 1440,80 1440,80 0,80" fill="#f3f5f4" />
         </svg>
       </div>
     </section>

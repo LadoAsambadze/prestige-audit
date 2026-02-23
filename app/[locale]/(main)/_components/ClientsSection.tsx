@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 type Clients = {
   name: string;
@@ -60,7 +61,9 @@ const LogoCard = ({ logo, name, type }: Clients) => {
   );
 };
 
-export default function ClientssSection() {
+export default function ClientsSection() {
+  const t = useTranslations("main");
+
   return (
     <section className="relative z-10 bg-[#f3f5f4] py-10 md:pt-16 pb-32 overflow-hidden">
       <style jsx global>{`
@@ -98,7 +101,7 @@ export default function ClientssSection() {
         <div className="flex items-center justify-center w-full gap-3 mb-3">
           <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
           <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
-            Our Clients
+            {t("clientsSectionLabel")}
           </span>
           <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
         </div>

@@ -12,31 +12,8 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-
-const departments = [
-  {
-    label: "Audit",
-    href: "/team?team=financial-audit",
-    cta: "View Audit Team",
-  },
-  { label: "Tax", href: "/team?team=tax-services", cta: "View Tax Team" },
-  {
-    label: "Accounting",
-    href: "/team?team=accounting-services",
-    cta: "View Accounting Team",
-  },
-  {
-    label: "Valuation",
-    href: "/team?team=valuation-services",
-    cta: "View Valuation Team",
-  },
-  { label: "Legal", href: "/team?team=legal-support", cta: "View Legal Team" },
-  {
-    label: "Consulting",
-    href: "/team?team=business-consulting",
-    cta: "View Consulting Team",
-  },
-];
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 const lineColors = [
   "#2563eb",
@@ -122,9 +99,28 @@ const cardThemes = [
   },
 ];
 
+const deptHrefs = [
+  "/team?team=financial-audit",
+  "/team?team=tax-services",
+  "/team?team=accounting-services",
+  "/team?team=valuation-services",
+  "/team?team=legal-support",
+  "/team?team=business-consulting",
+];
+
 function MobileCarousel({ isInView }: { isInView: boolean }) {
+  const t = useTranslations("main");
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+
+  const departments = [
+    { label: t("teamDept1Label"), href: deptHrefs[0], cta: t("teamDept1Cta") },
+    { label: t("teamDept2Label"), href: deptHrefs[1], cta: t("teamDept2Cta") },
+    { label: t("teamDept3Label"), href: deptHrefs[2], cta: t("teamDept3Cta") },
+    { label: t("teamDept4Label"), href: deptHrefs[3], cta: t("teamDept4Cta") },
+    { label: t("teamDept5Label"), href: deptHrefs[4], cta: t("teamDept5Cta") },
+    { label: t("teamDept6Label"), href: deptHrefs[5], cta: t("teamDept6Cta") },
+  ];
 
   useEffect(() => {
     if (!api) return;
@@ -159,7 +155,6 @@ function MobileCarousel({ isInView }: { isInView: boolean }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-
         <CarouselPrevious className="left-1 bg-white/90 backdrop-blur border-slate-200 hover:bg-white shadow-lg" />
         <CarouselNext className="right-1 bg-white/90 backdrop-blur border-slate-200 hover:bg-white shadow-lg" />
       </Carousel>
@@ -184,6 +179,8 @@ function MobileCarousel({ isInView }: { isInView: boolean }) {
 }
 
 export default function TeamSection() {
+  const t = useTranslations("main");
+  const ty = useTypography();
   const containerRef = useRef<HTMLDivElement>(null);
   const mainDotRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -193,49 +190,52 @@ export default function TeamSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
+  const departments = [
+    { label: t("teamDept1Label"), href: deptHrefs[0], cta: t("teamDept1Cta") },
+    { label: t("teamDept2Label"), href: deptHrefs[1], cta: t("teamDept2Cta") },
+    { label: t("teamDept3Label"), href: deptHrefs[2], cta: t("teamDept3Cta") },
+    { label: t("teamDept4Label"), href: deptHrefs[3], cta: t("teamDept4Cta") },
+    { label: t("teamDept5Label"), href: deptHrefs[4], cta: t("teamDept5Cta") },
+    { label: t("teamDept6Label"), href: deptHrefs[5], cta: t("teamDept6Cta") },
+  ];
+
   const computePaths = useCallback(() => {
     const container = containerRef.current;
     const mainDot = mainDotRef.current;
     if (!container || !mainDot) return;
-
     const cRect = container.getBoundingClientRect();
     const dotRect = mainDot.getBoundingClientRect();
     const startX = dotRect.left + dotRect.width / 2 - cRect.left;
     const startY = dotRect.top + dotRect.height / 2 - cRect.top;
-
     if (imageRef.current) {
       const imgRect = imageRef.current.getBoundingClientRect();
       const imgBottomY = imgRect.bottom - cRect.top;
       const imgMidX = imgRect.left + imgRect.width / 2 - cRect.left;
       setImagePath(`M ${imgMidX} ${imgBottomY} V ${startY}`);
     }
-
     const newPaths = cardRefs.current.map((card, i) => {
       if (!card) return "";
       const cardRect = card.getBoundingClientRect();
       const cardMidX = cardRect.left + cardRect.width / 2 - cRect.left;
       const cardTopY = cardRect.top - cRect.top;
       const cardSideY = cardRect.top + cardRect.height / 2 - cRect.top;
-
       if (i === 0)
         return `M ${startX} ${startY} H ${cardRect.right - cRect.left} V ${cardSideY} H ${cardRect.right - cRect.left}`;
       if (i === 1)
         return `M ${startX} ${startY} H ${cardRect.left - cRect.left} V ${cardSideY} H ${cardRect.left - cRect.left}`;
-
       const midY = startY + 60;
       return `M ${startX} ${startY} V ${midY} H ${cardMidX} V ${cardTopY}`;
     });
-
     setPaths(newPaths);
   }, []);
 
   useEffect(() => {
     computePaths();
     window.addEventListener("resize", computePaths);
-    const t = setTimeout(computePaths, 500);
+    const timer = setTimeout(computePaths, 500);
     return () => {
       window.removeEventListener("resize", computePaths);
-      clearTimeout(t);
+      clearTimeout(timer);
     };
   }, [computePaths]);
 
@@ -249,12 +249,7 @@ export default function TeamSection() {
           0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.3), 0 0 0 0 rgba(37,99,235,0.2); }
           50%       { box-shadow: 0 0 30px rgba(37,99,235,0.5), 0 0 20px 8px rgba(37,99,235,0.1); }
         }
-        .trunk-dot {
-          width: 20px; height: 20px; border-radius: 50%;
-          background: #2563eb; border: 4px solid #fff;
-          animation: pulseGlow 2s ease-in-out infinite;
-          z-index: 30;
-        }
+        .trunk-dot { width: 20px; height: 20px; border-radius: 50%; background: #2563eb; border: 4px solid #fff; animation: pulseGlow 2s ease-in-out infinite; z-index: 30; }
       `}</style>
 
       <div className="lg:hidden flex flex-col items-center px-6 gap-8">
@@ -271,8 +266,8 @@ export default function TeamSection() {
               animate={isInView ? { width: "2rem" } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
             />
-            <span className="text-xs font-medium uppercase tracking-[2px] text-gray-500">
-              Our Team
+            <span className="text-gray-500" style={ty.teamLabel}>
+              {t("teamSectionLabel")}
             </span>
             <motion.div
               className="h-0.5 bg-[#2563eb]"
@@ -304,17 +299,17 @@ export default function TeamSection() {
             <div className="aspect-[4/5] overflow-hidden">
               <img
                 src="4.jpeg"
-                alt="CEO"
+                alt={t("teamCeoName")}
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-5 text-center">
-              <h3 className="text-lg font-black text-white mb-1">
-                Giorgi Baramidze
+              <h3 className="text-white mb-1" style={ty.teamCeoName}>
+                {t("teamCeoName")}
               </h3>
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-400">
-                Founder & CEO
+              <p className="text-blue-400" style={ty.teamCeoTitle}>
+                {t("teamCeoTitle")}
               </p>
             </div>
           </div>
@@ -338,12 +333,13 @@ export default function TeamSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
             />
             <motion.span
-              className="text-sm font-medium uppercase tracking-[2px] text-gray-500"
+              className="text-gray-500"
+              style={ty.teamLabel}
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Our Team
+              {t("teamSectionLabel")}
             </motion.span>
             <motion.div
               className="h-0.5 bg-[#2563eb]"
@@ -398,27 +394,29 @@ export default function TeamSection() {
                 <div className="aspect-[4/5] overflow-hidden">
                   <img
                     src="4.jpeg"
-                    alt="CEO"
+                    alt={t("teamCeoName")}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
                   <motion.h3
-                    className="text-2xl font-black text-white mb-2"
+                    className="text-white mb-2"
+                    style={ty.teamCeoName}
                     initial={{ opacity: 0, y: 10 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.9 }}
                   >
-                    Giorgi Baramidze
+                    {t("teamCeoName")}
                   </motion.h3>
                   <motion.p
-                    className="text-xs font-bold uppercase tracking-[0.2em] text-blue-400"
+                    className="text-blue-400"
+                    style={ty.teamCeoTitle}
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.6, delay: 1.1 }}
                   >
-                    Founder & Chief Executive Officer
+                    {t("teamCeoTitleFull")}
                   </motion.p>
                 </div>
               </div>
@@ -532,7 +530,7 @@ function DeptCard({
   mobileDelay?: number;
 }) {
   const [hovered, setHovered] = useState(false);
-
+  const ty = useTypography();
   const initialX = enterFrom === "left" ? -80 : enterFrom === "right" ? 80 : 0;
   const initialY = enterFrom === "bottom" ? 60 : 0;
   const delay =
@@ -624,7 +622,8 @@ function DeptCard({
             </motion.div>
             <div>
               <motion.h4
-                className="text-base font-bold text-slate-800 mb-3"
+                className="text-slate-800 mb-3"
+                style={ty.deptCardTitle}
                 initial={{ opacity: 0, y: 8 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: delay + 0.35 }}
@@ -635,7 +634,8 @@ function DeptCard({
                 initial={{ opacity: 0, y: 10 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: delay + 0.45 }}
-                className={`inline-flex items-center gap-2 relative overflow-hidden px-4 py-2 rounded-full border ${theme.learnMoreBorder} bg-gradient-to-r ${theme.learnMoreBg} ${theme.learnMoreText} text-[10px] font-bold uppercase tracking-wider shadow-sm transition-all duration-300 group-hover:shadow-lg ${theme.learnMoreShadow} group-hover:border-transparent`}
+                className={`inline-flex items-center gap-2 relative overflow-hidden px-4 py-2 rounded-full border ${theme.learnMoreBorder} bg-gradient-to-r ${theme.learnMoreBg} ${theme.learnMoreText} shadow-sm transition-all duration-300 group-hover:shadow-lg ${theme.learnMoreShadow} group-hover:border-transparent`}
+                style={ty.deptCardBtn}
               >
                 <span
                   className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.learnMoreGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}

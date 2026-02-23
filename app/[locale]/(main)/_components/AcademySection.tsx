@@ -9,8 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 export default function AcademySection() {
+  const t = useTranslations("main");
+  const ty = useTypography();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -41,7 +45,6 @@ export default function AcademySection() {
 
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left: Academy image */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: -40 }}
@@ -85,10 +88,10 @@ export default function AcademySection() {
                 </div>
                 <div>
                   <p className="text-white text-sm font-semibold leading-none">
-                    6-Month Program
+                    {t("academyBadgeDuration")}
                   </p>
                   <p className="text-white/50 text-xs mt-0.5">
-                    Professional Certification
+                    {t("academyBadgeCert")}
                   </p>
                 </div>
               </motion.div>
@@ -113,13 +116,12 @@ export default function AcademySection() {
                   ))}
                 </div>
                 <span className="text-white/80 text-xs font-medium">
-                  200+ students
+                  {t("academyBadgeStudents")}
                 </span>
               </motion.div>
             </div>
           </motion.div>
 
-          {/* Right: CTA copy */}
           <motion.div
             className="flex flex-col justify-center"
             initial={{ opacity: 0, x: 40 }}
@@ -133,39 +135,38 @@ export default function AcademySection() {
           >
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="h-px w-10 bg-blue-400/40" />
-              <span
-                style={{ letterSpacing: "4px", fontFamily: "sans-serif" }}
-                className="text-[10px] font-semibold uppercase text-blue-300"
-              >
-                Accounting Academy
+              <span className="text-blue-300" style={ty.academyLabel}>
+                {t("academySectionLabel")}
               </span>
               <span className="h-px w-10 bg-blue-400/40" />
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight leading-[1.1]">
-              Master Accounting{" "}
-              <span className="italic text-blue-300">from scratch</span>
+            <h2 className="text-white mb-5" style={ty.academyHeading}>
+              {t("academyHeadingRegular")}{" "}
+              <span className="italic text-blue-300">
+                {t("academyHeadingItalic")}
+              </span>
               <br />
-              to professional level.
+              {t("academyHeadingSuffix")}
             </h2>
 
-            <p className="text-white/60 text-base md:text-lg leading-relaxed mb-8 max-w-xl">
-              Our structured 6-month academy teaches you everything from
-              bookkeeping fundamentals to advanced financial reporting — with
-              live lectures, real-world projects, and certified instructors
-              guiding you every step of the way.
+            <p className="text-white/60 mb-8 max-w-xl" style={ty.academyBody}>
+              {t("academyBody")}
             </p>
 
             <ul className="space-y-3 mb-10">
-              {[
-                "Live lectures twice a week",
-                "Accredited certificate on graduation",
-                "Mentorship from practicing accountants",
-                "Access to recordings & study materials",
-              ].map((item, i) => (
+              {(
+                [
+                  "academyFeature1",
+                  "academyFeature2",
+                  "academyFeature3",
+                  "academyFeature4",
+                ] as const
+              ).map((key, i) => (
                 <motion.li
                   key={i}
-                  className="flex items-center gap-3 text-white/75 text-sm md:text-base"
+                  className="flex items-center gap-3 text-white/75"
+                  style={ty.academyFeature}
                   initial={{ opacity: 0, x: 16 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -190,7 +191,7 @@ export default function AcademySection() {
                       />
                     </svg>
                   </span>
-                  {item}
+                  {t(key)}
                 </motion.li>
               ))}
             </ul>
@@ -201,10 +202,11 @@ export default function AcademySection() {
                 setModalOpen(true);
               }}
               className="group relative inline-flex items-center gap-3 self-start bg-blue-500 hover:bg-blue-400 text-white font-semibold px-7 py-4 rounded-xl transition-colors duration-200 overflow-hidden"
+              style={ty.btn}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
-              <span className="relative z-10">Apply for the Academy</span>
+              <span className="relative z-10">{t("academyCta")}</span>
               <svg
                 className="w-4 h-4 relative z-10 transition-transform duration-200 group-hover:translate-x-1"
                 fill="none"
@@ -236,33 +238,38 @@ export default function AcademySection() {
             <>
               <DialogHeader className="mb-6">
                 <DialogTitle className="text-white text-xl md:text-2xl font-bold">
-                  Get in touch
+                  {t("academyModalTitle")}
                 </DialogTitle>
                 <DialogDescription className="text-white/50 text-sm mt-1">
-                  Fill in your details and we'll contact you shortly.
+                  {t("academyModalDesc")}
                 </DialogDescription>
               </DialogHeader>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                {[
-                  {
-                    label: "Full Name",
-                    placeholder: "John Smith",
-                    type: "text",
-                  },
-                  {
-                    label: "Phone Number",
-                    placeholder: "+995 555 000 000",
-                    type: "tel",
-                  },
-                ].map((field) => (
-                  <div key={field.label}>
-                    <label className="block text-white/60 text-xs font-medium uppercase tracking-wider mb-2">
-                      {field.label}
+                {(
+                  [
+                    {
+                      labelKey: "academyModalFieldName",
+                      placeholderKey: "academyModalFieldNamePlaceholder",
+                      type: "text",
+                    },
+                    {
+                      labelKey: "academyModalFieldPhone",
+                      placeholderKey: "academyModalFieldPhonePlaceholder",
+                      type: "tel",
+                    },
+                  ] as const
+                ).map((field) => (
+                  <div key={field.labelKey}>
+                    <label
+                      className="block text-white/60 mb-2"
+                      style={ty.academyModalLabel}
+                    >
+                      {t(field.labelKey)}
                     </label>
                     <input
                       type={field.type}
-                      placeholder={field.placeholder}
+                      placeholder={t(field.placeholderKey)}
                       className="w-full bg-white/[0.06] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/25 text-sm focus:outline-none focus:border-blue-400/50 focus:bg-white/[0.09] transition-all"
                     />
                   </div>
@@ -270,12 +277,15 @@ export default function AcademySection() {
               </div>
 
               <div className="mb-4">
-                <label className="block text-white/60 text-xs font-medium uppercase tracking-wider mb-2">
-                  Email Address
+                <label
+                  className="block text-white/60 mb-2"
+                  style={ty.academyModalLabel}
+                >
+                  {t("academyModalFieldEmail")}
                 </label>
                 <input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder={t("academyModalFieldEmailPlaceholder")}
                   className="w-full bg-white/[0.06] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/25 text-sm focus:outline-none focus:border-blue-400/50 focus:bg-white/[0.09] transition-all"
                 />
               </div>
@@ -286,7 +296,7 @@ export default function AcademySection() {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
-                Submit — We'll Contact You
+                {t("academyModalSubmit")}
               </motion.button>
             </>
           ) : (
@@ -312,10 +322,10 @@ export default function AcademySection() {
                 </svg>
               </div>
               <h3 className="text-white text-xl font-bold mb-2">
-                Application received!
+                {t("academyModalSuccessTitle")}
               </h3>
               <p className="text-white/55 text-sm">
-                Our admissions team will reach out within 1–2 business days.
+                {t("academyModalSuccessBody")}
               </p>
             </motion.div>
           )}

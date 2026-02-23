@@ -8,6 +8,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-georgian: var(--font-georgian);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,47 +50,29 @@
 :root {
   --radius: 0.5rem;
 
-  /* Bold Corporate Blue - Light Mode */
-  --background: oklch(0.99 0.002 240); /* pure white */
-  --foreground: oklch(0.12 0.1 248); /* very deep blue-black */
-
-  --card: oklch(1 0 0); /* pure white */
+  --background: oklch(0.99 0.002 240);
+  --foreground: oklch(0.12 0.1 248);
+  --card: oklch(1 0 0);
   --card-foreground: oklch(0.12 0.1 248);
-
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.12 0.1 248);
-
-  /* Strong Royal Blue */
-  --primary: oklch(0.25 0.25 250); /* MUCH darker, saturated royal blue */
+  --primary: oklch(0.25 0.25 250);
   --primary-foreground: oklch(1 0 0);
-
-  /* Deep Indigo */
-  --secondary: oklch(0.2 0.22 265); /* very dark indigo */
+  --secondary: oklch(0.2 0.22 265);
   --secondary-foreground: oklch(1 0 0);
-
-  /* Light subtle backgrounds */
   --muted: oklch(0.96 0.005 240);
   --muted-foreground: oklch(0.42 0.08 248);
-
-  /* Vibrant Electric Blue for CTAs */
-  --accent: oklch(0.45 0.3 240); /* bright, saturated electric blue */
+  --accent: oklch(0.45 0.3 240);
   --accent-foreground: oklch(1 0 0);
-
-  /* Amber/Orange for warnings */
-  --destructive: oklch(0.55 0.3 45); /* warm amber gold */
-
+  --destructive: oklch(0.55 0.3 45);
   --border: oklch(0.88 0.01 240);
   --input: oklch(0.93 0.01 240);
   --ring: oklch(0.45 0.3 240);
-
-  /* Bold chart colors */
-  --chart-1: oklch(0.3 0.28 250); /* deep royal */
-  --chart-2: oklch(0.48 0.28 235); /* azure */
-  --chart-3: oklch(0.55 0.2 225); /* sky blue */
-  --chart-4: oklch(0.22 0.25 270); /* dark violet */
-  --chart-5: oklch(0.65 0.18 215); /* light cyan */
-
-  /* Sidebar */
+  --chart-1: oklch(0.3 0.28 250);
+  --chart-2: oklch(0.48 0.28 235);
+  --chart-3: oklch(0.55 0.2 225);
+  --chart-4: oklch(0.22 0.25 270);
+  --chart-5: oklch(0.65 0.18 215);
   --sidebar: oklch(0.97 0.005 240);
   --sidebar-foreground: oklch(0.12 0.1 248);
   --sidebar-primary: oklch(0.25 0.25 250);
@@ -101,45 +84,29 @@
 }
 
 .dark {
-  --background: oklch(0.05 0.06 248); /* almost black with blue tint */
-  --foreground: oklch(0.99 0.005 240); /* pure white */
-
-  --card: oklch(0.1 0.08 248); /* very dark blue card */
+  --background: oklch(0.05 0.06 248);
+  --foreground: oklch(0.99 0.005 240);
+  --card: oklch(0.1 0.08 248);
   --card-foreground: oklch(0.99 0.005 240);
-
   --popover: oklch(0.1 0.08 248);
   --popover-foreground: oklch(0.99 0.005 240);
-
-  /* Bright Neon Blue */
-  --primary: oklch(0.62 0.28 240); /* vivid bright blue */
+  --primary: oklch(0.62 0.28 240);
   --primary-foreground: oklch(0.05 0.06 248);
-
-  /* Purple-Blue */
-  --secondary: oklch(0.3 0.22 265); /* deep purple-blue */
+  --secondary: oklch(0.3 0.22 265);
   --secondary-foreground: oklch(0.99 0.005 240);
-
   --muted: oklch(0.15 0.06 248);
   --muted-foreground: oklch(0.75 0.02 240);
-
-  /* Electric Cyan */
-  --accent: oklch(0.68 0.3 235); /* very bright cyan-blue */
+  --accent: oklch(0.68 0.3 235);
   --accent-foreground: oklch(0.05 0.06 248);
-
-  /* Bright Gold */
-  --destructive: oklch(0.72 0.28 45); /* bright amber */
-
+  --destructive: oklch(0.72 0.28 45);
   --border: oklch(0.2 0.08 248);
   --input: oklch(0.15 0.07 248);
   --ring: oklch(0.68 0.3 235);
-
-  /* Dark mode charts */
   --chart-1: oklch(0.65 0.3 238);
   --chart-2: oklch(0.58 0.26 245);
   --chart-3: oklch(0.7 0.22 228);
   --chart-4: oklch(0.52 0.24 268);
   --chart-5: oklch(0.75 0.18 218);
-
-  /* Dark sidebar */
   --sidebar: oklch(0.05 0.06 248);
   --sidebar-foreground: oklch(0.99 0.005 240);
   --sidebar-primary: oklch(0.62 0.28 240);
@@ -148,6 +115,12 @@
   --sidebar-accent-foreground: oklch(0.99 0.005 240);
   --sidebar-border: oklch(0.2 0.08 248);
   --sidebar-ring: oklch(0.68 0.3 235);
+}
+
+.locale-ka body,
+body.locale-ka {
+  font-family:
+    var(--font-georgian), var(--font-geist-sans), system-ui, sans-serif;
 }
 
 @layer base {

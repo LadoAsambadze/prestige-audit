@@ -4,9 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe, ArrowUp } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 export default function Footer() {
   const pathname = usePathname();
+  const t = useTranslations("main");
+  const ty = useTypography();
 
   if (pathname.includes("admin")) {
     return null;
@@ -17,19 +21,22 @@ export default function Footer() {
   };
 
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Team", href: "/team" },
-    { name: "About Us", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: t("navHome"), href: "/" },
+    { name: t("navTeam"), href: "/team" },
+    { name: t("navAbout"), href: "/about" },
+    { name: t("navContact"), href: "/contact" },
   ];
 
   const serviceLinks = [
-    { name: "Financial Audit", href: "/services/financial-audit" },
-    { name: "Tax Services", href: "/services/tax-services" },
-    { name: "Accounting", href: "/services/accounting" },
-    { name: "Valuation", href: "/services/valuation" },
-    { name: "Legal Support", href: "/services/legal" },
-    { name: "Consulting", href: "/services/consulting" },
+    {
+      name: t("footerServiceFinancialAudit"),
+      href: "/services/financial-audit",
+    },
+    { name: t("footerServiceTax"), href: "/services/tax-services" },
+    { name: t("footerServiceAccounting"), href: "/services/accounting" },
+    { name: t("footerServiceValuation"), href: "/services/valuation" },
+    { name: t("footerServiceLegal"), href: "/services/legal" },
+    { name: t("footerServiceConsulting"), href: "/services/consulting" },
   ];
 
   return (
@@ -48,7 +55,8 @@ export default function Footer() {
 
       <div className="mx-auto max-w-7xl relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-10">
-          <div className="md:col-span-4 space-y-6">
+          {/* Brand column */}
+          <div className="md:col-span-4 space-y-6 hidden md:block">
             <Image
               src="/PrestigeLogo.png"
               alt="Prestige Audit"
@@ -59,8 +67,15 @@ export default function Footer() {
             />
 
             <div className="space-y-4">
-              <h4 className="text-white/80 font-semibold uppercase tracking-[0.2em] text-xs">
-                Follow Us
+              <h4
+                className="text-white/80"
+                style={{
+                  ...ty.label,
+                  fontWeight: 600,
+                  letterSpacing: ty.label.letterSpacing ?? "0.2em",
+                }}
+              >
+                {t("footerFollowUs")}
               </h4>
               <div className="flex gap-3">
                 {[Globe].map((Icon, i) => (
@@ -76,70 +91,83 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-2 space-y-5">
-            <h4 className="text-white font-bold text-lg">Pages</h4>
-            <ul className="space-y-3 text-blue-100/50 text-sm">
-              {navLinks.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="hover:text-white transition-colors duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Pages + Services combined row */}
+          <div className="md:col-span-5 flex gap-10">
+            {/* Pages */}
+            <div className="space-y-5 flex-1">
+              <h4 className="text-white font-bold" style={ty.itemTitle}>
+                {t("footerPages")}
+              </h4>
+              <ul className="space-y-3 text-blue-100/50" style={ty.itemDesc}>
+                {navLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div className="space-y-5 flex-1">
+              <h4 className="text-white font-bold" style={ty.itemTitle}>
+                {t("footerServices")}
+              </h4>
+              <ul className="space-y-3 text-blue-100/50" style={ty.itemDesc}>
+                {serviceLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
+          {/* Contact column */}
           <div className="md:col-span-3 space-y-5">
-            <h4 className="text-white font-bold text-lg">Services</h4>
-            <ul className="space-y-3 text-blue-100/50 text-sm">
-              {serviceLinks.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="hover:text-white transition-colors duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="md:col-span-3 space-y-5">
-            <h4 className="text-white font-bold text-lg">Contact</h4>
-            <ul className="space-y-4 text-blue-100/50 text-sm">
+            <h4 className="text-white font-bold" style={ty.itemTitle}>
+              {t("footerContact")}
+            </h4>
+            <ul className="space-y-4 text-blue-100/50" style={ty.itemDesc}>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 mt-0.5">📍</span>
-                <span>Batumi, Adjara, Georgia</span>
+                <span>{t("footerAddress")}</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 mt-0.5">📞</span>
                 <Link
-                  href="tel:+995000000000"
+                  href={`tel:${t("footerPhone").replace(/\s/g, "")}`}
                   className="hover:text-white transition-colors duration-200"
                 >
-                  +995 000 000 000
+                  {t("footerPhone")}
                 </Link>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 mt-0.5">✉️</span>
                 <Link
-                  href="mailto:info@prestigeaudit.ge"
+                  href={`mailto:${t("footerEmail")}`}
                   className="hover:text-white transition-colors duration-200"
                 >
-                  info@prestigeaudit.ge
+                  {t("footerEmail")}
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
+        {/* Bottom bar */}
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-center items-center gap-4">
-          <p className="text-blue-100/30 text-sm">
-            © 2026 Prestige Audit. All Rights Reserved
+          <p className="text-blue-100/30" style={ty.itemDesc}>
+            {t("footerCopyright")}
           </p>
         </div>
       </div>

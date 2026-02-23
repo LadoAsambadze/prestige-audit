@@ -2,12 +2,16 @@
 
 import { useState, useEffect, JSX } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 const backgroundImages: string[] = ["/bg2.jpg", "/b3.jpg", "/b4.jpg"];
 
 const FADE = { duration: 0.5, ease: "easeOut" as const };
 
 export default function HeroCarousel(): JSX.Element {
+  const t = useTranslations("main");
+  const ty = useTypography();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
@@ -66,8 +70,8 @@ export default function HeroCarousel(): JSX.Element {
                     <div className="rounded-full bg-white w-1 h-1" />
                     <div className="bg-white/40 w-8 md:w-10 h-[1px]" />
                   </div>
-                  <span className="text-white uppercase tracking-[2px] text-xs md:text-sm font-medium">
-                    Prestige Audit
+                  <span className="text-white" style={ty.label}>
+                    {t("heroBrand")}
                   </span>
                   <div className="flex items-center">
                     <div className="bg-white/40 w-8 md:w-10 h-[1px]" />
@@ -79,15 +83,19 @@ export default function HeroCarousel(): JSX.Element {
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ ...FADE, delay: 0.25 }}
-                  className="text-white font-semibold leading-[1.1] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[68px] 2xl:text-[75px]"
+                  className="text-white"
+                  style={ty.heroTitle}
                 >
                   <span className="block md:inline whitespace-nowrap">
-                    The Best <span className="text-[#2563eb]">Audit</span>
+                    {t("heroTitleLine1")}{" "}
+                    <span className="text-[#2563eb]">
+                      {t("heroTitleHighlight")}
+                    </span>
                   </span>
                   <br className="hidden md:block" />
                   <span className="block md:inline whitespace-nowrap">
                     {" "}
-                    Company in Batumi
+                    {t("heroTitleLine2")}
                   </span>
                 </motion.h1>
 
@@ -98,11 +106,12 @@ export default function HeroCarousel(): JSX.Element {
                 >
                   <a
                     href="/contact"
-                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-9 py-5 md:px-12 md:py-6 text-base font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
+                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-9 py-5 md:px-12 md:py-6 text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
+                    style={ty.btn}
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
                     <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <span className="relative z-10">Book Consultation</span>
+                    <span className="relative z-10">{t("heroCta")}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 27.7 18"

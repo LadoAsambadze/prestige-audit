@@ -7,17 +7,18 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-import React, { useEffect, useState } from "react";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface Service {
   id: string;
-  title: string;
+  titleKey: string;
+  contentTitleKey: string;
+  descriptionKey: string;
+  featureKeys: string[];
   icon: React.ReactNode;
-  contentTitle: string;
-  description: string;
-  features: string[];
   image: string;
 }
 
@@ -111,7 +112,15 @@ const cardThemes = [
 const services: Service[] = [
   {
     id: "financial-audit",
-    title: "Financial Audit",
+    titleKey: "financialAuditTitle",
+    contentTitleKey: "financialAuditContentTitle",
+    descriptionKey: "financialAuditDescription",
+    featureKeys: [
+      "financialAuditFeature1",
+      "financialAuditFeature2",
+      "financialAuditFeature3",
+    ],
+    image: "/Service1.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -127,19 +136,18 @@ const services: Service[] = [
         <path d="M29.73,28.43,27,25.68a5.11,5.11,0,0,0-7.82-6.52A5.11,5.11,0,0,0,25.68,27l2.75,2.75a.92.92,0,0,0,1.3,0A.92.92,0,0,0,29.73,28.43Zm-9.27-3.34a3.27,3.27,0,0,1,0-4.63,3.32,3.32,0,0,1,2.32-1,3.28,3.28,0,1,1-2.32,5.59Z" />
       </svg>
     ),
-    contentTitle: "Professional Audit Services",
-    description:
-      "Our experienced specialists provide a full and objective assessment of your business's financial health.",
-    features: [
-      "International Standard Audits",
-      "Detailed Financial Reporting",
-      "Risk Identification & Assessment",
-    ],
-    image: "/Service1.jpg",
   },
   {
     id: "tax-services",
-    title: "Tax Services",
+    titleKey: "taxServicesTitle",
+    contentTitleKey: "taxServicesContentTitle",
+    descriptionKey: "taxServicesDescription",
+    featureKeys: [
+      "taxServicesFeature1",
+      "taxServicesFeature2",
+      "taxServicesFeature3",
+    ],
+    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -154,19 +162,18 @@ const services: Service[] = [
         <path d="M19.05,27.52a12.85,12.85,0,0,1-4.05.64,13.09,13.09,0,0,1-9.11-3.67l2,.61a.92.92,0,0,0,.54-1.76l-5-1.54a1,1,0,0,0-.9.21.91.91,0,0,0-.26.88L3.42,28a.9.9,0,0,0,.89.71.75.75,0,0,0,.21,0,.91.91,0,0,0,.69-1.1L4.85,26a15,15,0,0,0,14.77,3.24.93.93,0,0,0-.57-1.76Z" />
       </svg>
     ),
-    contentTitle: "Tax Planning & Consulting",
-    description:
-      "Comprehensive tax services for individuals and corporations. We help optimize your tax liability.",
-    features: [
-      "Preparation of Tax Returns",
-      "Tax Planning & Optimization",
-      "Legal Tax Compliance",
-    ],
-    image: "/Office.jpg",
   },
   {
     id: "accounting",
-    title: "Accounting Services",
+    titleKey: "accountingTitle",
+    contentTitleKey: "accountingContentTitle",
+    descriptionKey: "accountingDescription",
+    featureKeys: [
+      "accountingFeature1",
+      "accountingFeature2",
+      "accountingFeature3",
+    ],
+    image: "/Service1.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -183,19 +190,18 @@ const services: Service[] = [
         <path d="M29.08,30H.92A.92.92,0,0,1,0,29.08v-7a.92.92,0,0,1,1.84,0v6.1H28.16v-6.1a.92.92,0,1,1,1.84,0v7a.92.92,0,0,1-.92.92Z" />
       </svg>
     ),
-    contentTitle: "Full Cycle Accounting",
-    description:
-      "End-to-end accounting services, including bookkeeping and professional financial reporting.",
-    features: [
-      "Daily Bookkeeping Operations",
-      "Financial Statement Preparation",
-      "Payroll Management",
-    ],
-    image: "/Service1.jpg",
   },
   {
     id: "valuation",
-    title: "Valuation Services",
+    titleKey: "valuationTitle",
+    contentTitleKey: "valuationContentTitle",
+    descriptionKey: "valuationDescription",
+    featureKeys: [
+      "valuationFeature1",
+      "valuationFeature2",
+      "valuationFeature3",
+    ],
+    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -209,19 +215,14 @@ const services: Service[] = [
         <path d="M15,16.09a7,7,0,1,0,7,7A7,7,0,0,0,15,16.09Zm-.76,5.79a3.4,3.4,0,0,0,1.08.52c.27.1.55.21.84.34A2.07,2.07,0,0,1,17.25,24a2.3,2.3,0,0,1-.15,1.78,2.1,2.1,0,0,1-1.45,1.06v.63a.65.65,0,1,1-1.3,0v-.65a2.1,2.1,0,0,1-1.74-1.91.66.66,0,0,1,.66-.65.65.65,0,0,1,.65.65c0,.36.52.7,1.06.7a1,1,0,0,0,1-.44.94.94,0,0,0,.07-.75.75.75,0,0,0-.41-.45c-.24-.11-.49-.2-.73-.29a4.66,4.66,0,0,1-1.47-.75,2,2,0,0,1-.54-2.42,2.07,2.07,0,0,1,1.49-1.16v-.62a.66.66,0,1,1,1.31,0v.64a2.11,2.11,0,0,1,1.73,1.91.66.66,0,0,1-.66.65.65.65,0,0,1-.65-.65c0-.36-.52-.69-1.06-.69-.76,0-.93.36-1,.47a.74.74,0,0,0,.2.87Z" />
       </svg>
     ),
-    contentTitle: "Expert Valuation Services",
-    description:
-      "Professional appraisal of real estate and business assets based on objective market values.",
-    features: [
-      "Real Estate Valuation",
-      "Business Analysis & Appraisal",
-      "Investment Project Assessment",
-    ],
-    image: "/Office.jpg",
   },
   {
     id: "legal",
-    title: "Legal Support",
+    titleKey: "legalTitle",
+    contentTitleKey: "legalContentTitle",
+    descriptionKey: "legalDescription",
+    featureKeys: ["legalFeature1", "legalFeature2", "legalFeature3"],
+    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -236,19 +237,18 @@ const services: Service[] = [
         <path d="M5.12,26.19a2.64,2.64,0,0,1,.25,1.13,2.69,2.69,0,1,1-2.68-2.69,2.87,2.87,0,0,1,1.13.25L6.61,22.1A10.56,10.56,0,0,0,7.9,23.4Z" />
       </svg>
     ),
-    contentTitle: "Full Legal Support",
-    description:
-      "Complete legal support and strategic consultation for all your business needs.",
-    features: [
-      "Contract Preparation",
-      "Corporate Governance",
-      "Legal Risk Management",
-    ],
-    image: "/Office.jpg",
   },
   {
     id: "consulting",
-    title: "Business Consulting",
+    titleKey: "consultingTitle",
+    contentTitleKey: "consultingContentTitle",
+    descriptionKey: "consultingDescription",
+    featureKeys: [
+      "consultingFeature1",
+      "consultingFeature2",
+      "consultingFeature3",
+    ],
+    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -259,11 +259,6 @@ const services: Service[] = [
         <path d="M15,0A15,15,0,1,0,30,15,15,15,0,0,0,15,0Zm8.06,7a.79.79,0,0,1-.2.52A55.39,55.39,0,0,0,13.19,23a1.24,1.24,0,0,1-2.25.11,35.8,35.8,0,0,0-4.25-6.49,1.78,1.78,0,0,1,2.66-2.36,32.86,32.86,0,0,1,2.82,3.45,0,0,0,0,0,0,0A46.22,46.22,0,0,1,21.8,6.44.76.76,0,0,1,23.06,7Z" />
       </svg>
     ),
-    contentTitle: "Strategic Business Consulting",
-    description:
-      "Strategic business consulting aimed at your company's growth and operational optimization.",
-    features: ["Business Strategy", "Process Optimization", "Market Analysis"],
-    image: "/Office.jpg",
   },
 ];
 
@@ -285,7 +280,16 @@ const headerVariants = {
   },
 };
 
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+function ServiceCard({
+  service,
+  index,
+  basePath,
+}: {
+  service: Service;
+  index: number;
+  basePath: string;
+}) {
+  const t = useTranslations("main");
   const theme = cardThemes[index % cardThemes.length];
 
   return (
@@ -299,7 +303,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
     >
       <Card
         className={`
-          group relative h-[420px] md:h-[380px] my-1 border border-transparent
+          group relative h-[420px] md:h-[440px] my-1 border border-transparent
           ${theme.border}
           rounded-[32px]
           bg-gradient-to-br ${theme.bg}
@@ -318,29 +322,27 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             >
               {service.icon}
             </div>
-            <h3 className="text-xl font-bold text-gray-900 leading-tight">
-              {service.title}
-            </h3>
+            <h3 className="card-title text-gray-900">{t(service.titleKey)}</h3>
           </div>
 
-          <p className="text-gray-600 text-[15px] leading-relaxed mb-6 line-clamp-3">
-            {service.description}
+          <p className="card-desc text-gray-600 mb-6 line-clamp-3">
+            {t(service.descriptionKey)}
           </p>
 
           <ul className="space-y-3 mb-auto">
-            {service.features.map((feature, idx) => (
+            {service.featureKeys.map((key, idx) => (
               <li key={idx} className="flex items-start gap-3 text-gray-700">
                 <CheckCircle2
                   className={`w-[18px] h-[18px] ${theme.check} shrink-0 mt-0.5`}
                 />
-                <span className="text-[13px] font-medium">{feature}</span>
+                <span className="card-feature">{t(key)}</span>
               </li>
             ))}
           </ul>
 
           <div className="mt-auto pt-4">
             <Link
-              href={`/services/${service.id}`}
+              href={`${basePath}/${service.id}`}
               className={`
                 group/link inline-flex items-center gap-2.5
                 relative overflow-hidden
@@ -348,7 +350,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
                 border ${theme.learnMoreBorder}
                 bg-gradient-to-r ${theme.learnMoreBg}
                 ${theme.learnMoreText}
-                text-sm font-semibold uppercase tracking-wider
+                service-btn
                 shadow-sm
                 transition-all duration-300
                 hover:shadow-lg ${theme.learnMoreShadow}
@@ -360,7 +362,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
                 className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.learnMoreGradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
               />
               <span className="relative z-10 group-hover/link:text-white transition-colors duration-300">
-                Learn More
+                {t("servicesLearnMore")}
               </span>
               <ArrowRight
                 className={`relative z-10 w-4 h-4 ${theme.learnMoreText} group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1`}
@@ -374,6 +376,9 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 }
 
 export default function ServicesSection() {
+  const t = useTranslations("main");
+  const basePath = "/services";
+
   return (
     <section className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-10 md:py-16 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
@@ -386,8 +391,8 @@ export default function ServicesSection() {
             className="flex items-center gap-3"
           >
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
-            <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
-              Our Services
+            <span className="section-label text-gray-500">
+              {t("servicesSectionLabel")}
             </span>
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
           </motion.div>
@@ -401,7 +406,11 @@ export default function ServicesSection() {
                   key={service.id}
                   className="pl-6 basis-[85%] sm:basis-[70%]"
                 >
-                  <ServiceCard service={service} index={index} />
+                  <ServiceCard
+                    service={service}
+                    index={index}
+                    basePath={basePath}
+                  />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -410,7 +419,12 @@ export default function ServicesSection() {
 
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
           {services.map((service, index) => (
-            <ServiceCard key={service.id} service={service} index={index} />
+            <ServiceCard
+              key={service.id}
+              service={service}
+              index={index}
+              basePath={basePath}
+            />
           ))}
         </div>
       </div>

@@ -1,222 +1,675 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
-import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState, useRef, useEffect } from "react";
+import { Menu, X, ChevronDown, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
-interface Testimonial {
-  quote: string;
-  name: string;
-  title: string;
-  image: string;
-}
-
-const testimonialsLeft: Testimonial[] = [
+const services = [
   {
-    quote: "Luctus nibh finibus facilisis dapibus etiam interdum tortor.",
-    name: "Nicole Saskia",
-    title: "Founder",
-    image: "https://i.pravatar.cc/150?u=1",
+    id: "financial-audit",
+    title: "Financial Audit",
+    description:
+      "Independent assessment of your financial statements and controls",
+    color: "from-blue-500 to-blue-700",
+    accentColor: "#3B82F6",
+    bgLight: "bg-blue-50",
+    textColor: "text-blue-600",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.75"
+          d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+    ),
   },
   {
-    quote: "Nulla molestie mattis scelerisque maximus eget fermentum.",
-    name: "Angela Ursel",
-    title: "Manager",
-    image: "https://i.pravatar.cc/150?u=2",
+    id: "tax-services",
+    title: "Tax Services",
+    description: "Strategic tax planning, compliance & optimization for growth",
+    color: "from-emerald-500 to-emerald-700",
+    accentColor: "#10B981",
+    bgLight: "bg-emerald-50",
+    textColor: "text-emerald-600",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.75"
+          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
   },
   {
-    quote: "Cras eleifend turpis fames primis vulputate ornare sagittis.",
-    name: "Gretel Nicole",
-    title: "CEO",
-    image: "https://i.pravatar.cc/150?u=3",
+    id: "accounting",
+    title: "Accounting Services",
+    description: "Full-cycle bookkeeping, reconciliation & financial reporting",
+    color: "from-violet-500 to-violet-700",
+    accentColor: "#8B5CF6",
+    bgLight: "bg-violet-50",
+    textColor: "text-violet-600",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.75"
+          d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+        />
+      </svg>
+    ),
+  },
+  {
+    id: "valuation",
+    title: "Valuation Services",
+    description: "Certified appraisals for assets, equity & entire businesses",
+    color: "from-amber-400 to-amber-600",
+    accentColor: "#F59E0B",
+    bgLight: "bg-amber-50",
+    textColor: "text-amber-600",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.75"
+          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+        />
+      </svg>
+    ),
+  },
+  {
+    id: "legal",
+    title: "Legal Support",
+    description: "Contracts, governance, compliance & dispute resolution",
+    color: "from-rose-500 to-rose-700",
+    accentColor: "#F43F5E",
+    bgLight: "bg-rose-50",
+    textColor: "text-rose-600",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.75"
+          d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+        />
+      </svg>
+    ),
+  },
+  {
+    id: "consulting",
+    title: "Business Consulting",
+    description: "Strategy, process optimization & sustainable growth advisory",
+    color: "from-cyan-500 to-cyan-700",
+    accentColor: "#06B6D4",
+    bgLight: "bg-cyan-50",
+    textColor: "text-cyan-600",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.75"
+          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+        />
+      </svg>
+    ),
   },
 ];
 
-const testimonialsMiddle: Testimonial[] = [
-  {
-    quote: "Viverra ac tincidunt nam porta elementum a enim euismod.",
-    name: "Arnold Willy",
-    title: "Sales Director",
-    image: "https://i.pravatar.cc/150?u=4",
-  },
-  {
-    quote: "Duis convallis tempus leo eu aenean sed diam nec metus.",
-    name: "Frieda Janine",
-    title: "CEO",
-    image: "https://i.pravatar.cc/150?u=5",
-  },
-  {
-    quote: "Imperdiet mollis nullam volutpat porttitor justo lectus.",
-    name: "Mario Pascal",
-    title: "Project Manager",
-    image: "https://i.pravatar.cc/150?u=6",
-  },
-];
+/* ─── Mega Menu ──────────────────────────────────────────── */
+function ServicesMegaMenu({
+  isOpen,
+  pathname,
+}: {
+  isOpen: boolean;
+  pathname: string;
+}) {
+  const [hovered, setHovered] = useState<string | null>(null);
+  const active = hovered ? services.find((s) => s.id === hovered) : services[0];
 
-const testimonialsRight: Testimonial[] = [
-  {
-    quote: "Sapien pellentesque habitant morbi tristique senectus et netus.",
-    name: "Elena Rossi",
-    title: "Designer",
-    image: "https://i.pravatar.cc/150?u=7",
-  },
-  {
-    quote: "Porttitor massa id neque aliquam vestibulum morbi blandit.",
-    name: "Marcus Aurelius",
-    title: "Marketing",
-    image: "https://i.pravatar.cc/150?u=8",
-  },
-  {
-    quote: "Amet dictum sit amet justo donec enim diam vulputate.",
-    name: "Sarah Jenkins",
-    title: "COO",
-    image: "https://i.pravatar.cc/150?u=9",
-  },
-];
-
-const allMobileTestimonials: Testimonial[] = [
-  ...testimonialsLeft,
-  ...testimonialsMiddle,
-  ...testimonialsRight,
-];
-
-const TestimonialCard = React.memo(
-  ({ quote, name, title, image }: Testimonial) => (
-    <Card className="bg-white border-none rounded-[20px] md:rounded-[24px] p-5 md:p-6 mb-4 md:mb-5 shadow-sm group hover:shadow-md transition-shadow">
-      <CardContent className="p-0">
-        <div className="flex gap-0.5 mb-3">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="w-3 h-3 fill-[#2563eb] text-[#2563eb]" />
-          ))}
-        </div>
-        <p className="text-gray-600 text-[13px] md:text-[13.5px] leading-relaxed mb-4 md:mb-5">
-          "{quote}"
-        </p>
-        <div className="flex items-center gap-3">
-          <Avatar className="h-9 w-9 border border-gray-100">
-            <AvatarImage src={image} loading="lazy" />
-            <AvatarFallback>{name[0]}</AvatarFallback>
-          </Avatar>
-          <div>
-            <h4 className="text-sm font-bold text-gray-900">{name}</h4>
-            <p className="text-[11px] text-gray-400">{title}</p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  ),
-);
-export default function ReviewsSection() {
   return (
-    <section className="relative z-10 -mt-10 md:-mt-20 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] pt-16 md:pt-20 pb-0 overflow-hidden">
-      <style jsx global>{`
-        @keyframes scrollUp {
-          0% {
-            transform: translate3d(0, 0, 0);
-          }
-          100% {
-            transform: translate3d(0, -50%, 0);
-          }
-        }
-        @keyframes scrollDown {
-          0% {
-            transform: translate3d(0, -50%, 0);
-          }
-          100% {
-            transform: translate3d(0, 0, 0);
-          }
-        }
-        .animate-scroll-up {
-          animation: scrollUp 30s linear infinite;
-          will-change: transform;
-        }
-        .animate-scroll-down {
-          animation: scrollDown 30s linear infinite;
-          will-change: transform;
-        }
-        .pause-on-hover:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+    <div
+      className={cn(
+        "absolute top-full left-1/2 -translate-x-1/2 mt-3 transition-all duration-200 origin-top",
+        isOpen
+          ? "opacity-100 scale-100 pointer-events-auto"
+          : "opacity-0 scale-95 pointer-events-none",
+      )}
+      style={{ width: 680 }}
+    >
+      {/* Arrow */}
+      <div className="flex justify-center mb-[-1px] relative z-10">
+        <div className="w-3 h-3 bg-white border-l border-t border-slate-200/80 rotate-45 shadow-sm" />
+      </div>
 
-      <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 pt-8 md:pt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
-          {/* Left Side CTA Card */}
-          <div className="lg:col-span-3">
-            <Card
-              className="relative rounded-[30px] md:rounded-[40px] p-8 md:p-10 border-none shadow-sm h-full flex flex-col overflow-hidden bg-cover bg-center"
-              style={{
-                backgroundImage: `url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80')`,
-              }}
-            >
-              {/* Dark Overlay */}
-              <div className="absolute inset-0 bg-black/40 z-0" />
-
-              <div className="relative z-10 h-full flex flex-col">
-                {/* Text moved to the TOP (mb-auto pushes everything else down) */}
-                <div className="mb-auto">
-                  <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-4 text-white">
-                    Trusted By Over 1300 Loyal Clients
-                  </h2>
-                  <p className="text-white/80 text-sm leading-relaxed max-w-[240px]">
-                    Ad litora torquent per conubia nostra inceptos himenaeos.
-                  </p>
-                </div>
-
-                {/* Button moved to the BOTTOM */}
-                <div className="mt-8">
-                  <Button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-full py-5 md:py-6 px-6 md:px-8 w-fit flex items-center gap-2 group transition-all text-sm md:text-base">
-                    Contact Us
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </div>
-            </Card>
+      <div
+        className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden"
+        style={{
+          boxShadow:
+            "0 20px 60px -10px rgba(10,26,63,0.22), 0 4px 16px -4px rgba(10,26,63,0.10)",
+        }}
+      >
+        <div className="flex">
+          {/* LEFT: service list */}
+          <div className="w-[55%] p-3 flex flex-col">
+            <p className="px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
+              Our Services
+            </p>
+            <div className="flex flex-col gap-0.5 flex-1">
+              {services.map((svc) => {
+                const isActive = pathname === `/services/${svc.id}`;
+                const isHovered = hovered === svc.id;
+                return (
+                  <Link
+                    key={svc.id}
+                    href={`/services/${svc.id}`}
+                    onMouseEnter={() => setHovered(svc.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    className={cn(
+                      "group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 relative",
+                      isActive ? "bg-blue-50" : isHovered ? "bg-slate-50" : "",
+                    )}
+                  >
+                    {/* Blue left stripe on active */}
+                    {isActive && (
+                      <span className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full bg-[#2563eb]" />
+                    )}
+                    {/* Bigger icon: 10×10 */}
+                    <div
+                      className={cn(
+                        "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white transition-all duration-150",
+                        `bg-gradient-to-br ${svc.color}`,
+                        isHovered ? "scale-105" : "",
+                      )}
+                      style={
+                        isHovered
+                          ? { boxShadow: `0 4px 14px ${svc.accentColor}55` }
+                          : {}
+                      }
+                    >
+                      {/* Render icon at w-5 h-5 inside */}
+                      {svc.icon}
+                    </div>
+                    {/* Text */}
+                    <div className="flex-1 min-w-0">
+                      <p
+                        className="text-[13px] font-semibold leading-tight truncate"
+                        style={{
+                          color: isActive
+                            ? "#1d4ed8"
+                            : isHovered
+                              ? "#0f172a"
+                              : "#334155",
+                        }}
+                      >
+                        {svc.title}
+                      </p>
+                    </div>
+                    <ChevronRight
+                      size={13}
+                      className={cn(
+                        "shrink-0 transition-all duration-150",
+                        isHovered
+                          ? "text-slate-500 translate-x-0.5"
+                          : "text-slate-300",
+                      )}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Scrolling Reviews - 3 Columns */}
-          <div className="lg:col-span-9 relative">
-            <div className="hidden lg:grid grid-cols-3 gap-4 md:gap-6 h-[600px] overflow-hidden relative">
-              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#f3f5f4] to-transparent z-20 pointer-events-none" />
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#f3f5f4] to-transparent z-20 pointer-events-none" />
+          {/* RIGHT: preview panel */}
+          <div className="w-[45%] flex flex-col border-l border-slate-100 bg-[#f8faff]">
+            {active && (
+              <div className="flex-1 p-5 flex flex-col">
+                {/* Large icon with brand shadow */}
+                <div
+                  className={cn(
+                    "w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-4 transition-all duration-200",
+                    `bg-gradient-to-br ${active.color}`,
+                  )}
+                  style={{ boxShadow: `0 8px 24px ${active.accentColor}44` }}
+                >
+                  {/* Scale up the icon inside */}
+                  <span className="scale-[1.4] block">{active.icon}</span>
+                </div>
 
-              {/* Track 1 */}
-              <div className="animate-scroll-up pause-on-hover flex flex-col">
-                {[...testimonialsLeft, ...testimonialsLeft].map((t, i) => (
-                  <TestimonialCard key={`l-${i}`} {...t} />
-                ))}
+                <h3 className="text-[15px] font-bold text-[#0a1a3f] mb-2 leading-tight">
+                  {active.title}
+                </h3>
+                <p className="text-[12.5px] text-slate-500 leading-relaxed flex-1">
+                  {active.description}
+                </p>
               </div>
+            )}
 
-              {/* Track 2 */}
-              <div className="animate-scroll-down pause-on-hover flex flex-col">
-                {[...testimonialsMiddle, ...testimonialsMiddle].map((t, i) => (
-                  <TestimonialCard key={`m-${i}`} {...t} />
-                ))}
-              </div>
-
-              {/* Track 3 */}
-              <div className="animate-scroll-up pause-on-hover flex flex-col">
-                {[...testimonialsRight, ...testimonialsRight].map((t, i) => (
-                  <TestimonialCard key={`r-${i}`} {...t} />
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile View */}
-            <div className="block lg:hidden relative h-[380px] sm:h-[420px] overflow-hidden rounded-[28px] md:rounded-[32px]">
-              <div className="animate-scroll-up pause-on-hover flex flex-col">
-                {[...allMobileTestimonials, ...allMobileTestimonials].map(
-                  (t, i) => (
-                    <TestimonialCard key={`mob-${i}`} {...t} />
-                  ),
-                )}
-              </div>
+            {/* View All Services button at the bottom of the right panel */}
+            <div className="p-3 pt-0">
+              <Link
+                href="/services"
+                className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-white transition-colors duration-150 group"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)",
+                }}
+              >
+                <span className="text-[13px] font-bold">View All Services</span>
+                <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                  <ArrowUpRight size={13} />
+                </div>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  );
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+export default function Header() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleServicesMouseEnter = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setServicesMenuOpen(true);
+  };
+
+  const handleServicesMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setServicesMenuOpen(false), 150);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        servicesRef.current &&
+        !servicesRef.current.contains(e.target as Node)
+      ) {
+        setServicesMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
+  if (pathname.includes("admin")) return null;
+
+  const isServicesActive =
+    pathname === "/services" || pathname.startsWith("/services/");
+
+  const navItems = [
+    { name: "Home", href: "/" },
+    { name: "Team", href: "/team" },
+    { name: "About Us", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  return (
+    <header
+      className="absolute top-0 left-0 right-0 z-50"
+      style={{ padding: "30px 30px 0" }}
+    >
+      <div className="relative max-w-[1420px] mx-auto">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "rgba(10, 26, 63, 0.15)",
+            backdropFilter: "blur(15px)",
+            WebkitBackdropFilter: "blur(15px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "24px",
+          }}
+        />
+
+        <div
+          className="relative flex items-center justify-between px-6 md:px-10"
+          style={{ height: "80px" }}
+        >
+          <Image
+            src="/PrestigeLogo.png"
+            alt="Logo"
+            width={280}
+            height={280}
+            style={{ objectFit: "contain" }}
+            className="cursor-pointer mt-2 w-56 -ml-12 md:ml-0 h-56 md:w-72 md:h-72"
+          />
+
+          {/* Desktop Nav */}
+          <nav
+            className="hidden lg:flex items-center justify-center gap-1"
+            style={{ width: "50%" }}
+          >
+            <Link
+              href="/"
+              className="group relative px-6 py-2 transition-colors duration-300"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "15px",
+                fontWeight: 600,
+                color:
+                  pathname === "/" ? "#4A9FF5" : "rgba(255, 255, 255, 0.9)",
+              }}
+            >
+              <span className="relative z-10 group-hover:text-white transition-colors">
+                Home
+              </span>
+              {pathname === "/" && (
+                <span className="absolute bottom-0 left-6 right-6 h-0.5 bg-[#4A9FF5] rounded-full" />
+              )}
+            </Link>
+
+            {/* Services with custom mega menu */}
+            <div
+              ref={servicesRef}
+              className="relative"
+              onMouseEnter={handleServicesMouseEnter}
+              onMouseLeave={handleServicesMouseLeave}
+            >
+              <button
+                className="group relative flex items-center gap-1.5 px-6 py-2 transition-colors duration-300"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "15px",
+                  fontWeight: 600,
+                  color:
+                    isServicesActive || servicesMenuOpen
+                      ? "#4A9FF5"
+                      : "rgba(255, 255, 255, 0.9)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+                onClick={() => setServicesMenuOpen((v) => !v)}
+              >
+                <span className="relative z-10 group-hover:text-white transition-colors">
+                  Services
+                </span>
+                <ChevronDown
+                  size={14}
+                  className={cn(
+                    "transition-transform duration-200 opacity-70",
+                    servicesMenuOpen ? "rotate-180" : "",
+                  )}
+                />
+                {isServicesActive && (
+                  <span className="absolute bottom-0 left-6 right-6 h-0.5 bg-[#4A9FF5] rounded-full" />
+                )}
+              </button>
+
+              <ServicesMegaMenu isOpen={servicesMenuOpen} pathname={pathname} />
+            </div>
+
+            {navItems.slice(1).map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="group relative px-6 py-2 transition-colors duration-300"
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                    color: isActive ? "#4A9FF5" : "rgba(255, 255, 255, 0.9)",
+                  }}
+                >
+                  <span className="relative z-10 group-hover:text-white transition-colors">
+                    {item.name}
+                  </span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-6 right-6 h-0.5 bg-[#4A9FF5] rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Mobile Burger */}
+          <div className="lg:hidden">
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="flex items-center justify-center w-10 h-10 rounded-xl border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20"
+                  aria-label="Open menu"
+                >
+                  <Menu size={20} />
+                </button>
+              </SheetTrigger>
+
+              <SheetContent
+                side="right"
+                className="w-[300px] bg-[#0a1a3f] border-l border-white/10 p-0 overflow-y-auto"
+              >
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+                    <Image
+                      src="/PrestigeLogo.png"
+                      alt="Logo"
+                      width={140}
+                      height={40}
+                      style={{ objectFit: "contain" }}
+                    />
+                    <button
+                      onClick={() => setOpen(false)}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/20 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+
+                  <nav className="flex flex-col px-4 py-6 gap-1">
+                    <Link
+                      href="/"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center px-4 py-3 rounded-xl transition-all duration-200"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "15px",
+                        fontWeight: 600,
+                        color:
+                          pathname === "/"
+                            ? "#4A9FF5"
+                            : "rgba(255, 255, 255, 0.8)",
+                        backgroundColor:
+                          pathname === "/"
+                            ? "rgba(74, 159, 245, 0.1)"
+                            : "transparent",
+                      }}
+                    >
+                      {pathname === "/" && (
+                        <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
+                      )}
+                      Home
+                    </Link>
+
+                    <div>
+                      <button
+                        onClick={() => setMobileServicesOpen((prev) => !prev)}
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200"
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "15px",
+                          fontWeight: 600,
+                          color: isServicesActive
+                            ? "#4A9FF5"
+                            : "rgba(255, 255, 255, 0.8)",
+                          backgroundColor: isServicesActive
+                            ? "rgba(74, 159, 245, 0.1)"
+                            : "transparent",
+                        }}
+                      >
+                        <span className="flex items-center gap-0">
+                          {isServicesActive && (
+                            <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
+                          )}
+                          Services
+                        </span>
+                        <ChevronDown
+                          size={16}
+                          className={cn(
+                            "text-white/40 transition-transform duration-300",
+                            mobileServicesOpen && "rotate-180",
+                          )}
+                        />
+                      </button>
+
+                      <div
+                        className={cn(
+                          "overflow-hidden transition-all duration-300",
+                          mobileServicesOpen
+                            ? "max-h-[600px] opacity-100"
+                            : "max-h-0 opacity-0",
+                        )}
+                      >
+                        <Link
+                          href="/services"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-3 mx-2 px-4 py-2.5 mt-1 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
+                        >
+                          <span className="text-[12px] font-bold uppercase tracking-widest text-white/40">
+                            All Services
+                          </span>
+                          <ChevronRight
+                            size={12}
+                            className="text-white/30 ml-auto"
+                          />
+                        </Link>
+
+                        <div className="mt-1 flex flex-col gap-0.5 pb-2">
+                          {services.map((svc) => {
+                            const isActive = pathname === `/services/${svc.id}`;
+                            return (
+                              <Link
+                                key={svc.id}
+                                href={`/services/${svc.id}`}
+                                onClick={() => setOpen(false)}
+                                className={cn(
+                                  "flex items-center gap-3 mx-2 px-4 py-2.5 rounded-xl transition-all duration-200",
+                                  isActive
+                                    ? "bg-white/[0.08]"
+                                    : "hover:bg-white/[0.05]",
+                                )}
+                              >
+                                <div
+                                  className={cn(
+                                    "w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-white bg-gradient-to-br",
+                                    svc.color,
+                                  )}
+                                >
+                                  {svc.icon}
+                                </div>
+                                <span
+                                  className="text-[13px] font-semibold"
+                                  style={{
+                                    color: isActive
+                                      ? "#fff"
+                                      : "rgba(255,255,255,0.7)",
+                                  }}
+                                >
+                                  {svc.title}
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    {navItems.slice(1).map((item) => {
+                      const isActive = pathname === item.href;
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          onClick={() => setOpen(false)}
+                          className="flex items-center px-4 py-3 rounded-xl transition-all duration-200"
+                          style={{
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontSize: "15px",
+                            fontWeight: 600,
+                            color: isActive
+                              ? "#4A9FF5"
+                              : "rgba(255, 255, 255, 0.8)",
+                            backgroundColor: isActive
+                              ? "rgba(74, 159, 245, 0.1)"
+                              : "transparent",
+                          }}
+                        >
+                          {isActive && (
+                            <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
+                          )}
+                          {item.name}
+                        </Link>
+                      );
+                    })}
+                  </nav>
+
+                  <div className="mt-auto px-4 pb-8">
+                    <div className="h-px bg-white/10 mb-6" />
+                    <Link
+                      href="/contact"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center justify-center w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-colors duration-200"
+                    >
+                      Book Consultation
+                    </Link>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 const BafLogo = () => (
   <div className="w-full h-full flex flex-col items-center justify-center bg-[#1a2b5e] rounded-full">
@@ -60,22 +62,10 @@ const logos = [
   { alt: "IAASB", Logo: IasbLogo },
 ];
 
-const items = [
-  {
-    title: "Licensed & Certified",
-    desc: "Fully licensed by SARAS with all permits required to conduct statutory and voluntary audits across Georgia.",
-    icon: "M25,2L5,12v11c0,12.4,8.6,24,20,27c11.4-3,20-14.6,20-27V12L25,2z M22,35l-8-8l2.8-2.8L22,29.4l11.2-11.2L36,21L22,35z",
-  },
-  {
-    title: "Professional Team",
-    desc: "Our specialists are certified members of BAF and ACCA, applying International Auditing Standards (ISA) on every engagement.",
-    icon: "M17,22c4.4,0,8-3.6,8-8s-3.6-8-8-8s-8,3.6-8,8S12.6,22,17,22z M17,26c-5.3,0-16,2.7-16,8v4h32v-4C33,28.7,22.3,26,17,26z",
-  },
-  {
-    title: "International Standards",
-    desc: "All audits and financial reports conform to IFRS and IAASB standards, keeping our clients fully compliant in global and local markets.",
-    icon: "M25,3C12.9,3,3,12.9,3,25s9.9,22,22,22s22-9.9,22-22S37.1,3,25,3z M25,11c1.7,0,3,1.3,3,3s-1.3,3-3,3s-3-1.3-3-3S23.3,11,25,11z M30,37H20v-2h3V23h-3v-2h7v14h3V37z",
-  },
+const itemIcons = [
+  "M25,2L5,12v11c0,12.4,8.6,24,20,27c11.4-3,20-14.6,20-27V12L25,2z M22,35l-8-8l2.8-2.8L22,29.4l11.2-11.2L36,21L22,35z",
+  "M17,22c4.4,0,8-3.6,8-8s-3.6-8-8-8s-8,3.6-8,8S12.6,22,17,22z M17,26c-5.3,0-16,2.7-16,8v4h32v-4C33,28.7,22.3,26,17,26z",
+  "M25,3C12.9,3,3,12.9,3,25s9.9,22,22,22s22-9.9,22-22S37.1,3,25,3z M25,11c1.7,0,3,1.3,3,3s-1.3,3-3,3s-3-1.3-3-3S23.3,11,25,11z M30,37H20v-2h3V23h-3v-2h7v14h3V37z",
 ];
 
 const fadeUp = {
@@ -91,6 +81,27 @@ const orbitDuration = 20;
 const angleStep = 360 / logos.length;
 
 const PartnersSection: React.FC = () => {
+  const t = useTranslations("main");
+  const ty = useTypography();
+
+  const items = [
+    {
+      titleKey: "partnersItem1Title",
+      descKey: "partnersItem1Desc",
+      icon: itemIcons[0],
+    },
+    {
+      titleKey: "partnersItem2Title",
+      descKey: "partnersItem2Desc",
+      icon: itemIcons[1],
+    },
+    {
+      titleKey: "partnersItem3Title",
+      descKey: "partnersItem3Desc",
+      icon: itemIcons[2],
+    },
+  ];
+
   return (
     <section
       className="py-10 md:py-16 overflow-hidden"
@@ -108,34 +119,34 @@ const PartnersSection: React.FC = () => {
               viewport={{ once: true }}
             >
               <div className="w-8 md:w-10 h-0.5 bg-blue-600" />
-              <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
-                History
+              <span className="text-gray-500" style={ty.label}>
+                {t("partnersSectionLabel")}
               </span>
               <div className="w-8 md:w-10 h-0.5 bg-blue-600" />
             </motion.div>
 
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-6 text-blue-600"
+              className="mb-6 text-blue-600"
+              style={ty.sectionHeading}
               custom={1}
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
             >
-              With 20 years of experience
+              {t("partnersHeading")}
             </motion.h2>
 
             <motion.p
-              className="text-base md:text-lg mb-4 text-gray-500 leading-relaxed"
+              className="mb-4 text-gray-500"
+              style={ty.sectionBody}
               custom={2}
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Prestige Audit company has been a Leader in Batumi and all over
-              Georgia audit market for many years. We have all the necessary
-              licenses and permits to conduct an audit in Georgia.
+              {t("partnersBody")}
             </motion.p>
 
             <div className="space-y-6">
@@ -155,10 +166,12 @@ const PartnersSection: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900">
-                      {item.title}
+                    <h4 className="text-gray-900" style={ty.itemTitle}>
+                      {t(item.titleKey)}
                     </h4>
-                    <p className="text-sm text-gray-500">{item.desc}</p>
+                    <p className="text-gray-500" style={ty.itemDesc}>
+                      {t(item.descKey)}
+                    </p>
                   </div>
                 </motion.div>
               ))}

@@ -2,8 +2,12 @@
 
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTypography } from "@/hooks/useTypography";
 
 export default function VideoSection() {
+  const t = useTranslations("main");
+  const ty = useTypography();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -16,7 +20,6 @@ export default function VideoSection() {
     <section className="relative bg-[#f3f5f4] py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-          {/* LEFT — Video */}
           <motion.div
             className="w-full lg:w-[58%]"
             initial={{ opacity: 0, x: -40 }}
@@ -40,7 +43,6 @@ export default function VideoSection() {
             </div>
           </motion.div>
 
-          {/* RIGHT — Text */}
           <motion.div
             className="w-full lg:w-[42%] flex flex-col justify-center"
             initial={{ opacity: 0, x: 40 }}
@@ -67,11 +69,11 @@ export default function VideoSection() {
                 25
               </motion.span>
               <div className="mb-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600 mb-1">
-                  Years of
+                <p className="text-blue-600 mb-1" style={ty.videoYearsLabel}>
+                  {t("videoSectionYearsLabel")}
                 </p>
-                <p className="text-2xl font-black text-slate-800 leading-tight">
-                  Excellence
+                <p className="text-slate-800" style={ty.videoExcellence}>
+                  {t("videoSectionExcellence")}
                 </p>
               </div>
             </div>
@@ -79,7 +81,8 @@ export default function VideoSection() {
             <div className="w-16 h-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-500 mb-6" />
 
             <motion.h2
-              className="text-3xl lg:text-4xl font-black text-slate-900 leading-tight mb-5"
+              className="text-slate-900 mb-5"
+              style={ty.videoHeading}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -89,15 +92,16 @@ export default function VideoSection() {
                 ease: "easeOut" as const,
               }}
             >
-              Prestige Audit has been{" "}
+              {t("videoSectionHeading1")}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">
-                setting the standard
+                {t("videoSectionHeadingHighlight")}
               </span>{" "}
-              for a quarter century.
+              {t("videoSectionHeading2")}
             </motion.h2>
 
             <motion.p
-              className="text-base text-slate-500 leading-relaxed mb-8 max-w-md"
+              className="text-slate-500 mb-8 max-w-md"
+              style={ty.videoBody}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -107,17 +111,16 @@ export default function VideoSection() {
                 ease: "easeOut" as const,
               }}
             >
-              Since our founding, we have helped hundreds of businesses across
-              Georgia and beyond navigate complex financial landscapes with
-              clarity, integrity, and precision. Twenty-five years of trust —
-              built one client at a time.
+              {t("videoSectionBody")}
             </motion.p>
 
             <div className="flex gap-8">
-              {[
-                { value: "500+", label: "Clients Served" },
-                { value: "25", label: "Years Active" },
-              ].map((stat, i) => (
+              {(
+                [
+                  { value: "videoStat1Value", label: "videoStat1Label" },
+                  { value: "videoStat2Value", label: "videoStat2Label" },
+                ] as const
+              ).map((stat, i) => (
                 <motion.div
                   key={i}
                   className="flex flex-col"
@@ -130,11 +133,14 @@ export default function VideoSection() {
                     ease: "easeOut" as const,
                   }}
                 >
-                  <span className="text-2xl font-black text-blue-600">
-                    {stat.value}
+                  <span className="text-blue-600" style={ty.videoStatValue}>
+                    {t(stat.value)}
                   </span>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-wider mt-0.5">
-                    {stat.label}
+                  <span
+                    className="text-slate-400 mt-0.5"
+                    style={ty.videoStatLabel}
+                  >
+                    {t(stat.label)}
                   </span>
                 </motion.div>
               ))}

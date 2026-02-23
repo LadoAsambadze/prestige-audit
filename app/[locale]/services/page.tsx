@@ -36,17 +36,6 @@ export default function ServicesPage() {
           >
             <Briefcase size={14} /> Our Services
           </motion.div>
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold text-white leading-[1.1]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Comprehensive Solutions <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200">
-              Tailored for Your Business
-            </span>
-          </motion.h1>
         </div>
       </motion.section>
       <ServicesSection />
