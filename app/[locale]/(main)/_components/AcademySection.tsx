@@ -10,11 +10,9 @@ import {
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useTypography } from "@/hooks/useTypography";
 
 export default function AcademySection() {
   const t = useTranslations("main");
-  const ty = useTypography();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -38,7 +36,6 @@ export default function AcademySection() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       />
-
       <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-blue-500/30 rounded-full blur-[80px] md:blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] md:blur-[80px] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#0a1a3f_90%)] z-0" />
@@ -135,13 +132,13 @@ export default function AcademySection() {
           >
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="h-px w-10 bg-blue-400/40" />
-              <span className="text-blue-300" style={ty.academyLabel}>
+              <span className="text-blue-300 text-sm font-medium tracking-widest uppercase">
                 {t("academySectionLabel")}
               </span>
               <span className="h-px w-10 bg-blue-400/40" />
             </div>
 
-            <h2 className="text-white mb-5" style={ty.academyHeading}>
+            <h2 className="text-white mb-5 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               {t("academyHeadingRegular")}{" "}
               <span className="italic text-blue-300">
                 {t("academyHeadingItalic")}
@@ -150,7 +147,7 @@ export default function AcademySection() {
               {t("academyHeadingSuffix")}
             </h2>
 
-            <p className="text-white/60 mb-8 max-w-xl" style={ty.academyBody}>
+            <p className="text-white/60 mb-8 max-w-xl text-base md:text-lg leading-relaxed">
               {t("academyBody")}
             </p>
 
@@ -165,8 +162,7 @@ export default function AcademySection() {
               ).map((key, i) => (
                 <motion.li
                   key={i}
-                  className="flex items-center gap-3 text-white/75"
-                  style={ty.academyFeature}
+                  className="flex items-center gap-3 text-white/75 text-sm md:text-base"
                   initial={{ opacity: 0, x: 16 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -201,8 +197,7 @@ export default function AcademySection() {
                 setFormSubmitted(false);
                 setModalOpen(true);
               }}
-              className="group relative inline-flex items-center gap-3 self-start bg-blue-500 hover:bg-blue-400 text-white font-semibold px-7 py-4 rounded-xl transition-colors duration-200 overflow-hidden"
-              style={ty.btn}
+              className="group relative inline-flex items-center gap-3 self-start bg-blue-500 hover:bg-blue-400 text-white font-semibold px-7 py-4 rounded-xl transition-colors duration-200 overflow-hidden text-base"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -261,10 +256,7 @@ export default function AcademySection() {
                   ] as const
                 ).map((field) => (
                   <div key={field.labelKey}>
-                    <label
-                      className="block text-white/60 mb-2"
-                      style={ty.academyModalLabel}
-                    >
+                    <label className="block text-white/60 mb-2 text-xs font-medium uppercase tracking-wider">
                       {t(field.labelKey)}
                     </label>
                     <input
@@ -277,10 +269,7 @@ export default function AcademySection() {
               </div>
 
               <div className="mb-4">
-                <label
-                  className="block text-white/60 mb-2"
-                  style={ty.academyModalLabel}
-                >
+                <label className="block text-white/60 mb-2 text-xs font-medium uppercase tracking-wider">
                   {t("academyModalFieldEmail")}
                 </label>
                 <input

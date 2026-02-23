@@ -7,7 +7,6 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -15,11 +14,9 @@ import { useTranslations } from "next-intl";
 interface Service {
   id: string;
   titleKey: string;
-  contentTitleKey: string;
   descriptionKey: string;
   featureKeys: string[];
   icon: React.ReactNode;
-  image: string;
 }
 
 const cardThemes = [
@@ -29,13 +26,11 @@ const cardThemes = [
     iconShadow: "shadow-blue-100",
     check: "text-blue-600",
     border: "hover:border-blue-200",
-    accent: "bg-blue-600",
-    linkColor: "bg-blue-600",
-    learnMoreGradient: "from-blue-600 to-indigo-600",
-    learnMoreShadow: "hover:shadow-blue-200/60",
-    learnMoreText: "text-blue-700",
-    learnMoreBg: "from-blue-50 to-indigo-50",
-    learnMoreBorder: "border-blue-200/80",
+    gradient: "from-blue-600 to-indigo-600",
+    hoverShadow: "hover:shadow-blue-200/60",
+    text: "text-blue-700",
+    lightBg: "from-blue-50 to-indigo-50",
+    lightBorder: "border-blue-200/80",
   },
   {
     bg: "from-emerald-50 via-teal-50 to-white",
@@ -43,13 +38,11 @@ const cardThemes = [
     iconShadow: "shadow-emerald-100",
     check: "text-emerald-600",
     border: "hover:border-emerald-200",
-    accent: "bg-emerald-600",
-    linkColor: "bg-emerald-600",
-    learnMoreGradient: "from-emerald-500 to-teal-600",
-    learnMoreShadow: "hover:shadow-emerald-200/60",
-    learnMoreText: "text-emerald-700",
-    learnMoreBg: "from-emerald-50 to-teal-50",
-    learnMoreBorder: "border-emerald-200/80",
+    gradient: "from-emerald-500 to-teal-600",
+    hoverShadow: "hover:shadow-emerald-200/60",
+    text: "text-emerald-700",
+    lightBg: "from-emerald-50 to-teal-50",
+    lightBorder: "border-emerald-200/80",
   },
   {
     bg: "from-violet-50 via-purple-50 to-white",
@@ -57,13 +50,11 @@ const cardThemes = [
     iconShadow: "shadow-violet-100",
     check: "text-violet-600",
     border: "hover:border-violet-200",
-    accent: "bg-violet-600",
-    linkColor: "bg-violet-600",
-    learnMoreGradient: "from-violet-600 to-purple-600",
-    learnMoreShadow: "hover:shadow-violet-200/60",
-    learnMoreText: "text-violet-700",
-    learnMoreBg: "from-violet-50 to-purple-50",
-    learnMoreBorder: "border-violet-200/80",
+    gradient: "from-violet-600 to-purple-600",
+    hoverShadow: "hover:shadow-violet-200/60",
+    text: "text-violet-700",
+    lightBg: "from-violet-50 to-purple-50",
+    lightBorder: "border-violet-200/80",
   },
   {
     bg: "from-amber-50 via-yellow-50 to-white",
@@ -71,13 +62,11 @@ const cardThemes = [
     iconShadow: "shadow-amber-100",
     check: "text-amber-600",
     border: "hover:border-amber-200",
-    accent: "bg-amber-500",
-    linkColor: "bg-amber-500",
-    learnMoreGradient: "from-amber-500 to-orange-500",
-    learnMoreShadow: "hover:shadow-amber-200/60",
-    learnMoreText: "text-amber-700",
-    learnMoreBg: "from-amber-50 to-orange-50",
-    learnMoreBorder: "border-amber-200/80",
+    gradient: "from-amber-500 to-orange-500",
+    hoverShadow: "hover:shadow-amber-200/60",
+    text: "text-amber-700",
+    lightBg: "from-amber-50 to-orange-50",
+    lightBorder: "border-amber-200/80",
   },
   {
     bg: "from-rose-50 via-pink-50 to-white",
@@ -85,13 +74,11 @@ const cardThemes = [
     iconShadow: "shadow-rose-100",
     check: "text-rose-600",
     border: "hover:border-rose-200",
-    accent: "bg-rose-600",
-    linkColor: "bg-rose-600",
-    learnMoreGradient: "from-rose-500 to-pink-600",
-    learnMoreShadow: "hover:shadow-rose-200/60",
-    learnMoreText: "text-rose-700",
-    learnMoreBg: "from-rose-50 to-pink-50",
-    learnMoreBorder: "border-rose-200/80",
+    gradient: "from-rose-500 to-pink-600",
+    hoverShadow: "hover:shadow-rose-200/60",
+    text: "text-rose-700",
+    lightBg: "from-rose-50 to-pink-50",
+    lightBorder: "border-rose-200/80",
   },
   {
     bg: "from-cyan-50 via-sky-50 to-white",
@@ -99,13 +86,11 @@ const cardThemes = [
     iconShadow: "shadow-cyan-100",
     check: "text-cyan-600",
     border: "hover:border-cyan-200",
-    accent: "bg-cyan-600",
-    linkColor: "bg-cyan-600",
-    learnMoreGradient: "from-cyan-500 to-sky-600",
-    learnMoreShadow: "hover:shadow-cyan-200/60",
-    learnMoreText: "text-cyan-700",
-    learnMoreBg: "from-cyan-50 to-sky-50",
-    learnMoreBorder: "border-cyan-200/80",
+    gradient: "from-cyan-500 to-sky-600",
+    hoverShadow: "hover:shadow-cyan-200/60",
+    text: "text-cyan-700",
+    lightBg: "from-cyan-50 to-sky-50",
+    lightBorder: "border-cyan-200/80",
   },
 ];
 
@@ -113,14 +98,12 @@ const services: Service[] = [
   {
     id: "financial-audit",
     titleKey: "financialAuditTitle",
-    contentTitleKey: "financialAuditContentTitle",
     descriptionKey: "financialAuditDescription",
     featureKeys: [
       "financialAuditFeature1",
       "financialAuditFeature2",
       "financialAuditFeature3",
     ],
-    image: "/Service1.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -140,14 +123,12 @@ const services: Service[] = [
   {
     id: "tax-services",
     titleKey: "taxServicesTitle",
-    contentTitleKey: "taxServicesContentTitle",
     descriptionKey: "taxServicesDescription",
     featureKeys: [
       "taxServicesFeature1",
       "taxServicesFeature2",
       "taxServicesFeature3",
     ],
-    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -166,14 +147,12 @@ const services: Service[] = [
   {
     id: "accounting",
     titleKey: "accountingTitle",
-    contentTitleKey: "accountingContentTitle",
     descriptionKey: "accountingDescription",
     featureKeys: [
       "accountingFeature1",
       "accountingFeature2",
       "accountingFeature3",
     ],
-    image: "/Service1.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -194,14 +173,12 @@ const services: Service[] = [
   {
     id: "valuation",
     titleKey: "valuationTitle",
-    contentTitleKey: "valuationContentTitle",
     descriptionKey: "valuationDescription",
     featureKeys: [
       "valuationFeature1",
       "valuationFeature2",
       "valuationFeature3",
     ],
-    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -219,10 +196,8 @@ const services: Service[] = [
   {
     id: "legal",
     titleKey: "legalTitle",
-    contentTitleKey: "legalContentTitle",
     descriptionKey: "legalDescription",
     featureKeys: ["legalFeature1", "legalFeature2", "legalFeature3"],
-    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -241,14 +216,12 @@ const services: Service[] = [
   {
     id: "consulting",
     titleKey: "consultingTitle",
-    contentTitleKey: "consultingContentTitle",
     descriptionKey: "consultingDescription",
     featureKeys: [
       "consultingFeature1",
       "consultingFeature2",
       "consultingFeature3",
     ],
-    image: "/Office.jpg",
     icon: (
       <svg
         viewBox="0 0 30 30"
@@ -302,14 +275,7 @@ function ServiceCard({
       className="h-full relative"
     >
       <Card
-        className={`
-          group relative h-[420px] md:h-[440px] my-1 border border-transparent
-          ${theme.border}
-          rounded-[32px]
-          bg-gradient-to-br ${theme.bg}
-          p-8 shadow-sm hover:shadow-xl
-          transition-all duration-500 overflow-hidden
-        `}
+        className={`group relative h-[420px] md:h-[440px] my-1 border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
       >
         <div
           className={`absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl ${theme.iconBg}`}
@@ -343,29 +309,16 @@ function ServiceCard({
           <div className="mt-auto pt-4">
             <Link
               href={`${basePath}/${service.id}`}
-              className={`
-                group/link inline-flex items-center gap-2.5
-                relative overflow-hidden
-                px-5 py-2.5 rounded-full
-                border ${theme.learnMoreBorder}
-                bg-gradient-to-r ${theme.learnMoreBg}
-                ${theme.learnMoreText}
-                service-btn
-                shadow-sm
-                transition-all duration-300
-                hover:shadow-lg ${theme.learnMoreShadow}
-                hover:border-transparent
-                hover:scale-[1.02]
-              `}
+              className={`group/link inline-flex items-center gap-2.5 relative overflow-hidden px-5 py-2.5 rounded-full border ${theme.lightBorder} bg-gradient-to-r ${theme.lightBg} ${theme.text} service-btn shadow-sm transition-all duration-300 hover:shadow-lg ${theme.hoverShadow} hover:border-transparent hover:scale-[1.02]`}
             >
               <span
-                className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.learnMoreGradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
+                className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.gradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
               />
               <span className="relative z-10 group-hover/link:text-white transition-colors duration-300">
                 {t("servicesLearnMore")}
               </span>
               <ArrowRight
-                className={`relative z-10 w-4 h-4 ${theme.learnMoreText} group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1`}
+                className={`relative z-10 w-4 h-4 ${theme.text} group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1`}
               />
             </Link>
           </div>
@@ -380,7 +333,7 @@ export default function ServicesSection() {
   const basePath = "/services";
 
   return (
-    <section className="relative z-50 -mt-20 md:-mt-28 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-10 md:py-16 overflow-hidden">
+    <section className="relative z-50 -mt-20 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-10 md:py-16 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="px-6 lg:px-12 flex justify-center mb-10 md:mb-12">
           <motion.div

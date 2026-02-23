@@ -13,7 +13,6 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useTranslations } from "next-intl";
-import { useTypography } from "@/hooks/useTypography";
 
 const lineColors = [
   "#2563eb",
@@ -108,6 +107,157 @@ const deptHrefs = [
   "/team?team=business-consulting",
 ];
 
+function DeptCard({
+  dept,
+  theme,
+  cardRef,
+  index,
+  isInView,
+  enterFrom = "bottom",
+  mobileDelay,
+}: {
+  dept: { label: string; href: string; cta: string };
+  theme: (typeof cardThemes)[0];
+  cardRef: any;
+  index: number;
+  isInView: boolean;
+  enterFrom?: "left" | "right" | "bottom";
+  mobileDelay?: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const initialX = enterFrom === "left" ? -80 : enterFrom === "right" ? 80 : 0;
+  const initialY = enterFrom === "bottom" ? 60 : 0;
+  const delay =
+    mobileDelay ??
+    (enterFrom === "left"
+      ? 0.6
+      : enterFrom === "right"
+        ? 0.7
+        : 0.9 + (index - 2) * 0.12);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className="w-full"
+      initial={{
+        opacity: 0,
+        x: initialX,
+        y: initialY,
+        scale: 0.88,
+        filter: "blur(8px)",
+      }}
+      animate={
+        isInView
+          ? { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }
+          : {}
+      }
+      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+    >
+      <Link href={dept.href} className="group block">
+        <div
+          className={`relative overflow-hidden bg-gradient-to-br ${theme.cardBg} rounded-[2rem] p-6 border border-transparent transition-all duration-500 hover:shadow-2xl ${theme.border} group-hover:-translate-y-2`}
+          style={{
+            boxShadow: hovered
+              ? `0 20px 60px ${theme.glowColor}, 0 0 0 1px ${theme.accent}20`
+              : "0 2px 12px rgba(0,0,0,0.05)",
+            transition: "box-shadow 0.4s ease, transform 0.3s ease",
+          }}
+        >
+          <motion.div
+            className={`absolute -top-8 -right-8 w-28 h-28 rounded-full ${theme.iconBg} blur-2xl`}
+            animate={
+              hovered
+                ? { scale: 1.6, opacity: 0.35 }
+                : { scale: 1, opacity: 0.15 }
+            }
+            transition={{ duration: 0.4 }}
+          />
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={
+              hovered ? { x: "200%", opacity: 0.5 } : { x: "-100%", opacity: 0 }
+            }
+            transition={{ duration: 0.6 }}
+            style={{
+              background:
+                "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.7) 50%, transparent 60%)",
+            }}
+          />
+          <motion.div
+            className="absolute top-3 right-3"
+            initial={{ opacity: 0, scale: 0, rotate: -30 }}
+            animate={
+              isInView
+                ? { opacity: [0, 1, 0.6], scale: [0, 1.2, 1], rotate: 0 }
+                : {}
+            }
+            transition={{ duration: 0.6, delay: delay + 0.3 }}
+          >
+            <Sparkles size={14} className="text-slate-300" />
+          </motion.div>
+
+          <div className="flex flex-col items-center text-center gap-4 relative z-10">
+            <motion.div
+              className={`p-4 rounded-2xl ${theme.iconBg} text-white shadow-lg`}
+              initial={{ scale: 0, rotate: -20 }}
+              animate={isInView ? { scale: 1, rotate: 0 } : {}}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 14,
+                delay: delay + 0.2,
+              }}
+              whileHover={{ rotate: 10, scale: 1.1 }}
+            >
+              <Users size={24} />
+            </motion.div>
+            <div>
+              <motion.h4
+                className="text-slate-800 mb-3 font-semibold text-base"
+                initial={{ opacity: 0, y: 8 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: delay + 0.35 }}
+              >
+                {dept.label}
+              </motion.h4>
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: delay + 0.45 }}
+                className={`inline-flex items-center gap-2 relative overflow-hidden px-4 py-2 rounded-full border ${theme.learnMoreBorder} bg-gradient-to-r ${theme.learnMoreBg} ${theme.learnMoreText} text-xs font-semibold shadow-sm transition-all duration-300 group-hover:shadow-lg ${theme.learnMoreShadow} group-hover:border-transparent`}
+              >
+                <span
+                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.learnMoreGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                />
+                <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                  {dept.cta}
+                </span>
+                <motion.div
+                  className={`relative z-10 ${theme.learnMoreText} group-hover:text-white`}
+                  animate={hovered ? { x: 3 } : { x: 0 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  <ArrowRight size={12} />
+                </motion.div>
+              </motion.span>
+            </div>
+          </div>
+
+          <motion.div
+            className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-gradient-to-r ${theme.learnMoreGradient} rounded-full`}
+            initial={{ width: 0 }}
+            animate={hovered ? { width: "60%" } : { width: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          />
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
 function MobileCarousel({ isInView }: { isInView: boolean }) {
   const t = useTranslations("main");
   const [api, setApi] = useState<CarouselApi>();
@@ -180,7 +330,6 @@ function MobileCarousel({ isInView }: { isInView: boolean }) {
 
 export default function TeamSection() {
   const t = useTranslations("main");
-  const ty = useTypography();
   const containerRef = useRef<HTMLDivElement>(null);
   const mainDotRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -209,20 +358,20 @@ export default function TeamSection() {
     const startY = dotRect.top + dotRect.height / 2 - cRect.top;
     if (imageRef.current) {
       const imgRect = imageRef.current.getBoundingClientRect();
-      const imgBottomY = imgRect.bottom - cRect.top;
-      const imgMidX = imgRect.left + imgRect.width / 2 - cRect.left;
-      setImagePath(`M ${imgMidX} ${imgBottomY} V ${startY}`);
+      setImagePath(
+        `M ${imgRect.left + imgRect.width / 2 - cRect.left} ${imgRect.bottom - cRect.top} V ${startY}`,
+      );
     }
     const newPaths = cardRefs.current.map((card, i) => {
       if (!card) return "";
-      const cardRect = card.getBoundingClientRect();
-      const cardMidX = cardRect.left + cardRect.width / 2 - cRect.left;
-      const cardTopY = cardRect.top - cRect.top;
-      const cardSideY = cardRect.top + cardRect.height / 2 - cRect.top;
+      const r = card.getBoundingClientRect();
+      const cardMidX = r.left + r.width / 2 - cRect.left;
+      const cardTopY = r.top - cRect.top;
+      const cardSideY = r.top + r.height / 2 - cRect.top;
       if (i === 0)
-        return `M ${startX} ${startY} H ${cardRect.right - cRect.left} V ${cardSideY} H ${cardRect.right - cRect.left}`;
+        return `M ${startX} ${startY} H ${r.right - cRect.left} V ${cardSideY}`;
       if (i === 1)
-        return `M ${startX} ${startY} H ${cardRect.left - cRect.left} V ${cardSideY} H ${cardRect.left - cRect.left}`;
+        return `M ${startX} ${startY} H ${r.left - cRect.left} V ${cardSideY}`;
       const midY = startY + 60;
       return `M ${startX} ${startY} V ${midY} H ${cardMidX} V ${cardTopY}`;
     });
@@ -266,7 +415,7 @@ export default function TeamSection() {
               animate={isInView ? { width: "2rem" } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
             />
-            <span className="text-gray-500" style={ty.teamLabel}>
+            <span className="text-gray-500 text-sm font-medium tracking-widest uppercase">
               {t("teamSectionLabel")}
             </span>
             <motion.div
@@ -305,12 +454,10 @@ export default function TeamSection() {
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-5 text-center">
-              <h3 className="text-white mb-1" style={ty.teamCeoName}>
+              <h3 className="text-white mb-1 font-bold text-lg">
                 {t("teamCeoName")}
               </h3>
-              <p className="text-blue-400" style={ty.teamCeoTitle}>
-                {t("teamCeoTitle")}
-              </p>
+              <p className="text-blue-400 text-sm">{t("teamCeoTitle")}</p>
             </div>
           </div>
         </motion.div>
@@ -333,8 +480,7 @@ export default function TeamSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
             />
             <motion.span
-              className="text-gray-500"
-              style={ty.teamLabel}
+              className="text-gray-500 text-sm font-medium tracking-widest uppercase"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -401,8 +547,7 @@ export default function TeamSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
                   <motion.h3
-                    className="text-white mb-2"
-                    style={ty.teamCeoName}
+                    className="text-white mb-2 font-bold text-xl"
                     initial={{ opacity: 0, y: 10 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.9 }}
@@ -410,8 +555,7 @@ export default function TeamSection() {
                     {t("teamCeoName")}
                   </motion.h3>
                   <motion.p
-                    className="text-blue-400"
-                    style={ty.teamCeoTitle}
+                    className="text-blue-400 text-sm"
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.6, delay: 1.1 }}
@@ -509,159 +653,5 @@ export default function TeamSection() {
         </div>
       </div>
     </section>
-  );
-}
-
-function DeptCard({
-  dept,
-  theme,
-  cardRef,
-  index,
-  isInView,
-  enterFrom = "bottom",
-  mobileDelay,
-}: {
-  dept: any;
-  theme: any;
-  cardRef: any;
-  index: number;
-  isInView: boolean;
-  enterFrom?: "left" | "right" | "bottom";
-  mobileDelay?: number;
-}) {
-  const [hovered, setHovered] = useState(false);
-  const ty = useTypography();
-  const initialX = enterFrom === "left" ? -80 : enterFrom === "right" ? 80 : 0;
-  const initialY = enterFrom === "bottom" ? 60 : 0;
-  const delay =
-    mobileDelay ??
-    (enterFrom === "left"
-      ? 0.6
-      : enterFrom === "right"
-        ? 0.7
-        : 0.9 + (index - 2) * 0.12);
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className="w-full"
-      initial={{
-        opacity: 0,
-        x: initialX,
-        y: initialY,
-        scale: 0.88,
-        filter: "blur(8px)",
-      }}
-      animate={
-        isInView
-          ? { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }
-          : {}
-      }
-      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-    >
-      <Link href={dept.href} className="group block">
-        <div
-          className={`relative overflow-hidden bg-gradient-to-br ${theme.cardBg} rounded-[2rem] p-6 border border-transparent transition-all duration-500 hover:shadow-2xl ${theme.border} group-hover:-translate-y-2`}
-          style={{
-            boxShadow: hovered
-              ? `0 20px 60px ${theme.glowColor}, 0 0 0 1px ${theme.accent}20`
-              : "0 2px 12px rgba(0,0,0,0.05)",
-            transition: "box-shadow 0.4s ease, transform 0.3s ease",
-          }}
-        >
-          <motion.div
-            className={`absolute -top-8 -right-8 w-28 h-28 rounded-full ${theme.iconBg} blur-2xl`}
-            animate={
-              hovered
-                ? { scale: 1.6, opacity: 0.35 }
-                : { scale: 1, opacity: 0.15 }
-            }
-            transition={{ duration: 0.4 }}
-          />
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={
-              hovered ? { x: "200%", opacity: 0.5 } : { x: "-100%", opacity: 0 }
-            }
-            transition={{ duration: 0.6 }}
-            style={{
-              background:
-                "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.7) 50%, transparent 60%)",
-            }}
-          />
-          <motion.div
-            className="absolute top-3 right-3"
-            initial={{ opacity: 0, scale: 0, rotate: -30 }}
-            animate={
-              isInView
-                ? { opacity: [0, 1, 0.6], scale: [0, 1.2, 1], rotate: 0 }
-                : {}
-            }
-            transition={{ duration: 0.6, delay: delay + 0.3 }}
-          >
-            <Sparkles size={14} className="text-slate-300" />
-          </motion.div>
-
-          <div className="flex flex-col items-center text-center gap-4 relative z-10">
-            <motion.div
-              className={`p-4 rounded-2xl ${theme.iconBg} text-white shadow-lg`}
-              initial={{ scale: 0, rotate: -20 }}
-              animate={isInView ? { scale: 1, rotate: 0 } : {}}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 14,
-                delay: delay + 0.2,
-              }}
-              whileHover={{ rotate: 10, scale: 1.1 }}
-            >
-              <Users size={24} />
-            </motion.div>
-            <div>
-              <motion.h4
-                className="text-slate-800 mb-3"
-                style={ty.deptCardTitle}
-                initial={{ opacity: 0, y: 8 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: delay + 0.35 }}
-              >
-                {dept.label}
-              </motion.h4>
-              <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: delay + 0.45 }}
-                className={`inline-flex items-center gap-2 relative overflow-hidden px-4 py-2 rounded-full border ${theme.learnMoreBorder} bg-gradient-to-r ${theme.learnMoreBg} ${theme.learnMoreText} shadow-sm transition-all duration-300 group-hover:shadow-lg ${theme.learnMoreShadow} group-hover:border-transparent`}
-                style={ty.deptCardBtn}
-              >
-                <span
-                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.learnMoreGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                />
-                <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                  {dept.cta}
-                </span>
-                <motion.div
-                  className={`relative z-10 ${theme.learnMoreText} group-hover:text-white`}
-                  animate={hovered ? { x: 3 } : { x: 0 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <ArrowRight size={12} />
-                </motion.div>
-              </motion.span>
-            </div>
-          </div>
-
-          <motion.div
-            className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-gradient-to-r ${theme.learnMoreGradient} rounded-full`}
-            initial={{ width: 0 }}
-            animate={hovered ? { width: "60%" } : { width: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          />
-        </div>
-      </Link>
-    </motion.div>
   );
 }

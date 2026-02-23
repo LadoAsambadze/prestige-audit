@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useTypography } from "@/hooks/useTypography";
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -16,7 +15,6 @@ const fadeUp = (delay: number) => ({
 
 export default function AboutParallax() {
   const t = useTranslations("main");
-  const ty = useTypography();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -37,10 +35,7 @@ export default function AboutParallax() {
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-[#f3f5f4]"
     >
-      <div
-        className="absolute top-0 left-0 w-full z-20 pointer-events-none"
-        style={{ height: "80px" }}
-      >
+      <div className="absolute top-0 left-0 w-full h-20 z-20 pointer-events-none">
         <svg
           viewBox="0 0 1440 80"
           preserveAspectRatio="none"
@@ -61,7 +56,6 @@ export default function AboutParallax() {
           className="absolute inset-[-25%] w-[150%] h-[150%] will-change-transform"
           aria-hidden="true"
         />
-
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-900/35 to-slate-950/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent" />
 
@@ -74,7 +68,7 @@ export default function AboutParallax() {
                   className="flex items-center gap-3 mb-5"
                 >
                   <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
-                  <span className="text-blue-300" style={ty.aboutLabel}>
+                  <span className="text-blue-300 text-sm font-medium tracking-widest uppercase">
                     {t("aboutLabel")}
                   </span>
                   <span className="flex-1 max-w-[60px] h-px bg-blue-400/40" />
@@ -82,8 +76,7 @@ export default function AboutParallax() {
 
                 <motion.h2
                   {...fadeUp(0.12)}
-                  className="mb-7 text-white"
-                  style={ty.aboutHeading}
+                  className="mb-7 text-white text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
                 >
                   {t("aboutHeadingRegular")}{" "}
                   <span className="italic text-blue-300">
@@ -94,8 +87,7 @@ export default function AboutParallax() {
 
                 <motion.p
                   {...fadeUp(0.22)}
-                  className="text-white/70 mb-10 max-w-[480px]"
-                  style={ty.aboutBody}
+                  className="text-white/70 mb-10 max-w-[480px] text-base md:text-lg leading-relaxed"
                 >
                   {t("aboutBody")}
                 </motion.p>
@@ -104,8 +96,7 @@ export default function AboutParallax() {
                   <a
                     suppressHydrationWarning
                     href="/about"
-                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-8 py-4 md:px-12 md:py-5 text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
-                    style={ty.btn}
+                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-full px-8 py-4 md:px-12 md:py-5 text-white text-base font-semibold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 active:scale-95"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
                     <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -161,10 +152,7 @@ export default function AboutParallax() {
                       <span className="h-px w-12 bg-blue-400/30" />
                     </div>
 
-                    <div
-                      className="text-center text-white/60 mb-10"
-                      style={ty.aboutLocation}
-                    >
+                    <div className="text-center text-white/60 mb-10 text-sm tracking-wide">
                       {t("aboutLocation")}
                     </div>
 
@@ -182,16 +170,10 @@ export default function AboutParallax() {
                             ease: "easeOut" as const,
                           }}
                         >
-                          <div
-                            className="text-blue-300 mb-1"
-                            style={ty.aboutStatValue}
-                          >
+                          <div className="text-blue-300 mb-1 text-2xl font-bold">
                             {stat.value}
                           </div>
-                          <div
-                            className="text-white/40"
-                            style={ty.aboutStatLabel}
-                          >
+                          <div className="text-white/40 text-xs uppercase tracking-wider">
                             {stat.label}
                           </div>
                         </motion.div>
@@ -205,10 +187,7 @@ export default function AboutParallax() {
         </div>
       </div>
 
-      <div
-        className="absolute bottom-0 left-0 w-full z-20 pointer-events-none"
-        style={{ height: "80px" }}
-      >
+      <div className="absolute bottom-0 left-0 w-full h-20 z-20 pointer-events-none">
         <svg
           viewBox="0 0 1440 80"
           preserveAspectRatio="none"

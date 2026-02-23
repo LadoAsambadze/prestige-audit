@@ -3,11 +3,9 @@
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useTypography } from "@/hooks/useTypography";
 
 export default function VideoSection() {
   const t = useTranslations("main");
-  const ty = useTypography();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -69,10 +67,10 @@ export default function VideoSection() {
                 25
               </motion.span>
               <div className="mb-6">
-                <p className="text-blue-600 mb-1" style={ty.videoYearsLabel}>
+                <p className="text-blue-600 mb-1 text-xs font-semibold uppercase tracking-widest">
                   {t("videoSectionYearsLabel")}
                 </p>
-                <p className="text-slate-800" style={ty.videoExcellence}>
+                <p className="text-slate-800 text-lg font-bold">
                   {t("videoSectionExcellence")}
                 </p>
               </div>
@@ -81,8 +79,7 @@ export default function VideoSection() {
             <div className="w-16 h-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-500 mb-6" />
 
             <motion.h2
-              className="text-slate-900 mb-5"
-              style={ty.videoHeading}
+              className="text-slate-900 mb-5 text-2xl md:text-3xl lg:text-4xl font-bold leading-tight"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -100,8 +97,7 @@ export default function VideoSection() {
             </motion.h2>
 
             <motion.p
-              className="text-slate-500 mb-8 max-w-md"
-              style={ty.videoBody}
+              className="text-slate-500 mb-8 max-w-md text-base md:text-lg leading-relaxed"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -133,13 +129,10 @@ export default function VideoSection() {
                     ease: "easeOut" as const,
                   }}
                 >
-                  <span className="text-blue-600" style={ty.videoStatValue}>
+                  <span className="text-blue-600 text-2xl md:text-3xl font-black">
                     {t(stat.value)}
                   </span>
-                  <span
-                    className="text-slate-400 mt-0.5"
-                    style={ty.videoStatLabel}
-                  >
+                  <span className="text-slate-400 mt-0.5 text-xs uppercase tracking-wider">
                     {t(stat.label)}
                   </span>
                 </motion.div>

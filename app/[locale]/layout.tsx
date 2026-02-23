@@ -18,8 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Noto Sans Georgian is purpose-built for Georgian script
-// and harmonizes beautifully with Latin fonts
+
 const notoGeorgian = Noto_Sans_Georgian({
   variable: "--font-georgian",
   subsets: ["georgian"],

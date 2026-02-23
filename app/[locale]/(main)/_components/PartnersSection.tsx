@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useTypography } from "@/hooks/useTypography";
 
 const BafLogo = () => (
   <div className="w-full h-full flex flex-col items-center justify-center bg-[#1a2b5e] rounded-full">
@@ -68,6 +67,24 @@ const itemIcons = [
   "M25,3C12.9,3,3,12.9,3,25s9.9,22,22,22s22-9.9,22-22S37.1,3,25,3z M25,11c1.7,0,3,1.3,3,3s-1.3,3-3,3s-3-1.3-3-3S23.3,11,25,11z M30,37H20v-2h3V23h-3v-2h7v14h3V37z",
 ];
 
+const items = [
+  {
+    titleKey: "partnersItem1Title",
+    descKey: "partnersItem1Desc",
+    icon: itemIcons[0],
+  },
+  {
+    titleKey: "partnersItem2Title",
+    descKey: "partnersItem2Desc",
+    icon: itemIcons[1],
+  },
+  {
+    titleKey: "partnersItem3Title",
+    descKey: "partnersItem3Desc",
+    icon: itemIcons[2],
+  },
+];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
   visible: (i: number) => ({
@@ -77,36 +94,14 @@ const fadeUp = {
   }),
 };
 
-const orbitDuration = 20;
-const angleStep = 360 / logos.length;
+const ORBIT_DURATION = 20;
+const ANGLE_STEP = 360 / logos.length;
 
 const PartnersSection: React.FC = () => {
   const t = useTranslations("main");
-  const ty = useTypography();
-
-  const items = [
-    {
-      titleKey: "partnersItem1Title",
-      descKey: "partnersItem1Desc",
-      icon: itemIcons[0],
-    },
-    {
-      titleKey: "partnersItem2Title",
-      descKey: "partnersItem2Desc",
-      icon: itemIcons[1],
-    },
-    {
-      titleKey: "partnersItem3Title",
-      descKey: "partnersItem3Desc",
-      icon: itemIcons[2],
-    },
-  ];
 
   return (
-    <section
-      className="py-10 md:py-16 overflow-hidden"
-      style={{ backgroundColor: "#F3F5F4" }}
-    >
+    <section className="py-10 md:py-16 overflow-hidden bg-[#F3F5F4]">
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32">
         <div className="flex flex-col lg:flex-row lg:gap-16 xl:gap-20 items-center">
           <div className="lg:w-[47%] w-full mb-12 lg:mb-0">
@@ -119,15 +114,14 @@ const PartnersSection: React.FC = () => {
               viewport={{ once: true }}
             >
               <div className="w-8 md:w-10 h-0.5 bg-blue-600" />
-              <span className="text-gray-500" style={ty.label}>
+              <span className="text-gray-500 text-sm font-medium tracking-widest uppercase">
                 {t("partnersSectionLabel")}
               </span>
               <div className="w-8 md:w-10 h-0.5 bg-blue-600" />
             </motion.div>
 
             <motion.h2
-              className="mb-6 text-blue-600"
-              style={ty.sectionHeading}
+              className="mb-6 text-blue-600 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
               custom={1}
               variants={fadeUp}
               initial="hidden"
@@ -138,8 +132,7 @@ const PartnersSection: React.FC = () => {
             </motion.h2>
 
             <motion.p
-              className="mb-4 text-gray-500"
-              style={ty.sectionBody}
+              className="mb-4 text-gray-500 text-base md:text-lg leading-relaxed"
               custom={2}
               variants={fadeUp}
               initial="hidden"
@@ -166,10 +159,10 @@ const PartnersSection: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-gray-900" style={ty.itemTitle}>
+                    <h4 className="text-gray-900 font-semibold text-base mb-1">
                       {t(item.titleKey)}
                     </h4>
-                    <p className="text-gray-500" style={ty.itemDesc}>
+                    <p className="text-gray-500 text-sm leading-relaxed">
                       {t(item.descKey)}
                     </p>
                   </div>
@@ -199,8 +192,6 @@ const PartnersSection: React.FC = () => {
                 style={{
                   background:
                     "linear-gradient(135deg, #0f1f5c 0%, #1a3a8f 35%, #1d4ed8 65%, #2563eb 100%)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
                   boxShadow:
                     "0 0 0 5px rgba(29,78,216,0.18), 0 8px 48px rgba(15,31,92,0.65), 0 2px 16px rgba(37,99,235,0.3), inset 0 1px 0 rgba(255,255,255,0.12)",
                 }}
@@ -220,7 +211,7 @@ const PartnersSection: React.FC = () => {
               </motion.div>
 
               {logos.map(({ alt, Logo }, index) => {
-                const initialAngle = index * angleStep;
+                const initialAngle = index * ANGLE_STEP;
                 return (
                   <motion.div
                     key={index}
@@ -228,7 +219,7 @@ const PartnersSection: React.FC = () => {
                     style={{ inset: "6%" }}
                     animate={{ rotate: [initialAngle, initialAngle + 360] }}
                     transition={{
-                      duration: orbitDuration,
+                      duration: ORBIT_DURATION,
                       repeat: Infinity,
                       ease: "linear",
                     }}
@@ -245,7 +236,7 @@ const PartnersSection: React.FC = () => {
                         rotate: [-initialAngle, -(initialAngle + 360)],
                       }}
                       transition={{
-                        duration: orbitDuration,
+                        duration: ORBIT_DURATION,
                         repeat: Infinity,
                         ease: "linear",
                       }}
