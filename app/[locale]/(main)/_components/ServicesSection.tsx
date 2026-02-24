@@ -303,24 +303,27 @@ function ServiceCard({
       className="h-full relative"
     >
       <Card
-        className={`group relative h-[420px] md:h-[440px] overflow-hidden my-1 border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
+        className={`group relative h-[420px] md:h-[440px] border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
       >
+        {/* Decorative Circle: Hidden on mobile to prevent overlapping elements */}
         <div
-          className={`absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl ${theme.iconBg}`}
+          className={`hidden md:block absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl ${theme.iconBg}`}
         />
 
         <div className="flex flex-col h-full relative z-10">
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-4 md:mb-6">
             <div
-              className={`w-12 h-12 p-3 ${theme.iconBg} text-white rounded-2xl shadow-lg ${theme.iconShadow} flex-shrink-0 md:group-hover:scale-105 transition-transform duration-500`}
+              className={`w-11 h-11 md:w-12 md:h-12 p-2.5 md:p-3 ${theme.iconBg} text-white rounded-xl md:rounded-2xl shadow-lg ${theme.iconShadow} flex-shrink-0 md:group-hover:scale-105 transition-transform duration-500`}
             >
               {service.icon}
             </div>
 
-            <h3 className="card-title text-gray-900">{t(service.titleKey)}</h3>
+            <h3 className="card-title text-gray-900 text-lg md:text-xl font-bold leading-tight">
+              {t(service.titleKey)}
+            </h3>
           </div>
 
-          <p className="card-desc text-gray-600 mb-6 line-clamp-3">
+          <p className="card-desc text-gray-600 text-sm md:text-base mb-6 line-clamp-3 md:line-clamp-4">
             {t(service.descriptionKey)}
           </p>
 
@@ -328,10 +331,11 @@ function ServiceCard({
             {service.featureKeys.map((key, idx) => (
               <li key={idx} className="flex items-start gap-3 text-gray-700">
                 <CheckCircle2
-                  className={`w-[18px] h-[18px] ${theme.check} shrink-0 mt-0.5`}
+                  className={`w-[16px] h-[16px] md:w-[18px] md:h-[18px] ${theme.check} shrink-0 mt-0.5`}
                 />
-
-                <span className="card-feature">{t(key)}</span>
+                <span className="card-feature text-xs md:text-sm leading-snug">
+                  {t(key)}
+                </span>
               </li>
             ))}
           </ul>
@@ -339,12 +343,12 @@ function ServiceCard({
           <div className="mt-auto pt-4">
             <Link
               href={`${basePath}/${service.id}`}
-              className={`group/link inline-flex items-center gap-2.5 relative overflow-hidden px-5 py-2.5 rounded-full border ${theme.lightBorder} bg-gradient-to-r ${theme.lightBg} ${theme.text} service-btn shadow-sm transition-all duration-300 hover:shadow-lg ${theme.hoverShadow} hover:border-transparent hover:scale-[1.02]`}
+              className={`group/link inline-flex items-center gap-2.5 relative overflow-hidden px-5 py-2.5 rounded-full border ${theme.lightBorder} bg-gradient-to-r ${theme.lightBg} ${theme.text} service-btn shadow-sm transition-all duration-300 hover:shadow-lg ${theme.hoverShadow} hover:border-transparent hover:scale-[1.02] text-sm md:text-base`}
             >
               <span
                 className={`absolute inset-0 rounded-full bg-gradient-to-r ${theme.gradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
               />
-              <span className="relative z-10 group-hover/link:text-white transition-colors duration-300">
+              <span className="relative z-10 group-hover/link:text-white transition-colors duration-300 font-semibold">
                 {t("servicesLearnMore")}
               </span>
               <ArrowRight
@@ -357,7 +361,6 @@ function ServiceCard({
     </motion.div>
   );
 }
-
 export default function ServicesSection() {
   const t = useTranslations("main");
   const basePath = "/services";
