@@ -142,7 +142,7 @@ export function ServicesMegaMenu({
           ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
           : "opacity-0 scale-95 pointer-events-none -translate-y-3",
       )}
-      style={{ width: "min(92vw, 640px)" }}
+      style={{ width: "min(92vw, 280px)" }}
     >
       {/* Arrow pointer matching header glass style */}
       <div
@@ -203,8 +203,8 @@ export function ServicesMegaMenu({
           style={{ background: "rgba(255,255,255,0.06)" }}
         />
 
-        {/* Services grid — 3 columns, icon + label only */}
-        <div className="p-4 grid grid-cols-3 gap-1.5">
+        {/* Services list — single column */}
+        <div className="p-4 flex flex-col gap-1">
           {services.map((svc) => {
             const isActive = pathname === `/services/${svc.id}`;
             return (
@@ -248,27 +248,6 @@ export function ServicesMegaMenu({
               </Link>
             );
           })}
-        </div>
-
-        {/* Footer */}
-        <div
-          className="mx-4 mb-4 px-4 py-3 rounded-xl flex items-center justify-between"
-          style={{
-            background: "rgba(74,159,245,0.06)",
-            border: "1px solid rgba(74,159,245,0.12)",
-          }}
-        >
-          <span
-            className="text-[10px] font-medium"
-            style={{ color: "rgba(255,255,255,0.35)" }}
-          >
-            Prestige Professional Advisory
-          </span>
-          <div className="flex gap-1">
-            <div className="h-1 w-1 rounded-full bg-blue-400/60" />
-            <div className="h-1 w-1 rounded-full bg-emerald-400/60" />
-            <div className="h-1 w-1 rounded-full bg-orange-400/60" />
-          </div>
         </div>
       </div>
     </div>
