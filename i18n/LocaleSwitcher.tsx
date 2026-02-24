@@ -8,9 +8,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
 import { useLocale } from "next-intl";
-
 import Image from "next/image";
 import { locales, usePathname, useRouter } from "./routing";
+import { cn } from "@/lib/utils";
 
 type Locale = "en" | "ka";
 
@@ -31,7 +31,6 @@ export default function LocaleSwitcher() {
 
   const handleLocaleChange = (newLocale: Locale) => {
     if (newLocale === currentLocale) return;
-
     router.push(pathname, { locale: newLocale });
   };
 
@@ -40,37 +39,48 @@ export default function LocaleSwitcher() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="flex items-center gap-2 rounded-full h-9 px-3 py-3 bg-white text-black border border-input hover:bg-gray-50 hover:text-accent-foreground">
+        <button className="flex items-center gap-2 rounded-xl h-10 px-3 transition-all duration-300 border border-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)] text-white group">
           <Image
             src={currentFlag.src}
             alt={currentFlag.alt}
-            width={24}
-            height={24}
-            className="h-6 w-6"
+            width={20}
+            height={20}
+            className="h-5 w-5 rounded-sm object-cover"
           />
-          <ChevronDownIcon className="h-4 w-4 opacity-50" />
+          <span className="text-sm font-semibold uppercase tracking-wider hidden sm:inline-block">
+            {currentLocale}
+          </span>
+          <ChevronDownIcon className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-48 p-2">
+      <PopoverContent
+        align="end"
+        className="w-40 p-1.5 border-[rgba(255,255,255,0.1)] bg-[#0a1a3f]/90 backdrop-blur-xl text-white shadow-2xl rounded-2xl"
+      >
         <div className="grid gap-1">
           {(locales as unknown as Locale[]).map((locale) => {
             const flag = LanguageFlags[locale];
+            const isActive = locale === currentLocale;
             return (
               <Button
                 key={locale}
                 variant="ghost"
-                className="justify-start gap-2 w-full"
+                className={cn(
+                  "justify-start gap-3 w-full rounded-xl hover:bg-white/10 hover:text-white transition-all",
+                  isActive && "bg-white/5 text-[#4A9FF5]",
+                )}
                 onClick={() => handleLocaleChange(locale)}
-                disabled={locale === currentLocale}
               >
                 <Image
                   src={flag.src}
                   alt={flag.alt}
-                  width={24}
-                  height={24}
-                  className="h-6 w-6"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 rounded-sm"
                 />
-                <span>{languageNames[locale]}</span>
+                <span className="text-sm font-medium">
+                  {languageNames[locale]}
+                </span>
               </Button>
             );
           })}

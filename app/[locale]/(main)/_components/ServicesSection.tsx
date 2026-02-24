@@ -303,7 +303,7 @@ function ServiceCard({
       className="h-full relative"
     >
       <Card
-        className={`group relative h-[420px] md:h-[440px] border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
+        className={`group relative h-[420px] md:h-[440px] py-1 border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
       >
         {/* Decorative Circle: Hidden on mobile to prevent overlapping elements */}
         <div

@@ -16,7 +16,6 @@ interface TeamMember {
 }
 
 const DEPARTMENTS = [
-  { key: "all", label: "All Teams" },
   { key: "financial-audit", label: "Financial Audit" },
   { key: "tax-services", label: "Tax Services" },
   { key: "accounting-services", label: "Accounting Services" },
@@ -149,9 +148,9 @@ export const TeamCard = React.memo(
       />
       <div
         className="absolute inset-0 flex flex-col items-center justify-end md:justify-center p-6
-                    bg-black/20 md:bg-black/0
-                    md:opacity-0 md:group-hover:opacity-100
-                    md:backdrop-blur-md
+                    bg-black/20 md:bg-black/0 
+                    md:opacity-0 md:group-hover:opacity-100 
+                    md:backdrop-blur-md 
                     transition-all duration-500 ease-in-out"
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:hidden" />
@@ -166,7 +165,7 @@ export const TeamCard = React.memo(
             {title}
           </p>
           <Link
-            href={`/team/gogita-baramidze`}
+            href={`/team/${slug || "profile"}`}
             className="mt-4 md:mt-6 w-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity delay-100"
           >
             <div className="flex w-full items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-2 text-xs font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-black">
@@ -232,27 +231,24 @@ export default function TeamPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const rawTeam = searchParams.get("team") ?? "all";
+  // Logic: Use the 'team' query param if valid, otherwise default to the first department
+  const rawTeam = searchParams.get("team");
   const activeFilter: DepartmentKey =
-    (DEPARTMENTS.find((d) => d.key === rawTeam)?.key as DepartmentKey) ?? "all";
+    (DEPARTMENTS.find((d) => d.key === rawTeam)?.key as DepartmentKey) ??
+    DEPARTMENTS[0].key;
 
   const handleFilter = useCallback(
     (key: DepartmentKey) => {
       const params = new URLSearchParams(searchParams.toString());
-      if (key === "all") {
-        params.delete("team");
-      } else {
-        params.set("team", key);
-      }
+      params.set("team", key);
       router.push(`?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
   );
 
-  const filtered =
-    activeFilter === "all"
-      ? teamMembers
-      : teamMembers.filter((m) => deptToKey(m.department) === activeFilter);
+  const filtered = teamMembers.filter(
+    (m) => deptToKey(m.department) === activeFilter,
+  );
 
   const sectionVariants = {
     hidden: { opacity: 0, scale: 0.97 },
@@ -314,6 +310,7 @@ export default function TeamPage() {
         </div>
       </motion.section>
 
+      {/* ── CONTENT ── */}
       <motion.section
         className="relative z-20 -mt-24 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] pt-16 pb-32 px-6 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]"
         initial="hidden"
@@ -342,9 +339,7 @@ export default function TeamPage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
               />
               <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-tight">
-                {activeFilter === "all"
-                  ? "All Teams"
-                  : DEPARTMENTS.find((d) => d.key === activeFilter)?.label}
+                {DEPARTMENTS.find((d) => d.key === activeFilter)?.label}
               </h2>
               <motion.div
                 className="w-8 h-0.5 bg-[#2563eb]"
@@ -364,7 +359,7 @@ export default function TeamPage() {
                 className="text-gray-500 text-sm font-medium"
               >
                 Showing {filtered.length} member
-                {filtered.length !== 1 ? "s" : ""} · Click to view CV
+                {filtered.length !== 1 ? "s" : ""} · Click to view Profile
               </motion.p>
             </AnimatePresence>
           </motion.div>
@@ -384,28 +379,11 @@ export default function TeamPage() {
                 },
               }}
             >
-              {filtered.length > 0 ? (
-                filtered.map((member) => (
-                  <motion.div key={member.id} variants={itemVariants}>
-                    <TeamCard {...member} />
-                  </motion.div>
-                ))
-              ) : (
-                <motion.div
-                  variants={itemVariants}
-                  className="col-span-full flex flex-col items-center justify-center py-24 text-center"
-                >
-                  <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                    <Users size={24} className="text-blue-500" />
-                  </div>
-                  <p className="text-gray-500 text-lg font-semibold">
-                    No members found
-                  </p>
-                  <p className="text-gray-400 text-sm mt-1">
-                    Try selecting a different team filter.
-                  </p>
+              {filtered.map((member) => (
+                <motion.div key={member.id} variants={itemVariants}>
+                  <TeamCard {...member} />
                 </motion.div>
-              )}
+              ))}
             </motion.div>
           </AnimatePresence>
         </div>

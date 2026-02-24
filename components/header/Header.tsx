@@ -2,247 +2,36 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname as useNextPathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
-import LocaleSwitcher from "@/i18n/LocaleSwitcher";
 
-const services = [
-  {
-    id: "financial-audit",
-    titleKey: "financialAuditTitle" as const,
-    descKey: "financialAuditDescription" as const,
-    color: "bg-blue-50 text-blue-600",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: "tax-services",
-    titleKey: "taxServicesTitle" as const,
-    descKey: "taxServicesDescription" as const,
-    color: "bg-emerald-50 text-emerald-600",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: "accounting",
-    titleKey: "accountingTitle" as const,
-    descKey: "accountingDescription" as const,
-    color: "bg-violet-50 text-violet-600",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: "valuation",
-    titleKey: "valuationTitle" as const,
-    descKey: "valuationDescription" as const,
-    color: "bg-amber-50 text-amber-600",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: "legal",
-    titleKey: "legalTitle" as const,
-    descKey: "legalDescription" as const,
-    color: "bg-rose-50 text-rose-600",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: "consulting",
-    titleKey: "consultingTitle" as const,
-    descKey: "consultingDescription" as const,
-    color: "bg-cyan-50 text-cyan-600",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-        />
-      </svg>
-    ),
-  },
-];
+// Localization Imports
+import { useLocale } from "next-intl";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
-const mobileServices = services.map((s) => ({
-  ...s,
-  icon: (
-    <svg
-      className="w-4 h-4"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      {(s.icon as any).props.children}
-    </svg>
-  ),
-}));
+// Sub-components/Data (Assuming these exist in your project)
+import { services, ServicesMegaMenu } from "./Services-mega-menu";
+import { locales, usePathname, useRouter } from "@/i18n/routing";
 
-function ServicesMegaMenu({
-  isOpen,
-  pathname,
-}: {
-  isOpen: boolean;
-  pathname: string;
-}) {
-  const t = useTranslations("main");
+type Locale = "en" | "ka";
 
-  return (
-    <div
-      className={cn(
-        "absolute top-[calc(100%+20px)] left-1/2 -translate-x-1/2 transition-all duration-300 origin-top",
-        isOpen
-          ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
-          : "opacity-0 scale-95 pointer-events-none -translate-y-2",
-      )}
-      style={{ width: "min(90vw, 840px)" }}
-    >
-      <div className="bg-white rounded-[2rem] border border-slate-200/50 overflow-hidden shadow-[0_30px_70px_-10px_rgba(0,0,0,0.15)]">
-        <div className="p-8">
-          <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-50">
-            <div>
-              <h4 className="text-slate-900 font-bold text-lg">
-                {t("navOurServices")}
-              </h4>
-              <p className="text-slate-400 text-xs mt-1">
-                {t("navAllServices")}
-              </p>
-            </div>
-            <Link
-              href="/services"
-              className="text-blue-600 text-xs font-bold flex items-center gap-1.5 hover:gap-2 transition-all"
-            >
-              {t("navAllServices")} <ArrowRight size={14} />
-            </Link>
-          </div>
+const LanguageFlags: Record<Locale, { src: string; alt: string }> = {
+  en: { src: "/svg/English.svg", alt: "English" },
+  ka: { src: "/svg/Georgian.svg", alt: "Georgian" },
+};
 
-          <div className="grid grid-cols-2 gap-x-10 gap-y-6">
-            {services.map((svc) => {
-              const isActive = pathname === `/services/${svc.id}`;
-              return (
-                <Link
-                  key={svc.id}
-                  href={`/services/${svc.id}`}
-                  className="group flex items-start gap-4 p-3 -m-3 rounded-2xl hover:bg-slate-50 transition-all duration-200"
-                >
-                  <div
-                    className={cn(
-                      "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110",
-                      svc.color,
-                    )}
-                  >
-                    {svc.icon}
-                  </div>
-                  <div className="flex flex-col pt-1">
-                    <span
-                      className={cn(
-                        "text-sm font-bold transition-colors",
-                        isActive
-                          ? "text-blue-600"
-                          : "text-slate-900 group-hover:text-blue-600",
-                      )}
-                    >
-                      {t(svc.titleKey)}
-                    </span>
-                    <span className="text-[12px] text-slate-500 leading-snug mt-1 line-clamp-2">
-                      {t(svc.descKey)}
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="bg-slate-50/80 px-8 py-5 flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
-            Professional Advisory & Solutions
-          </span>
-          <div className="flex gap-4">
-            <div className="h-1 w-1 rounded-full bg-slate-300" />
-            <div className="h-1 w-1 rounded-full bg-slate-300" />
-            <div className="h-1 w-1 rounded-full bg-slate-300" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+const languageNames: Record<Locale, string> = {
+  en: "English",
+  ka: "ქართული",
+};
 
 const navLinkStyle = (isActive: boolean) => ({
   color: isActive ? "#4A9FF5" : "rgba(255, 255, 255, 0.9)",
@@ -253,9 +42,80 @@ const mobileLinkStyle = (isActive: boolean) => ({
   backgroundColor: isActive ? "rgba(74, 159, 245, 0.1)" : "transparent",
 });
 
-export default function Header() {
+const navItems = [
+  { name: "Team", href: "/team" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
+];
+
+function LocaleSwitcher() {
+  const router = useRouter();
   const pathname = usePathname();
-  const t = useTranslations("main");
+  const currentLocale = useLocale() as Locale;
+
+  const handleLocaleChange = (newLocale: Locale) => {
+    if (newLocale === currentLocale) return;
+    router.push(pathname, { locale: newLocale });
+  };
+
+  const currentFlag = LanguageFlags[currentLocale];
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <button className="flex items-center gap-2 rounded-xl h-10 px-3 transition-all duration-300 border border-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)] text-white group">
+          <Image
+            src={currentFlag.src}
+            alt={currentFlag.alt}
+            width={20}
+            height={20}
+            className="h-5 w-5 rounded-sm object-cover"
+          />
+          <span className="text-sm font-semibold uppercase tracking-wider hidden sm:inline-block">
+            {currentLocale}
+          </span>
+          <ChevronDown className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent
+        align="end"
+        className="w-40 p-1.5 border-[rgba(255,255,255,0.1)] bg-[#0a1a3f]/95 backdrop-blur-xl text-white shadow-2xl rounded-2xl z-[60]"
+      >
+        <div className="grid gap-1">
+          {(locales as unknown as Locale[]).map((locale) => {
+            const flag = LanguageFlags[locale];
+            const isActive = locale === currentLocale;
+            return (
+              <Button
+                key={locale}
+                variant="ghost"
+                className={cn(
+                  "justify-start gap-3 w-full rounded-xl hover:bg-white/10 hover:text-white transition-all",
+                  isActive && "bg-white/5 text-[#4A9FF5]",
+                )}
+                onClick={() => handleLocaleChange(locale)}
+              >
+                <Image
+                  src={flag.src}
+                  alt={flag.alt}
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 rounded-sm"
+                />
+                <span className="text-sm font-medium">
+                  {languageNames[locale]}
+                </span>
+              </Button>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export default function Header() {
+  const pathname = useNextPathname();
   const [open, setOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
@@ -276,22 +136,16 @@ export default function Header() {
       if (
         servicesRef.current &&
         !servicesRef.current.contains(e.target as Node)
-      )
+      ) {
         setServicesMenuOpen(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (pathname.includes("admin")) return null;
-
   const isServicesActive =
     pathname === "/services" || pathname.startsWith("/services/");
-  const navItems = [
-    { name: t("navTeam"), href: "/team" },
-    { name: t("navAbout"), href: "/about" },
-    { name: t("navContact"), href: "/contact" },
-  ];
   const navLinkClass =
     "group relative px-6 py-2 text-sm font-semibold transition-colors duration-300";
 
@@ -316,7 +170,6 @@ export default function Header() {
           className="relative flex items-center justify-between px-6 md:px-10 2xl:px-16"
           style={{ height: "clamp(80px, 6vh, 110px)" }}
         >
-          {/* LOGO - Wrapped in Link for redirection */}
           <Link
             href="/"
             className="relative z-10 transition-transform hover:scale-[1.02] active:scale-[0.98]"
@@ -324,30 +177,29 @@ export default function Header() {
             <Image
               src="/PrestigeLogo.png"
               alt="Logo"
-              width={280}
-              height={280}
+              width={140}
+              height={140}
               style={{ objectFit: "contain" }}
-              className="cursor-pointer mt-2 w-56 -ml-8 md:ml-0 h-56 md:w-72 md:h-72 2xl:w-80 2xl:h-80"
+              className="cursor-pointer mt-2 w-56 -ml-8 md:ml-0 h-56 md:w-64 md:h-64 2xl:w-72 2xl:h-72"
             />
           </Link>
 
-          <nav
-            className="hidden lg:flex items-center justify-center gap-1 xl:gap-4"
-            style={{ width: "auto" }}
-          >
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center justify-center gap-1 xl:gap-4">
             <Link
               href="/"
               className={navLinkClass}
               style={navLinkStyle(pathname === "/")}
             >
-              <span className="relative z-10 group-hover:text-white transition-colors">
-                {t("navHome")}
+              <span className="relative z-10 group-hover:text-[#fff] transition-colors">
+                Home
               </span>
               {pathname === "/" && (
                 <span className="absolute bottom-0 left-6 right-6 h-0.5 bg-[#4A9FF5] rounded-full" />
               )}
             </Link>
 
+            {/* Services Dropdown */}
             <div
               ref={servicesRef}
               className="relative"
@@ -362,8 +214,8 @@ export default function Header() {
                 style={navLinkStyle(isServicesActive || servicesMenuOpen)}
                 onClick={() => setServicesMenuOpen((v) => !v)}
               >
-                <span className="relative z-10 group-hover:text-white transition-colors">
-                  {t("navServices")}
+                <span className="relative z-10 group-hover:text-[#fff] transition-colors">
+                  Services
                 </span>
                 <ChevronDown
                   size={14}
@@ -388,7 +240,7 @@ export default function Header() {
                   className={navLinkClass}
                   style={navLinkStyle(isActive)}
                 >
-                  <span className="relative z-10 group-hover:text-white transition-colors">
+                  <span className="relative z-10 group-hover:text-[#fff] transition-colors">
                     {item.name}
                   </span>
                   {isActive && (
@@ -399,16 +251,18 @@ export default function Header() {
             })}
           </nav>
 
+          {/* Right Side - Desktop LocaleSwitcher */}
           <div className="hidden lg:flex items-center gap-6">
             <LocaleSwitcher />
           </div>
 
+          {/* Mobile Menu */}
           <div className="lg:hidden flex items-center gap-3">
             <LocaleSwitcher />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <button
-                  className="flex items-center justify-center w-10 h-10 rounded-xl border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20"
+                  className="flex items-center justify-center w-10 h-10 rounded-xl border border-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.1)] text-[#fff] transition-colors hover:bg-[rgba(255,255,255,0.2)]"
                   aria-label="Open menu"
                 >
                   <Menu size={20} />
@@ -417,22 +271,22 @@ export default function Header() {
 
               <SheetContent
                 side="right"
-                className="w-[300px] bg-[#0a1a3f] border-l border-white/10 p-0 overflow-y-auto"
+                className="w-[300px] !bg-[#0a1a3f] !border-l !border-[rgba(255,255,255,0.1)] p-0 overflow-y-auto"
               >
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+                  <div className="flex items-center justify-between px-6 py-5 border-b border-[rgba(255,255,255,0.1)]">
                     <Link href="/" onClick={() => setOpen(false)}>
                       <Image
                         src="/PrestigeLogo.png"
                         alt="Logo"
-                        width={140}
+                        width={100}
                         height={40}
                         style={{ objectFit: "contain" }}
                       />
                     </Link>
                     <button
                       onClick={() => setOpen(false)}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/20 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-[rgba(255,255,255,0.2)] text-[rgba(255,255,255,0.7)] hover:text-[#fff] hover:bg-[rgba(255,255,255,0.1)] transition-colors"
                     >
                       <X size={16} />
                     </button>
@@ -448,9 +302,10 @@ export default function Header() {
                       {pathname === "/" && (
                         <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
                       )}
-                      {t("navHome")}
+                      Home
                     </Link>
 
+                    {/* Mobile Services Accordion */}
                     <div>
                       <button
                         onClick={() => setMobileServicesOpen((prev) => !prev)}
@@ -461,12 +316,12 @@ export default function Header() {
                           {isServicesActive && (
                             <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
                           )}
-                          {t("navServices")}
+                          Services
                         </span>
                         <ChevronDown
                           size={16}
                           className={cn(
-                            "text-white/40 transition-transform duration-300",
+                            "text-[rgba(255,255,255,0.4)] transition-transform duration-300",
                             mobileServicesOpen && "rotate-180",
                           )}
                         />
@@ -483,19 +338,18 @@ export default function Header() {
                         <Link
                           href="/services"
                           onClick={() => setOpen(false)}
-                          className="flex items-center gap-3 mx-2 px-4 py-2.5 mt-1 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
+                          className="flex items-center gap-3 mx-2 px-4 py-2.5 mt-1 rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.08)]"
                         >
-                          <span className="font-bold uppercase text-white/40 text-xs tracking-widest">
-                            {t("navAllServices")}
+                          <span className="font-bold uppercase text-[rgba(255,255,255,0.4)] text-xs tracking-widest">
+                            All Services
                           </span>
                           <ChevronRight
                             size={12}
-                            className="text-white/30 ml-auto"
+                            className="text-[rgba(255,255,255,0.3)] ml-auto"
                           />
                         </Link>
-
                         <div className="mt-1 flex flex-col gap-0.5 pb-2">
-                          {mobileServices.map((svc) => {
+                          {services.map((svc) => {
                             const isActive = pathname === `/services/${svc.id}`;
                             return (
                               <Link
@@ -503,19 +357,26 @@ export default function Header() {
                                 href={`/services/${svc.id}`}
                                 onClick={() => setOpen(false)}
                                 className={cn(
-                                  "flex items-center gap-3 mx-2 px-4 py-2.5 rounded-xl transition-all duration-200",
+                                  "flex items-center gap-3 mx-2 px-4 py-2.5 rounded-xl transition-all",
                                   isActive
-                                    ? "bg-white/[0.08]"
-                                    : "hover:bg-white/[0.05]",
+                                    ? "bg-[rgba(255,255,255,0.08)]"
+                                    : "hover:bg-[rgba(255,255,255,0.05)]",
                                 )}
                               >
                                 <div
                                   className={cn(
-                                    "w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-white bg-gradient-to-br",
-                                    svc.color,
+                                    "w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-[#fff] bg-gradient-to-br",
+                                    svc.gradient,
                                   )}
                                 >
-                                  {svc.icon}
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    {(svc.icon as any).props.children}
+                                  </svg>
                                 </div>
                                 <span
                                   className="text-sm font-semibold"
@@ -525,7 +386,7 @@ export default function Header() {
                                       : "rgba(255,255,255,0.7)",
                                   }}
                                 >
-                                  {t(svc.titleKey)}
+                                  {svc.title}
                                 </span>
                               </Link>
                             );
@@ -534,35 +395,21 @@ export default function Header() {
                       </div>
                     </div>
 
-                    {navItems.map((item) => {
-                      const isActive = pathname === item.href;
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200"
-                          style={mobileLinkStyle(isActive)}
-                        >
-                          {isActive && (
-                            <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
-                          )}
-                          {item.name}
-                        </Link>
-                      );
-                    })}
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className="flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all"
+                        style={mobileLinkStyle(pathname === item.href)}
+                      >
+                        {pathname === item.href && (
+                          <span className="w-1 h-4 bg-[#4A9FF5] rounded-full mr-3 shrink-0" />
+                        )}
+                        {item.name}
+                      </Link>
+                    ))}
                   </nav>
-
-                  <div className="mt-auto px-4 pb-8">
-                    <div className="h-px bg-white/10 mb-6" />
-                    <Link
-                      href="/contact"
-                      onClick={() => setOpen(false)}
-                      className="flex items-center justify-center w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors duration-200"
-                    >
-                      {t("navBookConsultation")}
-                    </Link>
-                  </div>
                 </div>
               </SheetContent>
             </Sheet>
