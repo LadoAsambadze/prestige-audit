@@ -15,7 +15,6 @@ interface TeamMember {
   slug?: string;
 }
 
-// Department keys used in URL query e.g. ?team=financial-audit
 const DEPARTMENTS = [
   { key: "all", label: "All Teams" },
   { key: "financial-audit", label: "Financial Audit" },
@@ -135,12 +134,10 @@ const teamMembers: TeamMember[] = [
   },
 ];
 
-// "Financial Audit" → "financial-audit"
 function deptToKey(dept: string): string {
   return dept.toLowerCase().replace(/\s+/g, "-");
 }
 
-// ── TEAM CARD ──────────────────────────────────────────────────────────────
 export const TeamCard = React.memo(
   ({ name, title, department, image, slug }: TeamMember) => (
     <div className="group relative aspect-[4/5] w-full cursor-pointer overflow-hidden rounded-[24px] bg-gray-200">
@@ -184,7 +181,6 @@ export const TeamCard = React.memo(
 );
 TeamCard.displayName = "TeamCard";
 
-// ── FILTER BAR ─────────────────────────────────────────────────────────────
 function FilterBar({
   active,
   onChange,
@@ -232,7 +228,6 @@ function FilterBar({
   );
 }
 
-// ── PAGE ───────────────────────────────────────────────────────────────────
 export default function TeamPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -319,7 +314,6 @@ export default function TeamPage() {
         </div>
       </motion.section>
 
-      {/* ── TEAM GRID ── */}
       <motion.section
         className="relative z-20 -mt-24 bg-[#f3f5f4] rounded-t-[60px] md:rounded-t-[80px] pt-16 pb-32 px-6 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.1)]"
         initial="hidden"
@@ -328,12 +322,10 @@ export default function TeamPage() {
         variants={sectionVariants}
       >
         <div className="max-w-7xl mx-auto">
-          {/* ── FILTER BAR ── */}
           <div className="mb-12">
             <FilterBar active={activeFilter} onChange={handleFilter} />
           </div>
 
-          {/* ── HEADER ROW ── */}
           <motion.div
             className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4"
             initial={{ opacity: 0, y: -16 }}
@@ -377,7 +369,6 @@ export default function TeamPage() {
             </AnimatePresence>
           </motion.div>
 
-          {/* ── GRID ── */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFilter}

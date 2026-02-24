@@ -303,7 +303,7 @@ function ServiceCard({
       className="h-full relative"
     >
       <Card
-        className={`group relative h-[420px] md:h-[440px] my-1 border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
+        className={`group relative h-[420px] md:h-[440px] overflow-hidden my-1 border border-transparent ${theme.border} rounded-[32px] bg-gradient-to-br ${theme.bg} p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
       >
         <div
           className={`absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl ${theme.iconBg}`}
@@ -316,11 +316,10 @@ function ServiceCard({
             >
               {service.icon}
             </div>
-            {/* Restored Original Font Class */}
+
             <h3 className="card-title text-gray-900">{t(service.titleKey)}</h3>
           </div>
 
-          {/* Restored Original Font Class */}
           <p className="card-desc text-gray-600 mb-6 line-clamp-3">
             {t(service.descriptionKey)}
           </p>
@@ -331,7 +330,7 @@ function ServiceCard({
                 <CheckCircle2
                   className={`w-[18px] h-[18px] ${theme.check} shrink-0 mt-0.5`}
                 />
-                {/* Restored Original Font Class */}
+
                 <span className="card-feature">{t(key)}</span>
               </li>
             ))}
@@ -365,7 +364,6 @@ export default function ServicesSection() {
 
   return (
     <section className="relative bg-[#f3f5f4] py-10 md:py-24 overflow-hidden">
-      {/* Container updated for bigger screen resolutions (Consistent with Video Section) */}
       <div className="max-w-[2000px] mx-auto px-0 md:px-16 lg:px-20 2xl:px-32">
         <div className="flex justify-center mb-10 md:mb-16">
           <motion.div
@@ -376,7 +374,7 @@ export default function ServicesSection() {
             className="flex items-center gap-3"
           >
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
-            {/* Restored Original Font Class */}
+
             <span className="section-label text-lg text-gray-500">
               {t("servicesSectionLabel")}
             </span>
@@ -384,7 +382,6 @@ export default function ServicesSection() {
           </motion.div>
         </div>
 
-        {/* Mobile View */}
         <div className="block md:hidden">
           <Carousel opts={{ align: "start", loop: false }} className="w-full">
             <CarouselContent className="-ml-0 mr-6">
@@ -405,7 +402,6 @@ export default function ServicesSection() {
           </Carousel>
         </div>
 
-        {/* Desktop View: Grid remains 3-columns but gap is optimized for larger resolutions */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 2xl:gap-12">
           {services.map((service, index) => (
             <ServiceCard
