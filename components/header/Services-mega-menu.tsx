@@ -8,12 +8,7 @@ export const services = [
   {
     id: "financial-audit",
     title: "Financial Audit",
-    description: "Comprehensive audit services for businesses of all sizes",
     gradient: "from-blue-500 to-cyan-400",
-    bgLight: "bg-blue-50",
-    textColor: "text-blue-600",
-    borderColor: "border-blue-100",
-    hoverBg: "hover:bg-blue-50/80",
     icon: (
       <svg
         className="w-5 h-5"
@@ -33,12 +28,7 @@ export const services = [
   {
     id: "tax-services",
     title: "Tax Services",
-    description: "Strategic tax planning and compliance solutions",
     gradient: "from-emerald-500 to-teal-400",
-    bgLight: "bg-emerald-50",
-    textColor: "text-emerald-600",
-    borderColor: "border-emerald-100",
-    hoverBg: "hover:bg-emerald-50/80",
     icon: (
       <svg
         className="w-5 h-5"
@@ -58,12 +48,7 @@ export const services = [
   {
     id: "accounting",
     title: "Accounting",
-    description: "Full-service bookkeeping and financial reporting",
     gradient: "from-orange-500 to-amber-400",
-    bgLight: "bg-orange-50",
-    textColor: "text-orange-600",
-    borderColor: "border-orange-100",
-    hoverBg: "hover:bg-orange-50/80",
     icon: (
       <svg
         className="w-5 h-5"
@@ -83,12 +68,7 @@ export const services = [
   {
     id: "valuation",
     title: "Valuation",
-    description: "Business valuation and financial advisory services",
     gradient: "from-rose-500 to-pink-400",
-    bgLight: "bg-rose-50",
-    textColor: "text-rose-600",
-    borderColor: "border-rose-100",
-    hoverBg: "hover:bg-rose-50/80",
     icon: (
       <svg
         className="w-5 h-5"
@@ -108,12 +88,7 @@ export const services = [
   {
     id: "legal",
     title: "Legal",
-    description: "Expert legal consultation and compliance guidance",
     gradient: "from-sky-500 to-blue-400",
-    bgLight: "bg-sky-50",
-    textColor: "text-sky-600",
-    borderColor: "border-sky-100",
-    hoverBg: "hover:bg-sky-50/80",
     icon: (
       <svg
         className="w-5 h-5"
@@ -133,12 +108,7 @@ export const services = [
   {
     id: "consulting",
     title: "Consulting",
-    description: "Strategic business consulting and growth advisory",
     gradient: "from-teal-500 to-emerald-400",
-    bgLight: "bg-teal-50",
-    textColor: "text-teal-600",
-    borderColor: "border-teal-100",
-    hoverBg: "hover:bg-teal-50/80",
     icon: (
       <svg
         className="w-5 h-5"
@@ -167,116 +137,137 @@ export function ServicesMegaMenu({
   return (
     <div
       className={cn(
-        "absolute top-[calc(100%+16px)] left-1/2 -translate-x-1/2 transition-all duration-300 origin-top z-50",
+        "absolute top-[calc(100%+20px)] left-1/2 -translate-x-1/2 transition-all duration-300 origin-top z-50",
         isOpen
           ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
           : "opacity-0 scale-95 pointer-events-none -translate-y-3",
       )}
-      style={{ width: "min(92vw, 780px)" }}
+      style={{ width: "min(92vw, 640px)" }}
     >
-      {/* Arrow pointer */}
-      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-card border-l border-t border-slate-200/60" />
+      {/* Arrow pointer matching header glass style */}
+      <div
+        className="absolute -top-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 rotate-45"
+        style={{
+          backgroundColor: "rgba(10, 26, 63, 0.95)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          borderBottom: "none",
+          borderRight: "none",
+        }}
+      />
 
-      <div className="relative bg-card rounded-2xl border border-slate-200/60 overflow-hidden shadow-[0_25px_60px_-12px_rgba(0,0,0,0.2)]">
-        {/* Header */}
-        <div className="px-7 pt-6 pb-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-card-foreground font-bold text-base">
-                Our Services
-              </h3>
-              <p className="text-slate-400 text-xs mt-0.5">
-                Professional advisory & solutions
-              </p>
-            </div>
-            <Link
-              href="/services"
-              className="group flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0a1a3f] text-[#fff] text-xs font-bold transition-all hover:gap-2.5 hover:shadow-lg hover:shadow-blue-500/20"
-            >
-              All Services
-              <ArrowRight
-                size={13}
-                className="transition-transform group-hover:translate-x-0.5"
-              />
-            </Link>
-          </div>
+      {/* Panel — same glass as header */}
+      <div
+        className="relative overflow-hidden rounded-2xl"
+        style={{
+          backgroundColor: "rgba(10, 26, 63, 0.95)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow:
+            "0 30px 70px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 159, 245, 0.05)",
+        }}
+      >
+        {/* Subtle glow accent at top */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(74,159,245,0.5), transparent)",
+          }}
+        />
+
+        {/* Header row */}
+        <div className="flex items-center justify-between px-6 pt-5 pb-4">
+          <span
+            className="text-[10px] font-bold uppercase tracking-[0.2em]"
+            style={{ color: "rgba(74,159,245,0.7)" }}
+          >
+            Our Services
+          </span>
+          <Link
+            href="/services"
+            className="group flex items-center gap-1.5 text-[11px] font-semibold transition-all duration-200"
+            style={{ color: "rgba(255,255,255,0.5)" }}
+          >
+            View all
+            <ArrowRight
+              size={11}
+              className="transition-transform group-hover:translate-x-0.5"
+            />
+          </Link>
         </div>
 
-        {/* Services Grid */}
-        <div className="px-5 pb-5">
-          <div className="grid grid-cols-2 gap-2">
-            {services.map((svc) => {
-              const isActive = pathname === `/services/${svc.id}`;
-              return (
-                <Link
-                  key={svc.id}
-                  href={`/services/${svc.id}`}
+        {/* Divider */}
+        <div
+          className="mx-6 h-px"
+          style={{ background: "rgba(255,255,255,0.06)" }}
+        />
+
+        {/* Services grid — 3 columns, icon + label only */}
+        <div className="p-4 grid grid-cols-3 gap-1.5">
+          {services.map((svc) => {
+            const isActive = pathname === `/services/${svc.id}`;
+            return (
+              <Link
+                key={svc.id}
+                href={`/services/${svc.id}`}
+                className={cn(
+                  "group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
+                  isActive ? "bg-white/10" : "hover:bg-white/[0.06]",
+                )}
+              >
+                {/* Icon */}
+                <div
                   className={cn(
-                    "group relative flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200",
-                    svc.hoverBg,
-                    isActive && svc.bgLight,
+                    "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-white bg-gradient-to-br transition-all duration-200 group-hover:scale-105",
+                    svc.gradient,
                   )}
+                  style={{
+                    boxShadow: isActive
+                      ? "0 4px 12px rgba(0,0,0,0.3)"
+                      : undefined,
+                  }}
                 >
-                  {/* Color accent line */}
-                  <div
-                    className={cn(
-                      "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-0 rounded-full bg-gradient-to-b transition-all duration-300 group-hover:h-8",
-                      svc.gradient,
-                      isActive && "h-8",
-                    )}
-                  />
+                  <div className="w-4 h-4">{svc.icon}</div>
+                </div>
 
-                  {/* Icon */}
-                  <div
-                    className={cn(
-                      "relative w-11 h-11 rounded-xl flex items-center justify-center shrink-0 text-white bg-gradient-to-br shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:shadow-md",
-                      svc.gradient,
-                    )}
-                  >
-                    {svc.icon}
-                  </div>
+                {/* Label */}
+                <span
+                  className="text-sm font-semibold transition-colors duration-200 whitespace-nowrap"
+                  style={{
+                    color: isActive ? "#fff" : "rgba(255,255,255,0.7)",
+                  }}
+                >
+                  {svc.title}
+                </span>
 
-                  {/* Text */}
-                  <div className="flex-1 min-w-0">
-                    <span
-                      className={cn(
-                        "block text-sm font-bold transition-colors duration-200",
-                        isActive
-                          ? svc.textColor
-                          : "text-card-foreground group-hover:" +
-                              svc.textColor.replace("text-", "text-"),
-                      )}
-                    >
-                      {svc.title}
-                    </span>
-                    <span className="block text-[11px] text-slate-400 leading-snug mt-0.5 line-clamp-1">
-                      {svc.description}
-                    </span>
-                  </div>
-
-                  {/* Arrow on hover */}
-                  <ArrowRight
-                    size={14}
-                    className={cn(
-                      "shrink-0 transition-all duration-300 opacity-0 -translate-x-2 group-hover:opacity-60 group-hover:translate-x-0",
-                      svc.textColor,
-                    )}
-                  />
-                </Link>
-              );
-            })}
-          </div>
+                {/* Active indicator dot */}
+                {isActive && (
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#4A9FF5]" />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Footer */}
-        <div className="bg-slate-50 px-7 py-3.5 flex items-center justify-between border-t border-slate-100">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.15em]">
+        <div
+          className="mx-4 mb-4 px-4 py-3 rounded-xl flex items-center justify-between"
+          style={{
+            background: "rgba(74,159,245,0.06)",
+            border: "1px solid rgba(74,159,245,0.12)",
+          }}
+        >
+          <span
+            className="text-[10px] font-medium"
+            style={{ color: "rgba(255,255,255,0.35)" }}
+          >
             Prestige Professional Advisory
           </span>
-          <div className="flex gap-1.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            <div className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+          <div className="flex gap-1">
+            <div className="h-1 w-1 rounded-full bg-blue-400/60" />
+            <div className="h-1 w-1 rounded-full bg-emerald-400/60" />
+            <div className="h-1 w-1 rounded-full bg-orange-400/60" />
           </div>
         </div>
       </div>

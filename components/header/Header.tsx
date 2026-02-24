@@ -184,7 +184,6 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center justify-center gap-1 xl:gap-4">
             <Link
               href="/"
