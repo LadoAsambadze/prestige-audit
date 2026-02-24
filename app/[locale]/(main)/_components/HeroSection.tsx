@@ -21,7 +21,7 @@ export default function HeroSection(): JSX.Element {
   }, []);
 
   return (
-    <section className="relative min-h-[100vh] sm:min-h-[110vh] flex items-center justify-center overflow-hidden bg-[#F3F5F4]">
+    <section className="relative min-h-[100vh] sm:min-h-[100vh] flex items-center justify-center overflow-hidden bg-[#F3F5F4]">
       <div className="absolute inset-0 z-0">
         <AnimatePresence initial={false}>
           <motion.div
@@ -103,7 +103,7 @@ export default function HeroSection(): JSX.Element {
       </div>
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-4">
         {SLIDES.map((_, i) => (
-          <Button
+          <button
             key={i}
             onClick={() => setCurrent(i)}
             className="group relative h-2 transition-all duration-500"
@@ -116,7 +116,7 @@ export default function HeroSection(): JSX.Element {
                   : "bg-white/30 group-hover:bg-white/60"
               }`}
             />
-          </Button>
+          </button>
         ))}
       </div>
     </section>

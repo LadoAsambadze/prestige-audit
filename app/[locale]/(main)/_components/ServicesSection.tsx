@@ -7,7 +7,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
@@ -235,15 +235,37 @@ const services: Service[] = [
   },
 ];
 
-const cardVariants = {
+const mobileCardVariants: Variants = {
   hidden: { opacity: 0, y: 28 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" as const },
+    transition: {
+      duration: 0.5,
+      delay: i * 0.1,
+      ease: "easeOut",
+    },
   }),
 };
 
+const desktopCardVariants: Variants = {
+  hidden: (i: number) => ({
+    opacity: 0,
+    x: i % 3 === 0 ? -60 : i % 3 === 2 ? 60 : 0,
+    y: i % 3 === 1 ? 40 : 0,
+  }),
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      delay: (i % 3) * 0.15,
+
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
+    },
+  }),
+};
 const headerVariants = {
   hidden: { opacity: 0, y: 18 },
   visible: {
@@ -252,26 +274,32 @@ const headerVariants = {
     transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
-
 function ServiceCard({
   service,
   index,
   basePath,
+  isMobile = false,
 }: {
   service: Service;
   index: number;
   basePath: string;
+  isMobile?: boolean;
 }) {
   const t = useTranslations("main");
   const theme = cardThemes[index % cardThemes.length];
+  const variants = isMobile ? mobileCardVariants : desktopCardVariants;
+
+  const viewportOptions = isMobile
+    ? { once: true, margin: "-30px" }
+    : { once: true, amount: 0.5 };
 
   return (
     <motion.div
-      custom={index % 3}
-      variants={cardVariants}
+      custom={index}
+      variants={variants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-30px" }}
+      viewport={viewportOptions}
       className="h-full relative"
     >
       <Card
@@ -288,9 +316,11 @@ function ServiceCard({
             >
               {service.icon}
             </div>
+            {/* Restored Original Font Class */}
             <h3 className="card-title text-gray-900">{t(service.titleKey)}</h3>
           </div>
 
+          {/* Restored Original Font Class */}
           <p className="card-desc text-gray-600 mb-6 line-clamp-3">
             {t(service.descriptionKey)}
           </p>
@@ -301,6 +331,7 @@ function ServiceCard({
                 <CheckCircle2
                   className={`w-[18px] h-[18px] ${theme.check} shrink-0 mt-0.5`}
                 />
+                {/* Restored Original Font Class */}
                 <span className="card-feature">{t(key)}</span>
               </li>
             ))}
@@ -333,9 +364,10 @@ export default function ServicesSection() {
   const basePath = "/services";
 
   return (
-    <section className="relative z-50 -mt-20 bg-[#f3f5f4] rounded-t-[50px] md:rounded-t-[80px] py-10 md:py-16 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="px-6 lg:px-12 flex justify-center mb-10 md:mb-12">
+    <section className="relative bg-[#f3f5f4] py-10 md:py-24 overflow-hidden">
+      {/* Container updated for bigger screen resolutions (Consistent with Video Section) */}
+      <div className="max-w-[2000px] mx-auto px-0 md:px-16 lg:px-20 2xl:px-32">
+        <div className="flex justify-center mb-10 md:mb-16">
           <motion.div
             variants={headerVariants}
             initial="hidden"
@@ -344,13 +376,15 @@ export default function ServicesSection() {
             className="flex items-center gap-3"
           >
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
-            <span className="section-label text-gray-500">
+            {/* Restored Original Font Class */}
+            <span className="section-label text-lg text-gray-500">
               {t("servicesSectionLabel")}
             </span>
             <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
           </motion.div>
         </div>
 
+        {/* Mobile View */}
         <div className="block md:hidden">
           <Carousel opts={{ align: "start", loop: false }} className="w-full">
             <CarouselContent className="-ml-0 mr-6">
@@ -363,6 +397,7 @@ export default function ServicesSection() {
                     service={service}
                     index={index}
                     basePath={basePath}
+                    isMobile={true}
                   />
                 </CarouselItem>
               ))}
@@ -370,13 +405,15 @@ export default function ServicesSection() {
           </Carousel>
         </div>
 
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
+        {/* Desktop View: Grid remains 3-columns but gap is optimized for larger resolutions */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 2xl:gap-12">
           {services.map((service, index) => (
             <ServiceCard
               key={service.id}
               service={service}
               index={index}
               basePath={basePath}
+              isMobile={false}
             />
           ))}
         </div>

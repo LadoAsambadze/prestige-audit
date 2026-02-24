@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 const BafLogo = () => (
@@ -61,43 +60,54 @@ const logos = [
   { alt: "IAASB", Logo: IasbLogo },
 ];
 
-const itemIcons = [
-  "M25,2L5,12v11c0,12.4,8.6,24,20,27c11.4-3,20-14.6,20-27V12L25,2z M22,35l-8-8l2.8-2.8L22,29.4l11.2-11.2L36,21L22,35z",
-  "M17,22c4.4,0,8-3.6,8-8s-3.6-8-8-8s-8,3.6-8,8S12.6,22,17,22z M17,26c-5.3,0-16,2.7-16,8v4h32v-4C33,28.7,22.3,26,17,26z",
-  "M25,3C12.9,3,3,12.9,3,25s9.9,22,22,22s22-9.9,22-22S37.1,3,25,3z M25,11c1.7,0,3,1.3,3,3s-1.3,3-3,3s-3-1.3-3-3S23.3,11,25,11z M30,37H20v-2h3V23h-3v-2h7v14h3V37z",
-];
-
 const items = [
   {
     titleKey: "partnersItem1Title",
     descKey: "partnersItem1Desc",
-    icon: itemIcons[0],
+    icon: "M25,2L5,12v11c0,12.4,8.6,24,20,27c11.4-3,20-14.6,20-27V12L25,2z M22,35l-8-8l2.8-2.8L22,29.4l11.2-11.2L36,21L22,35z",
   },
   {
     titleKey: "partnersItem2Title",
     descKey: "partnersItem2Desc",
-    icon: itemIcons[1],
+    icon: "M17,22c4.4,0,8-3.6,8-8s-3.6-8-8-8s-8,3.6-8,8S12.6,22,17,22z M17,26c-5.3,0-16,2.7-16,8v4h32v-4C33,28.7,22.3,26,17,26z",
   },
   {
     titleKey: "partnersItem3Title",
     descKey: "partnersItem3Desc",
-    icon: itemIcons[2],
+    icon: "M25,3C12.9,3,3,12.9,3,25s9.9,22,22,22s22-9.9,22-22S37.1,3,25,3z M25,11c1.7,0,3,1.3,3,3s-1.3,3-3,3s-3-1.3-3-3S23.3,11,25,11z M30,37H20v-2h3V23h-3v-2h7v14h3V37z",
   },
 ];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.12, ease: "easeOut" as const },
-  }),
-};
 
 const ORBIT_DURATION = 20;
 const ANGLE_STEP = 360 / logos.length;
 
-const PartnersSection: React.FC = () => {
+const fadeInLeft: Variants = {
+  hidden: { opacity: 0, x: -60 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      delay: i * 0.12,
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
+    },
+  }),
+};
+
+const fadeInRight: Variants = {
+  hidden: { opacity: 0, x: 80, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 1.1,
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
+    },
+  },
+};
+
+const PartnersSection = () => {
   const t = useTranslations("main");
 
   return (
@@ -108,13 +118,13 @@ const PartnersSection: React.FC = () => {
             <motion.div
               className="flex items-center gap-3 mb-4"
               custom={0}
-              variants={fadeUp}
+              variants={fadeInLeft}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="w-8 md:w-10 h-0.5 bg-blue-600" />
-              <span className="text-gray-500 text-sm font-medium tracking-widest uppercase">
+              <span className="text-gray-500 text-base md:text-lg font-medium tracking-widest uppercase">
                 {t("partnersSectionLabel")}
               </span>
               <div className="w-8 md:w-10 h-0.5 bg-blue-600" />
@@ -123,7 +133,7 @@ const PartnersSection: React.FC = () => {
             <motion.h2
               className="mb-6 text-blue-600 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
               custom={1}
-              variants={fadeUp}
+              variants={fadeInLeft}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -134,7 +144,7 @@ const PartnersSection: React.FC = () => {
             <motion.p
               className="mb-4 text-gray-500 text-base md:text-lg leading-relaxed"
               custom={2}
-              variants={fadeUp}
+              variants={fadeInLeft}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -148,7 +158,7 @@ const PartnersSection: React.FC = () => {
                   key={i}
                   className="flex items-start gap-4"
                   custom={3 + i}
-                  variants={fadeUp}
+                  variants={fadeInLeft}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
@@ -176,12 +186,13 @@ const PartnersSection: React.FC = () => {
 
             <motion.div
               className="relative w-full max-w-[460px] aspect-square flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, ease: "easeOut" as const }}
+              variants={fadeInRight}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
             >
               <div className="absolute inset-[6%] border border-blue-200/50 rounded-full" />
+
               <div
                 className="absolute rounded-full border border-blue-100/30"
                 style={{ inset: "20%" }}
@@ -198,7 +209,12 @@ const PartnersSection: React.FC = () => {
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15,
+                  delay: 0.6,
+                }}
               >
                 <div className="relative w-[95%] h-[85%]">
                   <Image
@@ -225,7 +241,7 @@ const PartnersSection: React.FC = () => {
                     }}
                   >
                     <motion.div
-                      className="absolute w-20 h-20 rounded-full overflow-hidden border-2 border-white/80"
+                      className="absolute w-20 h-20 rounded-full overflow-hidden border-2 border-white/80 shadow-md hover:scale-110 transition-transform duration-300 cursor-pointer"
                       style={{
                         top: 0,
                         left: "50%",

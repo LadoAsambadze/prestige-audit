@@ -100,7 +100,7 @@ export default function ClientsSection() {
       >
         <div className="flex items-center justify-center w-full gap-3 mb-3">
           <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />
-          <span className="text-xs md:text-sm font-medium uppercase tracking-[2px] text-gray-500">
+          <span className="text-base md:text-lg font-medium uppercase tracking-[2px] text-gray-500">
             {t("clientsSectionLabel")}
           </span>
           <div className="w-8 md:w-10 h-0.5 bg-[#2563eb]" />

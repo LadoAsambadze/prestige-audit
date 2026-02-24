@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -15,11 +15,10 @@ const services = [
     id: "financial-audit",
     titleKey: "financialAuditTitle" as const,
     descKey: "financialAuditDescription" as const,
-    color: "from-blue-500 to-blue-700",
-    accentColor: "#3B82F6",
+    color: "bg-blue-50 text-blue-600",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -27,7 +26,7 @@ const services = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="1.75"
+          strokeWidth="2"
           d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         />
       </svg>
@@ -37,11 +36,10 @@ const services = [
     id: "tax-services",
     titleKey: "taxServicesTitle" as const,
     descKey: "taxServicesDescription" as const,
-    color: "from-emerald-500 to-emerald-700",
-    accentColor: "#10B981",
+    color: "bg-emerald-50 text-emerald-600",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -49,7 +47,7 @@ const services = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="1.75"
+          strokeWidth="2"
           d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
@@ -59,11 +57,10 @@ const services = [
     id: "accounting",
     titleKey: "accountingTitle" as const,
     descKey: "accountingDescription" as const,
-    color: "from-violet-500 to-violet-700",
-    accentColor: "#8B5CF6",
+    color: "bg-violet-50 text-violet-600",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -71,7 +68,7 @@ const services = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="1.75"
+          strokeWidth="2"
           d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
         />
       </svg>
@@ -81,11 +78,10 @@ const services = [
     id: "valuation",
     titleKey: "valuationTitle" as const,
     descKey: "valuationDescription" as const,
-    color: "from-amber-400 to-amber-600",
-    accentColor: "#F59E0B",
+    color: "bg-amber-50 text-amber-600",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -93,7 +89,7 @@ const services = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="1.75"
+          strokeWidth="2"
           d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
         />
       </svg>
@@ -103,11 +99,10 @@ const services = [
     id: "legal",
     titleKey: "legalTitle" as const,
     descKey: "legalDescription" as const,
-    color: "from-rose-500 to-rose-700",
-    accentColor: "#F43F5E",
+    color: "bg-rose-50 text-rose-600",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -115,7 +110,7 @@ const services = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="1.75"
+          strokeWidth="2"
           d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
         />
       </svg>
@@ -125,11 +120,10 @@ const services = [
     id: "consulting",
     titleKey: "consultingTitle" as const,
     descKey: "consultingDescription" as const,
-    color: "from-cyan-500 to-cyan-700",
-    accentColor: "#06B6D4",
+    color: "bg-cyan-50 text-cyan-600",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -137,7 +131,7 @@ const services = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="1.75"
+          strokeWidth="2"
           d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
         />
       </svg>
@@ -167,141 +161,83 @@ function ServicesMegaMenu({
   pathname: string;
 }) {
   const t = useTranslations("main");
-  const [hovered, setHovered] = useState<string | null>(null);
-  const active =
-    services.find((s) => s.id === (hovered ?? services[0].id)) ?? services[0];
 
   return (
     <div
       className={cn(
-        "absolute top-full left-1/2 -translate-x-1/2 mt-4 transition-all duration-200 origin-top",
+        "absolute top-[calc(100%+20px)] left-1/2 -translate-x-1/2 transition-all duration-300 origin-top",
         isOpen
-          ? "opacity-100 scale-100 pointer-events-auto"
-          : "opacity-0 scale-95 pointer-events-none",
+          ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
+          : "opacity-0 scale-95 pointer-events-none -translate-y-2",
       )}
-      style={{ width: 720 }}
+      style={{ width: "min(90vw, 840px)" }}
     >
-      <div className="flex justify-center mb-[-1px] relative z-10">
-        <div className="w-3 h-3 bg-white border-l border-t border-slate-200/80 rotate-45 shadow-sm" />
-      </div>
-
-      <div
-        className="bg-white rounded-3xl border border-slate-200/60 overflow-hidden"
-        style={{
-          boxShadow:
-            "0 24px 64px -12px rgba(10,26,63,0.25), 0 4px 20px -4px rgba(10,26,63,0.10)",
-        }}
-      >
-        <div className="flex">
-          {/* Preview panel */}
-          <div className="w-[42%] flex flex-col border-r border-slate-100 bg-gradient-to-br from-[#f0f5ff] to-[#f8faff]">
-            <div className="flex-1 p-6 flex flex-col">
-              <div
-                className={cn(
-                  "w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-5 transition-all duration-300",
-                  `bg-gradient-to-br ${active.color}`,
-                )}
-                style={{ boxShadow: `0 10px 30px ${active.accentColor}55` }}
-              >
-                <span className="scale-[1.5] block">{active.icon}</span>
-              </div>
-              <h3 className="text-[15px] font-bold text-[#0a1a3f] mb-2.5 leading-tight">
-                {t(active.titleKey)}
-              </h3>
-              <p className="text-[12.5px] text-slate-500 leading-relaxed flex-1">
-                {t(active.descKey)}
+      <div className="bg-white rounded-[2rem] border border-slate-200/50 overflow-hidden shadow-[0_30px_70px_-10px_rgba(0,0,0,0.15)]">
+        <div className="p-8">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-50">
+            <div>
+              <h4 className="text-slate-900 font-bold text-lg">
+                {t("navOurServices")}
+              </h4>
+              <p className="text-slate-400 text-xs mt-1">
+                {t("navAllServices")}
               </p>
-              <div className="mt-5 pt-4 border-t border-slate-200/60">
-                <Link
-                  href={`/services/${active.id}`}
-                  className={cn(
-                    "inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-full text-white bg-gradient-to-r transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5",
-                    active.color,
-                  )}
-                  style={{ boxShadow: `0 4px 14px ${active.accentColor}44` }}
-                >
-                  {t("servicesLearnMore")}
-                  <ChevronRight size={12} />
-                </Link>
-              </div>
             </div>
+            <Link
+              href="/services"
+              className="text-blue-600 text-xs font-bold flex items-center gap-1.5 hover:gap-2 transition-all"
+            >
+              {t("navAllServices")} <ArrowRight size={14} />
+            </Link>
           </div>
 
-          <div className="w-[58%] p-4 flex flex-col">
-            <p className="px-3 pt-1 pb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
-              {t("navOurServices")}
-            </p>
-            <div className="flex flex-col gap-1">
-              {services.map((svc) => {
-                const isActive = pathname === `/services/${svc.id}`;
-                const isHovered = hovered === svc.id;
-                return (
-                  <Link
-                    key={svc.id}
-                    href={`/services/${svc.id}`}
-                    onMouseEnter={() => setHovered(svc.id)}
-                    onMouseLeave={() => setHovered(null)}
+          <div className="grid grid-cols-2 gap-x-10 gap-y-6">
+            {services.map((svc) => {
+              const isActive = pathname === `/services/${svc.id}`;
+              return (
+                <Link
+                  key={svc.id}
+                  href={`/services/${svc.id}`}
+                  className="group flex items-start gap-4 p-3 -m-3 rounded-2xl hover:bg-slate-50 transition-all duration-200"
+                >
+                  <div
                     className={cn(
-                      "group flex items-center rounded-2xl transition-all duration-150 relative overflow-hidden",
-                      isActive ? "bg-blue-50" : isHovered ? "bg-slate-50" : "",
+                      "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110",
+                      svc.color,
                     )}
                   >
-                    {isActive && (
-                      <span className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full bg-[#2563eb]" />
-                    )}
-                    <div
+                    {svc.icon}
+                  </div>
+                  <div className="flex flex-col pt-1">
+                    <span
                       className={cn(
-                        "m-1.5 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white transition-all duration-200",
-                        `bg-gradient-to-br ${svc.color}`,
+                        "text-sm font-bold transition-colors",
+                        isActive
+                          ? "text-blue-600"
+                          : "text-slate-900 group-hover:text-blue-600",
                       )}
-                      style={{
-                        boxShadow: isHovered
-                          ? `0 4px 14px ${svc.accentColor}55`
-                          : "none",
-                      }}
                     >
-                      <span className="scale-[0.8] block">{svc.icon}</span>
-                    </div>
-                    <div className="flex-1 min-w-0 px-3 py-2">
-                      <p
-                        className="text-[13px] font-semibold leading-tight truncate"
-                        style={{
-                          color: isActive
-                            ? "#1d4ed8"
-                            : isHovered
-                              ? "#0f172a"
-                              : "#334155",
-                        }}
-                      >
-                        {t(svc.titleKey)}
-                      </p>
-                    </div>
-                    <ChevronRight
-                      size={13}
-                      className={cn(
-                        "shrink-0 mr-3 transition-all duration-150",
-                        isHovered
-                          ? "text-slate-500 translate-x-0.5"
-                          : "text-slate-300",
-                      )}
-                    />
-                  </Link>
-                );
-              })}
-            </div>
+                      {t(svc.titleKey)}
+                    </span>
+                    <span className="text-[12px] text-slate-500 leading-snug mt-1 line-clamp-2">
+                      {t(svc.descKey)}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        <div className="border-t border-slate-100 px-5 py-3 bg-slate-50/50 flex items-center justify-between">
-          <p className="text-xs text-slate-400 font-medium">
-            {t("navAllServices")}
-          </p>
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
-          >
-            {t("navAllServices")} <ChevronRight size={12} />
-          </Link>
+        <div className="bg-slate-50/80 px-8 py-5 flex items-center justify-between">
+          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+            Professional Advisory & Solutions
+          </span>
+          <div className="flex gap-4">
+            <div className="h-1 w-1 rounded-full bg-slate-300" />
+            <div className="h-1 w-1 rounded-full bg-slate-300" />
+            <div className="h-1 w-1 rounded-full bg-slate-300" />
+          </div>
         </div>
       </div>
     </div>
@@ -332,7 +268,7 @@ export default function Header() {
   };
 
   const handleServicesMouseLeave = () => {
-    closeTimer.current = setTimeout(() => setServicesMenuOpen(false), 150);
+    closeTimer.current = setTimeout(() => setServicesMenuOpen(false), 200);
   };
 
   useEffect(() => {
@@ -344,10 +280,7 @@ export default function Header() {
         setServicesMenuOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      if (closeTimer.current) clearTimeout(closeTimer.current);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   if (pathname.includes("admin")) return null;
@@ -365,9 +298,9 @@ export default function Header() {
   return (
     <header
       className="absolute top-0 left-0 right-0 z-50"
-      style={{ padding: "24px 24px 0" }}
+      style={{ padding: "clamp(24px, 2vw, 48px) clamp(24px, 3vw, 64px) 0" }}
     >
-      <div className="relative max-w-[1420px] mx-auto">
+      <div className="relative max-w-[2000px] mx-auto">
         <div
           className="absolute inset-0"
           style={{
@@ -380,21 +313,27 @@ export default function Header() {
         />
 
         <div
-          className="relative flex items-center justify-between px-6 md:px-10"
-          style={{ height: "80px" }}
+          className="relative flex items-center justify-between px-6 md:px-10 2xl:px-16"
+          style={{ height: "clamp(80px, 6vh, 110px)" }}
         >
-          <Image
-            src="/PrestigeLogo.png"
-            alt="Logo"
-            width={280}
-            height={280}
-            style={{ objectFit: "contain" }}
-            className="cursor-pointer mt-2 w-56 -ml-8 md:ml-0 h-56 md:w-72 md:h-72"
-          />
+          {/* LOGO - Wrapped in Link for redirection */}
+          <Link
+            href="/"
+            className="relative z-10 transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Image
+              src="/PrestigeLogo.png"
+              alt="Logo"
+              width={280}
+              height={280}
+              style={{ objectFit: "contain" }}
+              className="cursor-pointer mt-2 w-56 -ml-8 md:ml-0 h-56 md:w-72 md:h-72 2xl:w-80 2xl:h-80"
+            />
+          </Link>
 
           <nav
-            className="hidden lg:flex items-center justify-center gap-1"
-            style={{ width: "50%" }}
+            className="hidden lg:flex items-center justify-center gap-1 xl:gap-4"
+            style={{ width: "auto" }}
           >
             <Link
               href="/"
@@ -460,7 +399,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-6">
             <LocaleSwitcher />
           </div>
 
@@ -482,13 +421,15 @@ export default function Header() {
               >
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-                    <Image
-                      src="/PrestigeLogo.png"
-                      alt="Logo"
-                      width={140}
-                      height={40}
-                      style={{ objectFit: "contain" }}
-                    />
+                    <Link href="/" onClick={() => setOpen(false)}>
+                      <Image
+                        src="/PrestigeLogo.png"
+                        alt="Logo"
+                        width={140}
+                        height={40}
+                        style={{ objectFit: "contain" }}
+                      />
+                    </Link>
                     <button
                       onClick={() => setOpen(false)}
                       className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/20 text-white/70 hover:text-white hover:bg-white/10 transition-colors"

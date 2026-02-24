@@ -76,7 +76,7 @@
   "aboutStat3Label": "Accuracy",
 
   "teamSectionLabel": "Our Team",
-  "teamCeoName": "Giorgi Baramidze",
+  "teamCeoName": "Maia Pheikrishvili",
   "teamCeoTitle": "Founder & CEO",
   "teamCeoTitleFull": "Founder & Chief Executive Officer",
   "teamDept1Label": "Audit",
@@ -96,9 +96,9 @@
 
   "academySectionLabel": "Accounting Academy",
   "academyHeadingRegular": "Master Accounting",
-  "academyHeadingItalic": "from scratch",
-  "academyHeadingSuffix": "to professional level.",
-  "academyBody": "Our structured 6-month academy teaches you everything from bookkeeping fundamentals to advanced financial reporting — with live lectures, real-world projects, and certified instructors guiding you every step of the way.",
+  "academyHeadingItalic": "from Zero",
+  "academyHeadingSuffix": "to Pro.",
+  "academyBody": "A structured 6-month program with live lectures, real-world projects, and certified instructors — taking you from beginner to professional.",
   "academyBadgeDuration": "6-Month Program",
   "academyBadgeCert": "Professional Certification",
   "academyBadgeStudents": "200+ students",
@@ -138,7 +138,6 @@
   "navBookConsultation": "Book Consultation",
   "navAllServices": "All Services",
   "navOurServices": "Our Services",
-  
 
   "footerFollowUs": "Follow Us",
   "footerPages": "Pages",

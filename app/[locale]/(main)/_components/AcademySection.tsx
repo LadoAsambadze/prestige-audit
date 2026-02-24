@@ -18,12 +18,13 @@ export default function AcademySection() {
 
   return (
     <motion.section
-      className="relative w-full z-[9999999] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] -mt-10 bg-[#0a1a3f] pt-16 md:pt-20 lg:pt-24 pb-20 md:pb-28 lg:pb-38 overflow-hidden"
+      className="relative w-full z-[50] rounded-t-[50px] md:rounded-t-[60px] lg:rounded-t-[80px] -mt-10 bg-[#0a1a3f] pt-16 md:pt-20 lg:pt-24 pb-20 md:pb-28 lg:pb-38 overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
-      transition={{ duration: 0.55, ease: "easeOut" as const }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
     >
+      {/* Background Decor */}
       <motion.div
         className="absolute inset-0 z-0 opacity-40 mix-blend-overlay"
         style={{
@@ -36,37 +37,34 @@ export default function AcademySection() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       />
-      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] bg-blue-500/30 rounded-full blur-[80px] md:blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] md:blur-[80px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-blue-500/30 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-cyan-400/20 rounded-full blur-[80px] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#0a1a3f_90%)] z-0" />
 
       <div className="max-w-[2000px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left: Visual Content */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.55, ease: "easeOut" as const }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
           >
             <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-900/40">
               <img
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80"
-                alt="Accounting Academy Learning"
+                alt="Academy Learning"
                 className="w-full h-[320px] md:h-[420px] lg:h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#0a1a3f]/80 via-transparent to-blue-500/10" />
 
+              {/* Status Badges */}
               <motion.div
                 className="absolute bottom-5 left-5 flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.45,
-                  delay: 0.3,
-                  ease: "easeOut" as const,
-                }}
+                transition={{ duration: 0.45, delay: 0.3 }}
               >
                 <div className="w-8 h-8 rounded-full bg-blue-400/20 flex items-center justify-center">
                   <svg
@@ -79,7 +77,7 @@ export default function AcademySection() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253"
                     />
                   </svg>
                 </div>
@@ -92,85 +90,51 @@ export default function AcademySection() {
                   </p>
                 </div>
               </motion.div>
-
-              <motion.div
-                className="absolute top-5 right-5 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-3 py-2"
-                initial={{ opacity: 0, y: -16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.45,
-                  delay: 0.38,
-                  ease: "easeOut" as const,
-                }}
-              >
-                <div className="flex -space-x-1.5">
-                  {[0, 1, 2].map((i) => (
-                    <div
-                      key={i}
-                      className="w-6 h-6 rounded-full bg-blue-400/40 border border-white/30"
-                    />
-                  ))}
-                </div>
-                <span className="text-white/80 text-xs font-medium">
-                  {t("academyBadgeStudents")}
-                </span>
-              </motion.div>
             </div>
           </motion.div>
 
+          {/* Right: Text Content */}
           <motion.div
             className="flex flex-col justify-center"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{
-              duration: 0.55,
-              delay: 0.12,
-              ease: "easeOut" as const,
-            }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.12 }}
           >
             <div className="inline-flex items-center gap-3 mb-6">
-              <span className="h-px w-10 bg-blue-400/40" />
-              <span className="text-blue-300 text-sm font-medium tracking-widest uppercase">
+              <span className="h-px w-8 bg-blue-400/40" />
+              <span className="text-blue-300 text-xs font-medium tracking-widest uppercase">
                 {t("academySectionLabel")}
               </span>
-              <span className="h-px w-10 bg-blue-400/40" />
             </div>
 
-            <h2 className="text-white mb-5 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+            {/* Refined Header: Smaller and Thinner */}
+            <h2 className="text-white mb-5 text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight">
               {t("academyHeadingRegular")}{" "}
-              <span className="italic text-blue-300">
+              <span className="italic text-blue-300 font-light">
                 {t("academyHeadingItalic")}
               </span>
               <br />
               {t("academyHeadingSuffix")}
             </h2>
 
-            <p className="text-white/60 mb-8 max-w-xl text-base md:text-lg leading-relaxed">
+            <p className="text-white/60 mb-8 max-w-xl text-base leading-relaxed">
               {t("academyBody")}
             </p>
 
             <ul className="space-y-3 mb-10">
-              {(
-                [
-                  "academyFeature1",
-                  "academyFeature2",
-                  "academyFeature3",
-                  "academyFeature4",
-                ] as const
-              ).map((key, i) => (
+              {[
+                "academyFeature1",
+                "academyFeature2",
+                "academyFeature3",
+                "academyFeature4",
+              ].map((key, i) => (
                 <motion.li
                   key={i}
                   className="flex items-center gap-3 text-white/75 text-sm md:text-base"
-                  initial={{ opacity: 0, x: 16 }}
+                  initial={{ opacity: 0, x: 10 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.2 + i * 0.09,
-                    ease: "easeOut" as const,
-                  }}
+                  transition={{ delay: 0.2 + i * 0.08 }}
                 >
                   <span className="w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center shrink-0">
                     <svg
@@ -197,13 +161,13 @@ export default function AcademySection() {
                 setFormSubmitted(false);
                 setModalOpen(true);
               }}
-              className="group relative inline-flex items-center gap-3 self-start bg-blue-500 hover:bg-blue-400 text-white font-semibold px-7 py-4 rounded-xl transition-colors duration-200 overflow-hidden text-base"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              className="group relative inline-flex items-center gap-3 self-start bg-blue-600 hover:bg-blue-500 text-white font-medium px-8 py-4 rounded-xl transition-all duration-300 text-sm md:text-base"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <span className="relative z-10">{t("academyCta")}</span>
               <svg
-                className="w-4 h-4 relative z-10 transition-transform duration-200 group-hover:translate-x-1"
+                className="w-4 h-4 transition-transform group-hover:translate-x-1"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -215,12 +179,12 @@ export default function AcademySection() {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-              <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
             </motion.button>
           </motion.div>
         </div>
       </div>
 
+      {/* Modal / Dialog */}
       <Dialog
         open={modalOpen}
         onOpenChange={(open) => {
@@ -228,21 +192,21 @@ export default function AcademySection() {
           if (!open) setFormSubmitted(false);
         }}
       >
-        <DialogContent className="bg-[#0d1f4a] z-[9999999999] border border-white/20 text-white max-w-lg w-full rounded-2xl p-8 shadow-2xl shadow-blue-900/50">
+        <DialogContent className="bg-[#0a1a3f] border border-white/10 text-white max-w-lg w-[95%] rounded-2xl p-6 md:p-10 shadow-3xl">
           {!formSubmitted ? (
             <>
-              <DialogHeader className="mb-6">
-                <DialogTitle className="text-white text-xl md:text-2xl font-bold">
+              <DialogHeader className="mb-8">
+                <DialogTitle className="text-white text-xl md:text-2xl font-semibold tracking-tight">
                   {t("academyModalTitle")}
                 </DialogTitle>
-                <DialogDescription className="text-white/50 text-sm mt-1">
+                <DialogDescription className="text-white/50 text-sm mt-2">
                   {t("academyModalDesc")}
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                {(
-                  [
+              <div className="space-y-4 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
                     {
                       labelKey: "academyModalFieldName",
                       placeholderKey: "academyModalFieldNamePlaceholder",
@@ -253,51 +217,47 @@ export default function AcademySection() {
                       placeholderKey: "academyModalFieldPhonePlaceholder",
                       type: "tel",
                     },
-                  ] as const
-                ).map((field) => (
-                  <div key={field.labelKey}>
-                    <label className="block text-white/60 mb-2 text-xs font-medium uppercase tracking-wider">
-                      {t(field.labelKey)}
-                    </label>
-                    <input
-                      type={field.type}
-                      placeholder={t(field.placeholderKey)}
-                      className="w-full bg-white/[0.06] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/25 text-sm focus:outline-none focus:border-blue-400/50 focus:bg-white/[0.09] transition-all"
-                    />
-                  </div>
-                ))}
+                  ].map((field) => (
+                    <div key={field.labelKey}>
+                      <label className="block text-white/40 mb-1.5 text-[10px] font-bold uppercase tracking-widest">
+                        {t(field.labelKey)}
+                      </label>
+                      <input
+                        type={field.type}
+                        placeholder={t(field.placeholderKey)}
+                        className="w-full bg-white/[0.04] border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <label className="block text-white/40 mb-1.5 text-[10px] font-bold uppercase tracking-widest">
+                    {t("academyModalFieldEmail")}
+                  </label>
+                  <input
+                    type="email"
+                    placeholder={t("academyModalFieldEmailPlaceholder")}
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  />
+                </div>
               </div>
 
-              <div className="mb-4">
-                <label className="block text-white/60 mb-2 text-xs font-medium uppercase tracking-wider">
-                  {t("academyModalFieldEmail")}
-                </label>
-                <input
-                  type="email"
-                  placeholder={t("academyModalFieldEmailPlaceholder")}
-                  className="w-full bg-white/[0.06] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/25 text-sm focus:outline-none focus:border-blue-400/50 focus:bg-white/[0.09] transition-all"
-                />
-              </div>
-
-              <motion.button
+              <button
                 onClick={() => setFormSubmitted(true)}
-                className="w-full bg-blue-500 hover:bg-blue-400 text-white font-semibold py-4 rounded-xl transition-colors duration-200"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20"
               >
                 {t("academyModalSubmit")}
-              </motion.button>
+              </button>
             </>
           ) : (
             <motion.div
-              className="text-center py-8"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, ease: "easeOut" as const }}
+              className="text-center py-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
-              <div className="w-14 h-14 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center mx-auto mb-5">
+              <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center mx-auto mb-6">
                 <svg
-                  className="w-7 h-7 text-blue-300"
+                  className="w-8 h-8 text-green-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -310,10 +270,10 @@ export default function AcademySection() {
                   />
                 </svg>
               </div>
-              <h3 className="text-white text-xl font-bold mb-2">
+              <h3 className="text-white text-xl font-semibold mb-2">
                 {t("academyModalSuccessTitle")}
               </h3>
-              <p className="text-white/55 text-sm">
+              <p className="text-white/50 text-sm">
                 {t("academyModalSuccessBody")}
               </p>
             </motion.div>
