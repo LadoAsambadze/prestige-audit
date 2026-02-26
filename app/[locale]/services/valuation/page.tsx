@@ -15,110 +15,95 @@ import {
   Award,
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
-const valuationServices = [
-  {
-    icon: Building2,
-    title: "Real Estate Valuation",
-    desc: "Market-value appraisals of residential, commercial, and industrial properties for sale, purchase, financing, or insurance purposes.",
-  },
-  {
-    icon: Briefcase,
-    title: "Business Valuation",
-    desc: "Comprehensive assessment of a company's fair market value — essential for M&A, shareholder disputes, estate planning, or strategic decisions.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Investment Project Assessment",
-    desc: "Independent feasibility and valuation analysis of investment projects, including DCF modelling, IRR calculation, and risk-adjusted return analysis.",
-  },
-  {
-    icon: PieChart,
-    title: "Intangible Asset Valuation",
-    desc: "Valuation of brands, patents, software, customer relationships, and other intangible assets for accounting, licensing, or transaction purposes.",
-  },
-  {
-    icon: Scale,
-    title: "Litigation & Dispute Support",
-    desc: "Expert valuation opinions and witness services for court proceedings, arbitration, and regulatory disputes requiring independent certification.",
-  },
-  {
-    icon: Map,
-    title: "Land & Development Valuation",
-    desc: "Appraisals of land plots including development potential analysis, zoning assessment, and highest-and-best-use studies.",
-  },
+// ── same token approach as ServicesSection amber card ──
+const amber = {
+  bg: "from-amber-50 via-yellow-50 to-white",
+  iconBg: "bg-amber-500",
+  iconShadow: "shadow-amber-100",
+  check: "text-amber-600",
+  border: "hover:border-amber-200",
+  gradient: "from-amber-500 to-orange-500",
+  hoverShadow: "hover:shadow-amber-200/60",
+  text: "text-amber-700",
+  lightBg: "from-amber-50 to-orange-50",
+  lightBorder: "border-amber-200/80",
+};
+
+const valuationServiceIcons = [
+  Building2,
+  Briefcase,
+  TrendingUp,
+  PieChart,
+  Scale,
+  Map,
 ];
 
-const stats = [
-  { value: "800+", label: "Valuations Completed" },
-  { value: "₾4B+", label: "Assets Valued" },
-  { value: "25+", label: "Asset Classes Covered" },
-  { value: "RICS", label: "Certified Valuers" },
-];
-
-const process = [
+const approachLetters = ["I", "M", "C"];
+const approachStyles = [
   {
-    number: "01",
-    title: "Scope Definition",
-    description:
-      "We establish the purpose of valuation, standard of value, and effective date — ensuring the assignment is precisely defined.",
-  },
-  {
-    number: "02",
-    title: "Data Collection",
-    description:
-      "Our valuers gather all relevant financial, physical, and market data — conducting site visits and management interviews where required.",
-  },
-  {
-    number: "03",
-    title: "Analysis & Modelling",
-    description:
-      "We apply the most appropriate valuation methodologies (income, market, cost approaches) and reconcile conclusions into a final value opinion.",
-  },
-  {
-    number: "04",
-    title: "Certified Report Delivery",
-    description:
-      "A comprehensive, certified valuation report is delivered — meeting the requirements of banks, courts, regulators, and auditors.",
-  },
-];
-
-const checklistItems = [
-  "Certified valuers with RICS and local professional accreditation",
-  "Compliance with IVS (International Valuation Standards)",
-  "Independent and objective — free from conflicts of interest",
-  "Accepted by banks, tax authorities, and courts",
-  "Detailed methodology and assumptions documentation",
-  "Site inspection and management interviews included",
-  "Fast turnaround without compromising quality",
-  "Post-report advisory support available",
-];
-
-const approaches = [
-  {
-    title: "Income Approach",
-    desc: "Values assets based on their capacity to generate future economic benefits — using DCF, capitalization of earnings, or dividend discount models.",
-    color: "from-amber-500 to-orange-500",
+    gradient: "from-amber-500 to-orange-500",
     bg: "from-amber-50 to-orange-50",
-    border: "border-amber-100",
+    border: "border-amber-200/80",
   },
   {
-    title: "Market Approach",
-    desc: "Derives value by comparing to recent transactions involving similar assets — the most market-reflective methodology when comparable data exists.",
-    color: "from-amber-600 to-yellow-500",
+    gradient: "from-amber-600 to-yellow-500",
     bg: "from-yellow-50 to-amber-50",
-    border: "border-yellow-100",
+    border: "border-yellow-200/80",
   },
   {
-    title: "Cost Approach",
-    desc: "Establishes value based on the cost to reproduce or replace an asset, adjusted for physical deterioration and functional or economic obsolescence.",
-    color: "from-orange-500 to-red-500",
+    gradient: "from-orange-500 to-red-500",
     bg: "from-orange-50 to-red-50",
-    border: "border-orange-100",
+    border: "border-orange-200/80",
   },
 ];
 
+// ── Service card ──
+function ValuationServiceCard({
+  iconIndex,
+  index,
+}: {
+  iconIndex: number;
+  index: number;
+}) {
+  const t = useTranslations("valuation");
+  const Icon = valuationServiceIcons[iconIndex];
+  const n = iconIndex + 1;
+
+  return (
+    <motion.div
+      className={`group relative rounded-[28px] bg-gradient-to-br ${amber.bg} border border-transparent ${amber.border} p-6 shadow-sm hover:shadow-xl ${amber.hoverShadow} transition-all duration-500 overflow-hidden`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+      whileHover={{ y: -4 }}
+    >
+      <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 blur-2xl bg-amber-500" />
+      <div
+        className={`relative z-10 w-11 h-11 p-2.5 ${amber.iconBg} text-white rounded-xl shadow-lg ${amber.iconShadow} mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}
+      >
+        <Icon className="w-5 h-5" />
+      </div>
+      <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-1.5">
+        {t(`service${n}Title`)}
+      </h3>
+      <p className="relative z-10 text-gray-500 text-sm leading-relaxed">
+        {t(`service${n}Desc`)}
+      </p>
+    </motion.div>
+  );
+}
+
+// ── Page ──
 export default function ValuationServicesPage() {
+  const t = useTranslations("valuation");
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -127,9 +112,49 @@ export default function ValuationServicesPage() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
+  const checklist = [
+    t("checklist1"),
+    t("checklist2"),
+    t("checklist3"),
+    t("checklist4"),
+    t("checklist5"),
+    t("checklist6"),
+    t("checklist7"),
+    t("checklist8"),
+  ];
+
+  const approaches = [
+    { title: t("approach1Title"), desc: t("approach1Desc") },
+    { title: t("approach2Title"), desc: t("approach2Desc") },
+    { title: t("approach3Title"), desc: t("approach3Desc") },
+  ];
+
+  const process = [
+    {
+      number: t("process1Number"),
+      title: t("process1Title"),
+      desc: t("process1Desc"),
+    },
+    {
+      number: t("process2Number"),
+      title: t("process2Title"),
+      desc: t("process2Desc"),
+    },
+    {
+      number: t("process3Number"),
+      title: t("process3Title"),
+      desc: t("process3Desc"),
+    },
+    {
+      number: t("process4Number"),
+      title: t("process4Title"),
+      desc: t("process4Desc"),
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#f3f5f4] font-sans">
-      {/* HERO */}
+      {/* ── HERO ── */}
       <section
         ref={heroRef}
         className="relative w-full bg-[#1c1207] overflow-hidden min-h-[88vh] flex items-center"
@@ -143,10 +168,8 @@ export default function ValuationServicesPage() {
             y: heroY,
           }}
         />
-        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-400/15 rounded-full blur-[80px] pointer-events-none" />
-
-        {/* Grid overlay */}
+        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-amber-500/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-orange-400/10 rounded-full blur-[80px] pointer-events-none" />
         <div
           className="absolute inset-0 z-0 opacity-[0.04]"
           style={{
@@ -170,87 +193,60 @@ export default function ValuationServicesPage() {
               className="inline-flex items-center gap-2 text-amber-300/80 hover:text-amber-200 text-sm font-medium transition-colors mb-10 group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
-              Back to Services
+              {t("heroBackLink")}
             </Link>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200 text-xs font-bold uppercase tracking-widest mb-6"
-                initial={{ opacity: 0, y: -16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                <Scale size={12} /> Valuation Services
-              </motion.div>
-              <motion.h1
-                className="text-5xl md:text-6xl font-extrabold text-white leading-[1.05] mb-6"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                Expert{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-200">
-                  Asset Valuation
-                </span>{" "}
-                You Can Certify
-              </motion.h1>
-              <motion.p
-                className="text-amber-100/60 text-lg leading-relaxed mb-10 max-w-lg"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                Credible, independent, and internationally certified valuations
-                for real estate, businesses, and intangible assets. Accepted by
-                financial institutions, courts, and tax authorities.
-              </motion.p>
-              <motion.div
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-[1.03]"
-                >
-                  Request a Valuation <ChevronRight size={16} />
-                </Link>
-                <a
-                  href="#services"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
-                >
-                  Our Services
-                </a>
-              </motion.div>
-            </div>
+          <div className="max-w-2xl">
+            <motion.div
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200 text-xs font-bold uppercase tracking-widest mb-6"
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Scale size={12} /> {t("heroBadge")}
+            </motion.div>
+
+            <motion.h1
+              className="text-5xl md:text-6xl font-extrabold text-white leading-[1.05] mb-6"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              {t("heroHeading")}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-200">
+                {t("heroHeadingHighlight")}
+              </span>{" "}
+              {t("heroHeadingSuffix")}
+            </motion.h1>
+
+            <motion.p
+              className="text-amber-100/60 text-lg leading-relaxed mb-10 max-w-lg"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              {t("heroBody")}
+            </motion.p>
 
             <motion.div
-              className="grid grid-cols-2 gap-5"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={i}
-                  className="bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-3xl p-7 text-center"
-                  whileHover={{
-                    scale: 1.03,
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="text-4xl font-extrabold text-white mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-amber-200/60 text-sm font-medium">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-[1.03]"
+              >
+                {t("heroCta")} <ChevronRight size={16} />
+              </Link>
+              <a
+                href="#services"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
+              >
+                {t("heroExplore")}
+              </a>
             </motion.div>
           </div>
         </motion.div>
@@ -269,54 +265,41 @@ export default function ValuationServicesPage() {
         </div>
       </section>
 
-      {/* ABOUT VALUATION */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* ── WHY IT MATTERS + CHECKLIST ── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 md:py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-0.5 bg-amber-500" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                Why It Matters
+                {t("whyLabel")}
               </span>
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900 leading-tight mb-6">
-              A Valuation Is Only as Good as the Expert Behind It
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-5">
+              {t("whyHeading")}
             </h2>
-            <p className="text-gray-600 text-[16px] leading-relaxed mb-5">
-              Whether you're buying, selling, financing, or reporting — the
-              credibility of a valuation depends entirely on the methodology,
-              independence, and certification of the valuer. An incorrect or
-              unsupported opinion can have serious financial and legal
-              consequences.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
+              {t("whyBody1")}
             </p>
-            <p className="text-gray-600 text-[16px] leading-relaxed mb-5">
-              Our certified valuers apply internationally recognized standards
-              (IVS, RICS Red Book) and deploy the most appropriate methodology
-              for each asset class. Every report is fully documented,
-              defensible, and accepted by major financial institutions and
-              government bodies.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
+              {t("whyBody2")}
             </p>
-            <p className="text-gray-600 text-[16px] leading-relaxed">
-              From a single property appraisal to a full business valuation for
-              a complex M&A transaction, our team has the experience to deliver
-              a credible, court-ready opinion on time.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-6">
+              {t("whyBody3")}
             </p>
 
-            <div className="mt-8 flex items-start gap-4 p-5 bg-amber-50 border border-amber-200/60 rounded-2xl">
+            <div className="flex items-start gap-4 p-5 bg-amber-50 border border-amber-200/60 rounded-2xl">
               <Award className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-bold text-amber-800 mb-1">
-                  Internationally Certified
+                  {t("whyAlertTitle")}
                 </p>
-                <p className="text-sm text-amber-700">
-                  All valuations comply with IVS and are performed by
-                  RICS-accredited professionals with recognized expertise.
-                </p>
+                <p className="text-sm text-amber-700">{t("whyAlertBody")}</p>
               </div>
             </div>
           </motion.div>
@@ -326,25 +309,30 @@ export default function ValuationServicesPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative"
           >
-            <div className="absolute -inset-4 rounded-[40px] bg-amber-500/8 blur-2xl" />
-            <div className="relative bg-white rounded-[32px] p-8 shadow-xl border border-amber-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-6">
-                What Every Engagement Includes
+            <div
+              className={`relative rounded-[28px] bg-gradient-to-br ${amber.bg} border ${amber.lightBorder} p-7 shadow-sm overflow-hidden`}
+            >
+              <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl bg-amber-500" />
+              <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-5">
+                {t("checklistCardTitle")}
               </h3>
-              <ul className="space-y-3.5">
-                {checklistItems.map((item, i) => (
+              <ul className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {checklist.map((item, i) => (
                   <motion.li
                     key={i}
-                    className="flex items-start gap-3 text-gray-700"
+                    className="flex items-start gap-2.5 text-gray-700"
                     initial={{ opacity: 0, x: 10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.06 }}
+                    transition={{ duration: 0.35, delay: i * 0.05 }}
                   >
-                    <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                    <span className="text-[14px] font-medium">{item}</span>
+                    <CheckCircle2
+                      className={`w-4 h-4 ${amber.check} shrink-0 mt-0.5`}
+                    />
+                    <span className="text-[13px] font-medium leading-snug">
+                      {item}
+                    </span>
                   </motion.li>
                 ))}
               </ul>
@@ -353,8 +341,8 @@ export default function ValuationServicesPage() {
         </div>
       </section>
 
-      {/* VALUATION APPROACHES */}
-      <section className="bg-white py-16">
+      {/* ── THREE APPROACHES ── */}
+      <section className="bg-white py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div
             className="text-center mb-12"
@@ -363,26 +351,61 @@ export default function ValuationServicesPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-0.5 bg-amber-500" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                Methodology
+                {t("approachesLabel")}
               </span>
               <div className="w-8 h-0.5 bg-amber-500" />
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900">
-              Three Approaches to Value
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              {t("approachesHeading")}
             </h2>
-            <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-              We select and reconcile the most appropriate methodology for each
-              specific assignment.
+            <p className="text-gray-500 mt-2 max-w-lg mx-auto text-sm">
+              {t("approachesBody")}
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
+
+          {/* Mobile carousel */}
+          <div className="block md:hidden">
+            <Carousel opts={{ align: "start", loop: false }} className="w-full">
+              <CarouselContent className="-ml-0 mr-6">
+                {approaches.map((approach, i) => (
+                  <CarouselItem
+                    key={i}
+                    className="pl-6 basis-[85%] sm:basis-[70%]"
+                  >
+                    <motion.div
+                      className={`relative rounded-[28px] bg-gradient-to-br ${approachStyles[i].bg} border ${approachStyles[i].border} p-7 overflow-hidden`}
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                    >
+                      <div
+                        className={`w-11 h-11 bg-gradient-to-br ${approachStyles[i].gradient} rounded-xl flex items-center justify-center mb-5 shadow-md text-white text-lg font-extrabold`}
+                      >
+                        {approachLetters[i]}
+                      </div>
+                      <h3 className="text-[16px] font-bold text-gray-900 mb-2">
+                        {approach.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {approach.desc}
+                      </p>
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6">
             {approaches.map((approach, i) => (
               <motion.div
                 key={i}
-                className={`bg-gradient-to-br ${approach.bg} border ${approach.border} rounded-[28px] p-8`}
+                className={`relative rounded-[28px] bg-gradient-to-br ${approachStyles[i].bg} border ${approachStyles[i].border} p-8 overflow-hidden`}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -390,11 +413,11 @@ export default function ValuationServicesPage() {
                 whileHover={{ y: -4 }}
               >
                 <div
-                  className={`w-12 h-12 bg-gradient-to-br ${approach.color} rounded-2xl flex items-center justify-center mb-5 shadow-md text-white text-xl font-extrabold`}
+                  className={`w-12 h-12 bg-gradient-to-br ${approachStyles[i].gradient} rounded-2xl flex items-center justify-center mb-5 shadow-md text-white text-xl font-extrabold`}
                 >
-                  {["I", "M", "C"][i]}
+                  {approachLetters[i]}
                 </div>
-                <h3 className="text-[18px] font-bold text-gray-900 mb-3">
+                <h3 className="text-[17px] font-bold text-gray-900 mb-2">
                   {approach.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
@@ -406,75 +429,75 @@ export default function ValuationServicesPage() {
         </div>
       </section>
 
-      {/* SERVICES GRID */}
-      <section id="services" className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-amber-500" />
-            <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-              Asset Classes
-            </span>
-            <div className="w-8 h-0.5 bg-amber-500" />
-          </div>
-          <h2 className="text-4xl font-extrabold text-gray-900">
-            Valuation Services
-          </h2>
-        </motion.div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {valuationServices.map((svc, i) => (
-            <motion.div
-              key={i}
-              className="group bg-white hover:bg-gradient-to-br hover:from-amber-50 hover:to-orange-50 border border-gray-100 hover:border-amber-100 rounded-[28px] p-7 transition-all duration-400 cursor-default shadow-sm"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              whileHover={{
-                y: -4,
-                boxShadow: "0 20px 60px rgba(245,158,11,0.1)",
-              }}
-            >
-              <div className="w-12 h-12 bg-amber-500 rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-amber-100 group-hover:scale-105 transition-transform duration-300">
-                <svc.icon className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="text-[17px] font-bold text-gray-900 mb-2">
-                {svc.title}
-              </h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {svc.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="bg-white py-20">
+      {/* ── SERVICES ── */}
+      <section id="services" className="bg-[#f3f5f4] py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div
-            className="text-center mb-14"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-0.5 bg-amber-500" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                Our Process
+                {t("servicesLabel")}
               </span>
               <div className="w-8 h-0.5 bg-amber-500" />
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900">
-              How a Valuation Works
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              {t("servicesHeading")}
             </h2>
           </motion.div>
+
+          {/* Mobile carousel */}
+          <div className="block md:hidden">
+            <Carousel opts={{ align: "start", loop: false }} className="w-full">
+              <CarouselContent className="-ml-0 mr-6">
+                {valuationServiceIcons.map((_, i) => (
+                  <CarouselItem
+                    key={i}
+                    className="pl-6 basis-[85%] sm:basis-[70%]"
+                  >
+                    <ValuationServiceCard iconIndex={i} index={i} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {valuationServiceIcons.map((_, i) => (
+              <ValuationServiceCard key={i} iconIndex={i} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROCESS ── */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="w-8 h-0.5 bg-amber-500" />
+              <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
+                {t("processLabel")}
+              </span>
+              <div className="w-8 h-0.5 bg-amber-500" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              {t("processHeading")}
+            </h2>
+          </motion.div>
+
           <div className="relative">
             <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200" />
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -491,11 +514,11 @@ export default function ValuationServicesPage() {
                     {step.number}
                     <div className="absolute inset-0 rounded-full bg-amber-400/30 blur-md -z-10" />
                   </div>
-                  <h3 className="text-[17px] font-bold text-gray-900 mb-3">
+                  <h3 className="text-[16px] font-bold text-gray-900 mb-2">
                     {step.title}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
-                    {step.description}
+                    {step.desc}
                   </p>
                 </motion.div>
               ))}
@@ -504,10 +527,10 @@ export default function ValuationServicesPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-6 lg:px-12 py-20">
+      {/* ── CTA ── */}
+      <section className="px-6 lg:px-12 py-16 md:py-20">
         <motion.div
-          className="max-w-7xl mx-auto relative overflow-hidden rounded-[40px] bg-[#1c1207] p-12 md:p-16 text-center"
+          className="max-w-7xl mx-auto relative overflow-hidden rounded-[36px] bg-[#1c1207] p-10 md:p-14 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -516,28 +539,27 @@ export default function ValuationServicesPage() {
           <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-amber-500/15 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-orange-400/10 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
-            <p className="text-amber-300/80 text-sm font-bold uppercase tracking-widest mb-4">
-              Get Certified
+            <p className="text-amber-300/80 text-xs font-bold uppercase tracking-widest mb-3">
+              {t("ctaLabel")}
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-5">
-              Know the True Value of Your Assets
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+              {t("ctaHeading")}
             </h2>
-            <p className="text-amber-100/60 max-w-lg mx-auto mb-8 text-base leading-relaxed">
-              Whether for a transaction, financing, litigation, or reporting —
-              our certified valuers deliver opinions you can rely on.
+            <p className="text-amber-100/60 max-w-md mx-auto mb-7 text-sm leading-relaxed">
+              {t("ctaBody")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-500 hover:bg-amber-400 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/40 hover:scale-[1.03] text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/40 hover:scale-[1.03] text-sm"
               >
-                Request a Valuation <ChevronRight size={16} />
+                {t("ctaBook")} <ChevronRight size={16} />
               </Link>
               <Link
                 href="/services"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all duration-300 backdrop-blur-sm text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all duration-300 backdrop-blur-sm text-sm"
               >
-                <ArrowLeft size={16} /> All Services
+                <ArrowLeft size={16} /> {t("ctaAllServices")}
               </Link>
             </div>
           </div>

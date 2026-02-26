@@ -65,17 +65,13 @@ export default function HeroSection(): JSX.Element {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...FADE, delay: 0.25 }}
-            className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
+            className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-snug tracking-widest"
           >
-            <span className="block md:inline whitespace-nowrap">
-              {t("heroTitleLine1")}{" "}
-              <span className="text-blue-500">{t("heroTitleHighlight")}</span>
+            <span className="block">{t("heroTitleLine1")}</span>
+            <span className="block text-blue-500">
+              {t("heroTitleHighlight")}
             </span>
-            <br className="hidden md:block" />
-            <span className="block md:inline whitespace-nowrap">
-              {" "}
-              {t("heroTitleLine2")}
-            </span>
+            <span className="block">{t("heroTitleLine2")}</span>
           </motion.h1>
 
           <motion.div

@@ -50,14 +50,16 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-10">
           <div className="md:col-span-4 space-y-6 hidden md:block">
-            <Image
-              src="/PrestigeLogo.png"
-              alt="Prestige Audit"
-              width={300}
-              height={300}
-              style={{ objectFit: "contain" }}
-              className="-ml-10 -mt-20"
-            />
+            <Link href="/">
+              <Image
+                src="/PrestigeLogo.png"
+                alt="Prestige Audit"
+                width={300}
+                height={300}
+                style={{ objectFit: "contain" }}
+                className="-ml-10 -mt-20"
+              />
+            </Link>
             <div className="space-y-4">
               <h4 className="text-white/80 text-xs font-semibold uppercase tracking-widest">
                 {t("footerFollowUs")}
@@ -84,7 +86,11 @@ export default function Footer() {
                     <Link
                       suppressHydrationWarning
                       href={item.href}
-                      className="hover:text-white transition-colors duration-200"
+                      className={`hover:text-white transition-colors duration-200 ${
+                        pathname === item.href
+                          ? "text-white underline underline-offset-4"
+                          : ""
+                      }`}
                     >
                       {item.name}
                     </Link>
@@ -102,7 +108,11 @@ export default function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="hover:text-white transition-colors duration-200"
+                      className={`hover:text-white transition-colors duration-200 ${
+                        pathname === item.href
+                          ? "text-white underline underline-offset-4"
+                          : ""
+                      }`}
                     >
                       {item.name}
                     </Link>

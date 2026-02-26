@@ -16,86 +16,76 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
-const taxServices = [
-  {
-    icon: FileText,
-    title: "Individual Tax Returns",
-    desc: "Accurate preparation and filing of personal income tax returns, including complex cases with foreign income, investments, and multiple sources.",
-  },
-  {
-    icon: Calculator,
-    title: "Corporate Tax Compliance",
-    desc: "End-to-end corporate tax return preparation, ensuring full compliance with current legislation while identifying every legitimate deduction.",
-  },
-  {
-    icon: TrendingDown,
-    title: "Tax Planning & Optimization",
-    desc: "Proactive strategies to legally minimize your tax burden — from entity structuring to timing of income and deductions.",
-  },
-  {
-    icon: Globe,
-    title: "International Tax Advisory",
-    desc: "Guidance on cross-border taxation, transfer pricing, tax treaties, and obligations for businesses operating in multiple jurisdictions.",
-  },
-  {
-    icon: Shield,
-    title: "Tax Dispute Resolution",
-    desc: "Expert representation during tax authority audits, appeals, and disputes — protecting your interests with documented, defensible positions.",
-  },
-  {
-    icon: Users,
-    title: "VAT & Indirect Taxes",
-    desc: "Registration, reporting, and compliance for VAT, GST, excise duties, and other indirect taxes across local and international operations.",
-  },
+// ── same token approach as ServicesSection emerald card ──
+const emerald = {
+  bg: "from-emerald-50 via-teal-50 to-white",
+  iconBg: "bg-emerald-600",
+  iconShadow: "shadow-emerald-100",
+  check: "text-emerald-600",
+  border: "hover:border-emerald-200",
+  gradient: "from-emerald-500 to-teal-600",
+  hoverShadow: "hover:shadow-emerald-200/60",
+  text: "text-emerald-700",
+  lightBg: "from-emerald-50 to-teal-50",
+  lightBorder: "border-emerald-200/80",
+};
+
+const taxServiceIcons = [
+  FileText,
+  Calculator,
+  TrendingDown,
+  Globe,
+  Shield,
+  Users,
 ];
 
-const stats = [
-  { value: "₾2.4B+", label: "Tax Savings Achieved" },
-  { value: "1,200+", label: "Tax Returns Filed" },
-  { value: "100%", label: "On-Time Filing Rate" },
-  { value: "15+", label: "Certified Tax Advisors" },
-];
+// ── Service card ──
+function TaxServiceCard({
+  iconIndex,
+  index,
+}: {
+  iconIndex: number;
+  index: number;
+}) {
+  const t = useTranslations("taxServices");
+  const Icon = taxServiceIcons[iconIndex];
+  const n = iconIndex + 1;
 
-const process = [
-  {
-    number: "01",
-    title: "Financial Review",
-    description:
-      "We gather and review all relevant financial data, income sources, expenses, and prior filings to build a complete picture.",
-  },
-  {
-    number: "02",
-    title: "Strategy Development",
-    description:
-      "Our advisors identify optimization opportunities and design a tax strategy aligned with your goals and risk appetite.",
-  },
-  {
-    number: "03",
-    title: "Preparation & Filing",
-    description:
-      "We prepare all returns with precision, apply every eligible relief, and file on time — every time.",
-  },
-  {
-    number: "04",
-    title: "Ongoing Advisory",
-    description:
-      "Tax doesn't end at filing. We monitor legislative changes and advise year-round to keep you ahead.",
-  },
-];
+  return (
+    <motion.div
+      className={`group relative rounded-[28px] bg-gradient-to-br ${emerald.bg} border border-transparent ${emerald.border} p-6 shadow-sm hover:shadow-xl ${emerald.hoverShadow} transition-all duration-500 overflow-hidden`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+      whileHover={{ y: -4 }}
+    >
+      <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 blur-2xl bg-emerald-600" />
+      <div
+        className={`relative z-10 w-11 h-11 p-2.5 ${emerald.iconBg} text-white rounded-xl shadow-lg ${emerald.iconShadow} mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}
+      >
+        <Icon className="w-5 h-5" />
+      </div>
+      <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-1.5">
+        {t(`service${n}Title`)}
+      </h3>
+      <p className="relative z-10 text-gray-500 text-sm leading-relaxed">
+        {t(`service${n}Desc`)}
+      </p>
+    </motion.div>
+  );
+}
 
-const checklistItems = [
-  "Compliance with local and international tax law",
-  "Proactive identification of tax-saving opportunities",
-  "Year-round advisory — not just at filing season",
-  "Secure document management and digital filing",
-  "Representation before tax authorities if needed",
-  "Transparent fixed-fee or retainer pricing",
-  "Multi-jurisdiction expertise for global businesses",
-  "Fast turnaround with guaranteed accuracy",
-];
-
+// ── Page ──
 export default function TaxServicesPage() {
+  const t = useTranslations("taxServices");
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -104,9 +94,20 @@ export default function TaxServicesPage() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
+  const checklist = [
+    t("checklist1"),
+    t("checklist2"),
+    t("checklist3"),
+    t("checklist4"),
+    t("checklist5"),
+    t("checklist6"),
+    t("checklist7"),
+    t("checklist8"),
+  ];
+
   return (
     <div className="min-h-screen bg-[#f3f5f4] font-sans">
-      {/* HERO */}
+      {/* ── HERO ── */}
       <section
         ref={heroRef}
         className="relative w-full bg-[#0c2340] overflow-hidden min-h-[88vh] flex items-center"
@@ -145,87 +146,60 @@ export default function TaxServicesPage() {
               className="inline-flex items-center gap-2 text-emerald-300/80 hover:text-emerald-200 text-sm font-medium transition-colors mb-10 group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
-              Back to Services
+              {t("heroBackLink")}
             </Link>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-bold uppercase tracking-widest mb-6"
-                initial={{ opacity: 0, y: -16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                <Calculator size={12} /> Tax Services
-              </motion.div>
-              <motion.h1
-                className="text-5xl md:text-6xl font-extrabold text-white leading-[1.05] mb-6"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                Smart{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
-                  Tax Planning
-                </span>{" "}
-                & Compliance
-              </motion.h1>
-              <motion.p
-                className="text-emerald-100/60 text-lg leading-relaxed mb-10 max-w-lg"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                We navigate the complexity of tax legislation so you don't have
-                to. From filing to long-term planning, our advisors ensure
-                you're always compliant — and never paying more than necessary.
-              </motion.p>
-              <motion.div
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/30 hover:scale-[1.03]"
-                >
-                  Get Tax Advice <ChevronRight size={16} />
-                </Link>
-                <a
-                  href="#services"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
-                >
-                  Our Tax Services
-                </a>
-              </motion.div>
-            </div>
+          <div className="max-w-2xl">
+            <motion.div
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-bold uppercase tracking-widest mb-6"
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Calculator size={12} /> {t("heroBadge")}
+            </motion.div>
+
+            <motion.h1
+              className="text-5xl md:text-6xl font-extrabold text-white leading-[1.05] mb-6"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              {t("heroHeading")}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
+                {t("heroHeadingHighlight")}
+              </span>{" "}
+              {t("heroHeadingSuffix")}
+            </motion.h1>
+
+            <motion.p
+              className="text-emerald-100/60 text-lg leading-relaxed mb-10 max-w-lg"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              {t("heroBody")}
+            </motion.p>
 
             <motion.div
-              className="grid grid-cols-2 gap-5"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={i}
-                  className="bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-3xl p-7 text-center"
-                  whileHover={{
-                    scale: 1.03,
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="text-4xl font-extrabold text-white mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-emerald-200/60 text-sm font-medium">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/30 hover:scale-[1.03]"
+              >
+                {t("heroCta")} <ChevronRight size={16} />
+              </Link>
+              <a
+                href="#services"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
+              >
+                {t("heroExplore")}
+              </a>
             </motion.div>
           </div>
         </motion.div>
@@ -244,54 +218,41 @@ export default function TaxServicesPage() {
         </div>
       </section>
 
-      {/* WHY TAX MATTERS */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* ── WHY IT MATTERS + CHECKLIST ── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 md:py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-0.5 bg-emerald-600" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                Why It Matters
+                {t("whyLabel")}
               </span>
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900 leading-tight mb-6">
-              Tax Planning Is More Than Filing Returns
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-5">
+              {t("whyHeading")}
             </h2>
-            <p className="text-gray-600 text-[16px] leading-relaxed mb-5">
-              Effective tax management is one of the most powerful levers for
-              improving your bottom line. Yet most businesses leave significant
-              savings on the table by treating tax as an afterthought —
-              something to handle at year-end rather than a strategic priority.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
+              {t("whyBody1")}
             </p>
-            <p className="text-gray-600 text-[16px] leading-relaxed mb-5">
-              Our advisors take a proactive approach: understanding your
-              business model, identifying structuring opportunities, and
-              building a tax strategy that grows with you. Whether you're an
-              individual, SME, or multinational, the right advice at the right
-              time makes a measurable difference.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
+              {t("whyBody2")}
             </p>
-            <p className="text-gray-600 text-[16px] leading-relaxed">
-              We also provide peace of mind — knowing that every return is
-              accurate, every deadline is met, and every position is defensible
-              if ever challenged.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-6">
+              {t("whyBody3")}
             </p>
 
-            <div className="mt-8 flex items-start gap-4 p-5 bg-amber-50 border border-amber-200/60 rounded-2xl">
+            <div className="flex items-start gap-4 p-5 bg-amber-50 border border-amber-200/60 rounded-2xl">
               <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-bold text-amber-800 mb-1">
-                  Did you know?
+                  {t("whyAlertTitle")}
                 </p>
-                <p className="text-sm text-amber-700">
-                  Businesses that engage tax advisors proactively save an
-                  average of 18–24% more in taxes than those who only file
-                  reactively.
-                </p>
+                <p className="text-sm text-amber-700">{t("whyAlertBody")}</p>
               </div>
             </div>
           </motion.div>
@@ -301,25 +262,30 @@ export default function TaxServicesPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative"
           >
-            <div className="absolute -inset-4 rounded-[40px] bg-emerald-600/8 blur-2xl" />
-            <div className="relative bg-white rounded-[32px] p-8 shadow-xl border border-emerald-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-6">
-                What Every Engagement Includes
+            <div
+              className={`relative rounded-[28px] bg-gradient-to-br ${emerald.bg} border ${emerald.lightBorder} p-7 shadow-sm overflow-hidden`}
+            >
+              <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl bg-emerald-600" />
+              <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-5">
+                {t("checklistCardTitle")}
               </h3>
-              <ul className="space-y-3.5">
-                {checklistItems.map((item, i) => (
+              <ul className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {checklist.map((item, i) => (
                   <motion.li
                     key={i}
-                    className="flex items-start gap-3 text-gray-700"
+                    className="flex items-start gap-2.5 text-gray-700"
                     initial={{ opacity: 0, x: 10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.06 }}
+                    transition={{ duration: 0.35, delay: i * 0.05 }}
                   >
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    <span className="text-[14px] font-medium">{item}</span>
+                    <CheckCircle2
+                      className={`w-4 h-4 ${emerald.check} shrink-0 mt-0.5`}
+                    />
+                    <span className="text-[13px] font-medium leading-snug">
+                      {item}
+                    </span>
                   </motion.li>
                 ))}
               </ul>
@@ -328,113 +294,60 @@ export default function TaxServicesPage() {
         </div>
       </section>
 
-      {/* TAX SERVICE TYPES */}
-      <section id="services" className="bg-white py-20">
+      {/* ── TAX SERVICES ── */}
+      <section id="services" className="bg-white py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div
-            className="text-center mb-14"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-0.5 bg-emerald-600" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                Tax Solutions
+                {t("servicesLabel")}
               </span>
               <div className="w-8 h-0.5 bg-emerald-600" />
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900">
-              Our Tax Services
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              {t("servicesHeading")}
             </h2>
-            <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-              From individuals to corporations, from local to cross-border — we
-              handle every tax challenge.
+            <p className="text-gray-500 mt-2 max-w-lg mx-auto text-sm">
+              {t("servicesBody")}
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {taxServices.map((svc, i) => (
-              <motion.div
-                key={i}
-                className="group bg-[#f3f5f4] hover:bg-gradient-to-br hover:from-emerald-50 hover:to-teal-50 border border-transparent hover:border-emerald-100 rounded-[28px] p-7 transition-all duration-400 cursor-default"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                whileHover={{
-                  y: -4,
-                  boxShadow: "0 20px 60px rgba(16,185,129,0.1)",
-                }}
-              >
-                <div className="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-emerald-100 group-hover:scale-105 transition-transform duration-300">
-                  <svc.icon className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="text-[17px] font-bold text-gray-900 mb-2">
-                  {svc.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {svc.desc}
-                </p>
-              </motion.div>
+          {/* Mobile carousel */}
+          <div className="block md:hidden">
+            <Carousel opts={{ align: "start", loop: false }} className="w-full">
+              <CarouselContent className="-ml-0 mr-6">
+                {taxServiceIcons.map((_, i) => (
+                  <CarouselItem
+                    key={i}
+                    className="pl-6 basis-[85%] sm:basis-[70%]"
+                  >
+                    <TaxServiceCard iconIndex={i} index={i} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {taxServiceIcons.map((_, i) => (
+              <TaxServiceCard key={i} iconIndex={i} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* PROCESS */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      {/* ── CTA ── */}
+      <section className="px-6 lg:px-12 pb-20 pt-16 md:pt-20">
         <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-emerald-600" />
-            <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-              Our Process
-            </span>
-            <div className="w-8 h-0.5 bg-emerald-600" />
-          </div>
-          <h2 className="text-4xl font-extrabold text-gray-900">
-            How We Work With You
-          </h2>
-        </motion.div>
-        <div className="relative">
-          <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-200" />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((step, i) => (
-              <motion.div
-                key={i}
-                className="relative text-center"
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.5, delay: i * 0.12 }}
-              >
-                <div className="relative inline-flex items-center justify-center w-[72px] h-[72px] rounded-full bg-emerald-600 text-white font-extrabold text-xl shadow-xl shadow-emerald-200 mb-6 mx-auto">
-                  {step.number}
-                  <div className="absolute inset-0 rounded-full bg-emerald-400/30 blur-md -z-10" />
-                </div>
-                <h3 className="text-[17px] font-bold text-gray-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-6 lg:px-12 pb-20">
-        <motion.div
-          className="max-w-7xl mx-auto relative overflow-hidden rounded-[40px] bg-[#0c2340] p-12 md:p-16 text-center"
+          className="max-w-7xl mx-auto relative overflow-hidden rounded-[36px] bg-[#0c2340] p-10 md:p-14 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -443,31 +356,30 @@ export default function TaxServicesPage() {
           <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-teal-400/10 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 mb-4">
+            <div className="inline-flex items-center gap-2 mb-3">
               <Clock className="w-4 h-4 text-emerald-300" />
-              <p className="text-emerald-300/80 text-sm font-bold uppercase tracking-widest">
-                Don't Wait Until Filing Season
+              <p className="text-emerald-300/80 text-xs font-bold uppercase tracking-widest">
+                {t("ctaLabel")}
               </p>
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-5">
-              Start Saving on Taxes Today
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+              {t("ctaHeading")}
             </h2>
-            <p className="text-emerald-100/60 max-w-lg mx-auto mb-8 text-base leading-relaxed">
-              The best time to start tax planning is now. Speak with our
-              advisors and discover how much you could be saving.
+            <p className="text-emerald-100/60 max-w-md mx-auto mb-7 text-sm leading-relaxed">
+              {t("ctaBody")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/40 hover:scale-[1.03] text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/40 hover:scale-[1.03] text-sm"
               >
-                Book a Free Consultation <ChevronRight size={16} />
+                {t("ctaBook")} <ChevronRight size={16} />
               </Link>
               <Link
                 href="/services"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all duration-300 backdrop-blur-sm text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all duration-300 backdrop-blur-sm text-sm"
               >
-                <ArrowLeft size={16} /> All Services
+                <ArrowLeft size={16} /> {t("ctaAllServices")}
               </Link>
             </div>
           </div>

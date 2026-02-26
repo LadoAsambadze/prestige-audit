@@ -12,88 +12,146 @@ import {
   ClipboardCheck,
   AlertTriangle,
   ChevronRight,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
-const auditSteps = [
+const blue = {
+  bg: "from-blue-50 via-indigo-50 to-white",
+  iconBg: "bg-blue-600",
+  iconShadow: "shadow-blue-100",
+  check: "text-blue-600",
+  border: "hover:border-blue-200",
+  gradient: "from-blue-600 to-indigo-600",
+  hoverShadow: "hover:shadow-blue-200/60",
+  text: "text-blue-700",
+  lightBg: "from-blue-50 to-indigo-50",
+  lightBorder: "border-blue-200/80",
+};
+
+const auditServiceIcons = [
+  FileSearch,
+  ShieldCheck,
+  BarChart3,
+  AlertTriangle,
+  ClipboardCheck,
+  TrendingUp,
+];
+
+const auditTeam = [
   {
-    number: "01",
-    title: "Initial Planning",
-    description:
-      "We begin with a thorough understanding of your business, industry context, and key risk areas. Our team reviews prior reports and engages with management to define the audit scope.",
+    name: "Sarah Mitchell",
+    title: "Senior Auditor",
+    image: "/3.png",
+    slug: "sarah-mitchell",
   },
   {
-    number: "02",
-    title: "Risk Assessment",
-    description:
-      "We identify and evaluate potential misstatements and control weaknesses. Our risk-based approach ensures we focus time and resources where it matters most.",
+    name: "Robert Clarke",
+    title: "Audit Manager",
+    image: "/4.jpeg",
+    slug: "robert-clarke",
   },
   {
-    number: "03",
-    title: "Fieldwork & Testing",
-    description:
-      "Our auditors perform substantive testing of transactions, balances, and controls. We gather sufficient evidence to form an informed, objective opinion.",
-  },
-  {
-    number: "04",
-    title: "Reporting & Conclusions",
-    description:
-      "We deliver a comprehensive audit report with findings, recommendations, and a clear audit opinion — giving stakeholders confidence in your financial statements.",
+    name: "Nino Kvaratskhelia",
+    title: "Financial Analyst",
+    image: "/3.png",
+    slug: "nino-kvaratskhelia",
   },
 ];
 
-const auditServices = [
-  {
-    icon: FileSearch,
-    title: "Statutory Financial Audit",
-    desc: "Full audit of annual financial statements in compliance with local and international accounting standards (IFRS, GAAP).",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Internal Control Review",
-    desc: "Evaluation of your internal control environment to identify gaps, reduce fraud risk, and improve operational reliability.",
-  },
-  {
-    icon: BarChart3,
-    title: "Due Diligence Audit",
-    desc: "Pre-transaction financial due diligence for mergers, acquisitions, and investments — uncovering hidden risks before you commit.",
-  },
-  {
-    icon: AlertTriangle,
-    title: "Forensic Audit",
-    desc: "Investigation of financial irregularities, suspected fraud, and litigation support with detailed, defensible documentation.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Compliance Audit",
-    desc: "Verification that your business meets all applicable regulatory, tax, and industry-specific compliance requirements.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Performance Audit",
-    desc: "Assessment of whether financial resources are managed economically and efficiently in pursuit of your strategic objectives.",
-  },
-];
+function AuditServiceCard({
+  iconIndex,
+  index,
+}: {
+  iconIndex: number;
+  index: number;
+}) {
+  const t = useTranslations("financalAudit");
+  const Icon = auditServiceIcons[iconIndex];
+  const n = iconIndex + 1;
 
-const stats = [
-  { value: "500+", label: "Audits Completed" },
-  { value: "98%", label: "Client Retention Rate" },
-  { value: "20+", label: "Years of Experience" },
-  { value: "40+", label: "Certified Specialists" },
-];
+  return (
+    <motion.div
+      className={`group relative rounded-[28px] bg-gradient-to-br ${blue.bg} border border-transparent ${blue.border} p-6 shadow-sm hover:shadow-xl ${blue.hoverShadow} transition-all duration-500 overflow-hidden`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+      whileHover={{ y: -4 }}
+    >
+      <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 blur-2xl bg-blue-600" />
+      <div
+        className={`relative z-10 w-11 h-11 p-2.5 ${blue.iconBg} text-white rounded-xl shadow-lg ${blue.iconShadow} mb-4 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center`}
+      >
+        <Icon className="w-5 h-5" />
+      </div>
+      <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-1.5">
+        {t(`service${n}Title`)}
+      </h3>
+      <p className="relative z-10 text-gray-500 text-sm leading-relaxed">
+        {t(`service${n}Desc`)}
+      </p>
+    </motion.div>
+  );
+}
 
-const benefits = [
-  "Audits conducted in accordance with ISA, IFRS, and local GAAP",
-  "Dedicated senior auditor assigned to your engagement",
-  "Digital-first workflow with secure client portal access",
-  "Timely delivery — we respect your deadlines",
-  "Clear, jargon-free reporting for management and boards",
-  "Ongoing advisory support beyond the audit itself",
-  "Strict confidentiality and data security protocols",
-  "Independent, objective opinion you can rely on",
-];
+function TeamCard({
+  member,
+  index,
+}: {
+  member: (typeof auditTeam)[0];
+  index: number;
+}) {
+  const t = useTranslations("financalAudit");
+
+  return (
+    <motion.div
+      className="group relative aspect-[4/5] w-full cursor-pointer overflow-hidden rounded-[28px] bg-gray-200"
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.55, delay: index * 0.1 }}
+      whileHover={{ y: -6 }}
+    >
+      <img
+        src={member.image}
+        alt={member.name}
+        className="h-full w-full object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a1a3f]/90 via-[#0a1a3f]/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
+        <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-blue-300/80 mb-1">
+          {t("teamMemberDept")}
+        </span>
+        <h3 className="text-xl font-bold text-white leading-tight mb-0.5">
+          {member.name}
+        </h3>
+        <p className="text-[11px] font-medium uppercase tracking-widest text-white/70">
+          {member.title}
+        </p>
+        <div className="mt-4 overflow-hidden max-h-0 group-hover:max-h-16 transition-all duration-400 ease-in-out">
+          <Link
+            href={`/team/${member.slug}`}
+            className="inline-flex items-center gap-2 rounded-full border border-white/40 px-5 py-2 text-xs font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-[#0a1a3f]"
+          >
+            {t("teamViewProfile")}
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function FinancialAuditPage() {
+  const t = useTranslations("financalAudit");
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -102,6 +160,17 @@ export default function FinancialAuditPage() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
+  const benefits = [
+    t("benefit1"),
+    t("benefit2"),
+    t("benefit3"),
+    t("benefit4"),
+    t("benefit5"),
+    t("benefit6"),
+    t("benefit7"),
+    t("benefit8"),
+  ];
+
   return (
     <div className="min-h-screen bg-[#f3f5f4] font-sans">
       {/* ── HERO ── */}
@@ -109,7 +178,6 @@ export default function FinancialAuditPage() {
         ref={heroRef}
         className="relative w-full bg-[#0a1a3f] overflow-hidden min-h-[88vh] flex items-center"
       >
-        {/* Background image parallax */}
         <motion.div
           className="absolute inset-0 z-0 opacity-30 mix-blend-overlay"
           style={{
@@ -119,12 +187,8 @@ export default function FinancialAuditPage() {
             y: heroY,
           }}
         />
-
-        {/* Gradient orbs */}
         <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-400/15 rounded-full blur-[80px] pointer-events-none" />
-
-        {/* Grid overlay */}
         <div
           className="absolute inset-0 z-0 opacity-[0.04]"
           style={{
@@ -138,7 +202,6 @@ export default function FinancialAuditPage() {
           className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-32 w-full"
           style={{ opacity: heroOpacity }}
         >
-          {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -149,20 +212,19 @@ export default function FinancialAuditPage() {
               className="inline-flex items-center gap-2 text-blue-300/80 hover:text-blue-200 text-sm font-medium transition-colors mb-10 group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
-              Back to Services
+              {t("heroBackLink")}
             </Link>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              {/* Badge */}
               <motion.div
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold uppercase tracking-widest mb-6"
                 initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <FileSearch size={12} /> Financial Audit
+                <FileSearch size={12} /> {t("heroBadge")}
               </motion.div>
 
               <motion.h1
@@ -171,11 +233,11 @@ export default function FinancialAuditPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Professional{" "}
+                {t("heroHeading")}{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200">
-                  Audit
+                  {t("heroHeadingHighlight")}
                 </span>{" "}
-                Services
+                {t("heroHeadingSuffix")}
               </motion.h1>
 
               <motion.p
@@ -184,9 +246,7 @@ export default function FinancialAuditPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                An independent, objective assessment of your financial
-                statements. We deliver clarity, compliance, and confidence — so
-                your stakeholders can trust the numbers.
+                {t("heroBody")}
               </motion.p>
 
               <motion.div
@@ -199,20 +259,19 @@ export default function FinancialAuditPage() {
                   href="/contact"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-blue-500 hover:bg-blue-400 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.03]"
                 >
-                  Request an Audit <ChevronRight size={16} />
+                  {t("heroCta")} <ChevronRight size={16} />
                 </Link>
                 <a
                   href="#services"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
                 >
-                  Explore Services
+                  {t("heroExplore")}
                 </a>
               </motion.div>
             </div>
           </div>
         </motion.div>
 
-        {/* Bottom wave */}
         <div className="absolute bottom-0 left-0 right-0 z-10">
           <svg
             viewBox="0 0 1440 80"
@@ -227,42 +286,29 @@ export default function FinancialAuditPage() {
         </div>
       </section>
 
-      {/* ── WHAT IS AN AUDIT ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* ── WHAT WE DO + BENEFITS ── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 md:py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-0.5 bg-blue-600" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                What We Do
+                {t("whatWeDoLabel")}
               </span>
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900 leading-tight mb-6">
-              What Is a Financial Audit — and Why Does It Matter?
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-5">
+              {t("whatWeDoHeading")}
             </h2>
-            <p className="text-gray-600 text-[16px] leading-relaxed mb-5">
-              A financial audit is an independent examination of your company's
-              financial records, transactions, and statements. The purpose is
-              simple: to provide an objective opinion on whether your financial
-              statements present a true and fair view of your financial
-              position.
+            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
+              {t("whatWeDoBody1")}
             </p>
-            <p className="text-gray-600 text-[16px] leading-relaxed mb-5">
-              Beyond regulatory compliance, a well-conducted audit strengthens
-              internal controls, builds investor and lender confidence, uncovers
-              inefficiencies, and positions your business for sustainable
-              growth. It's not just a checkbox — it's a strategic asset.
-            </p>
-            <p className="text-gray-600 text-[16px] leading-relaxed">
-              Our team of certified auditors brings deep industry knowledge and
-              strict adherence to International Standards on Auditing (ISA),
-              ensuring every engagement is thorough, independent, and
-              professionally executed.
+            <p className="text-gray-600 text-[15px] leading-relaxed">
+              {t("whatWeDoBody2")}
             </p>
           </motion.div>
 
@@ -271,25 +317,30 @@ export default function FinancialAuditPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative"
           >
-            <div className="absolute -inset-4 rounded-[40px] bg-blue-600/10 blur-2xl" />
-            <div className="relative bg-white rounded-[32px] p-8 shadow-xl border border-blue-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-6">
-                What's Included in Every Audit
+            <div
+              className={`relative rounded-[28px] bg-gradient-to-br ${blue.bg} border ${blue.lightBorder} p-7 shadow-sm overflow-hidden`}
+            >
+              <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl bg-blue-600" />
+              <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-5">
+                {t("benefitsCardTitle")}
               </h3>
-              <ul className="space-y-3.5">
+              <ul className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {benefits.map((b, i) => (
                   <motion.li
                     key={i}
-                    className="flex items-start gap-3 text-gray-700"
+                    className="flex items-start gap-2.5 text-gray-700"
                     initial={{ opacity: 0, x: 10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.06 }}
+                    transition={{ duration: 0.35, delay: i * 0.05 }}
                   >
-                    <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-[14px] font-medium">{b}</span>
+                    <CheckCircle2
+                      className={`w-4 h-4 ${blue.check} shrink-0 mt-0.5`}
+                    />
+                    <span className="text-[13px] font-medium leading-snug">
+                      {b}
+                    </span>
                   </motion.li>
                 ))}
               </ul>
@@ -298,120 +349,134 @@ export default function FinancialAuditPage() {
         </div>
       </section>
 
-      {/* ── AUDIT TYPES ── */}
-      <section id="services" className="bg-white py-20">
+      {/* ── AUDIT SERVICES ── */}
+      <section id="services" className="bg-white py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div
-            className="text-center mb-14"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-0.5 bg-blue-600" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-                Audit Types
+                {t("auditTypesLabel")}
               </span>
               <div className="w-8 h-0.5 bg-blue-600" />
             </div>
-            <h2 className="text-4xl font-extrabold text-gray-900">
-              Our Audit Services
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              {t("auditTypesHeading")}
             </h2>
-            <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-              From statutory obligations to strategic investigations, we cover
-              every dimension of financial assurance.
+            <p className="text-gray-500 mt-2 max-w-lg mx-auto text-sm">
+              {t("auditTypesBody")}
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {auditServices.map((svc, i) => (
-              <motion.div
-                key={i}
-                className="group bg-[#f3f5f4] hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 border border-transparent hover:border-blue-100 rounded-[28px] p-7 transition-all duration-400 cursor-default"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                whileHover={{
-                  y: -4,
-                  boxShadow: "0 20px 60px rgba(37,99,235,0.1)",
-                }}
-              >
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-5 shadow-md shadow-blue-100 group-hover:scale-105 transition-transform duration-300">
-                  <svc.icon className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="text-[17px] font-bold text-gray-900 mb-2">
-                  {svc.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {svc.desc}
-                </p>
-              </motion.div>
+          {/* Mobile carousel */}
+          <div className="block md:hidden">
+            <Carousel opts={{ align: "start", loop: false }} className="w-full">
+              <CarouselContent className="-ml-0 mr-6">
+                {auditServiceIcons.map((_, i) => (
+                  <CarouselItem
+                    key={i}
+                    className="pl-6 basis-[85%] sm:basis-[70%]"
+                  >
+                    <AuditServiceCard iconIndex={i} index={i} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {auditServiceIcons.map((_, i) => (
+              <AuditServiceCard key={i} iconIndex={i} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── PROCESS ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-blue-600" />
-            <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
-              Our Process
-            </span>
-            <div className="w-8 h-0.5 bg-blue-600" />
+      {/* ── TEAM ── */}
+      <section className="bg-[#f3f5f4] py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <motion.div
+            className="mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-0.5 bg-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
+                {t("teamLabel")}
+              </span>
+            </div>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+                {t("teamHeading")}
+              </h2>
+              <p className="text-gray-500 text-[14px] max-w-sm leading-relaxed">
+                {t("teamBody")}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Mobile carousel */}
+          <div className="block md:hidden">
+            <Carousel opts={{ align: "start", loop: false }} className="w-full">
+              <CarouselContent className="-ml-0 mr-6">
+                {auditTeam.map((member, i) => (
+                  <CarouselItem
+                    key={member.slug}
+                    className="pl-6 basis-[80%] sm:basis-[65%]"
+                  >
+                    <TeamCard member={member} index={i} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
-          <h2 className="text-4xl font-extrabold text-gray-900">
-            How We Conduct Your Audit
-          </h2>
-          <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-            A structured, transparent process designed to minimise disruption
-            and maximise insight.
-          </p>
-        </motion.div>
 
-        <div className="relative">
-          {/* Connecting line — desktop */}
-          <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-blue-200 via-blue-400 to-blue-200" />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {auditSteps.map((step, i) => (
-              <motion.div
-                key={i}
-                className="relative text-center"
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.5, delay: i * 0.12 }}
-              >
-                <div className="relative inline-flex items-center justify-center w-[72px] h-[72px] rounded-full bg-blue-600 text-white font-extrabold text-xl shadow-xl shadow-blue-200 mb-6 mx-auto">
-                  {step.number}
-                  <div className="absolute inset-0 rounded-full bg-blue-400/30 blur-md -z-10" />
-                </div>
-                <h3 className="text-[17px] font-bold text-gray-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </motion.div>
+          {/* Desktop grid */}
+          <div className="hidden md:grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {auditTeam.map((member, i) => (
+              <TeamCard key={member.slug} member={member} index={i} />
             ))}
           </div>
+
+          <motion.div
+            className="mt-10 flex justify-center"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <Link
+              href="/team?team=financial-audit"
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r ${blue.lightBg} border ${blue.lightBorder} ${blue.text} font-semibold text-sm transition-all duration-300 shadow-sm hover:shadow-lg ${blue.hoverShadow} hover:border-transparent hover:scale-[1.02] group/link relative overflow-hidden`}
+            >
+              <span
+                className={`absolute inset-0 rounded-full bg-gradient-to-r ${blue.gradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
+              />
+              <span className="relative z-10 group-hover/link:text-white transition-colors duration-300">
+                {t("teamViewAll")}
+              </span>
+              <ArrowRight
+                className={`relative z-10 w-4 h-4 ${blue.text} group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1`}
+              />
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── CTA BANNER ── */}
+      {/* ── CTA ── */}
       <section className="px-6 lg:px-12 pb-20">
         <motion.div
-          className="max-w-7xl mx-auto relative overflow-hidden rounded-[40px] bg-[#0a1a3f] p-12 md:p-16 text-center"
+          className="max-w-7xl mx-auto relative overflow-hidden rounded-[36px] bg-[#0a1a3f] p-10 md:p-14 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -419,31 +484,28 @@ export default function FinancialAuditPage() {
         >
           <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-500/20 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-cyan-400/15 rounded-full blur-[80px] pointer-events-none" />
-
           <div className="relative z-10">
-            <p className="text-blue-300/80 text-sm font-bold uppercase tracking-widest mb-4">
-              Ready to get started?
+            <p className="text-blue-300/80 text-xs font-bold uppercase tracking-widest mb-3">
+              {t("ctaLabel")}
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-5">
-              Let's Audit Your Business — Together
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+              {t("ctaHeading")}
             </h2>
-            <p className="text-blue-100/60 max-w-lg mx-auto mb-8 text-base leading-relaxed">
-              Speak with one of our senior auditors today. We'll assess your
-              needs and design an engagement that delivers real value — not just
-              compliance.
+            <p className="text-blue-100/60 max-w-md mx-auto mb-7 text-sm leading-relaxed">
+              {t("ctaBody")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-blue-500 hover:bg-blue-400 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/40 hover:scale-[1.03] text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-blue-500 hover:bg-blue-400 text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/40 hover:scale-[1.03] text-sm"
               >
-                Book a Free Consultation <ChevronRight size={16} />
+                {t("ctaBook")} <ChevronRight size={16} />
               </Link>
               <Link
                 href="/services"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all duration-300 backdrop-blur-sm text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition-all duration-300 backdrop-blur-sm text-sm"
               >
-                <ArrowLeft size={16} /> All Services
+                <ArrowLeft size={16} /> {t("ctaAllServices")}
               </Link>
             </div>
           </div>
