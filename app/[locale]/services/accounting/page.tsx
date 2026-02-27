@@ -12,7 +12,7 @@ import {
   RefreshCw,
   Database,
   CheckCircle2,
-  Zap,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -22,7 +22,6 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
-// ── same token approach as ServicesSection violet card ──
 const violet = {
   bg: "from-violet-50 via-purple-50 to-white",
   iconBg: "bg-violet-600",
@@ -45,7 +44,27 @@ const accountingServiceIcons = [
   RefreshCw,
 ];
 
-// ── Service card ──
+const accountingTeam = [
+  {
+    name: "Emily Turner",
+    title: "Senior Accountant",
+    image: "/3.png",
+    slug: "emily-turner",
+  },
+  {
+    name: "David Marsh",
+    title: "Accounting Manager",
+    image: "/4.jpeg",
+    slug: "david-marsh",
+  },
+  {
+    name: "Ana Beridze",
+    title: "Tax Specialist",
+    image: "/3.png",
+    slug: "ana-beridze",
+  },
+];
+
 function AccountingServiceCard({
   iconIndex,
   index,
@@ -82,7 +101,52 @@ function AccountingServiceCard({
   );
 }
 
-// ── Page ──
+function TeamCard({
+  member,
+  index,
+}: {
+  member: (typeof accountingTeam)[0];
+  index: number;
+}) {
+  const t = useTranslations("accounting");
+
+  return (
+    <motion.div
+      className="group relative aspect-[3/4] w-full cursor-pointer overflow-hidden rounded-[24px] bg-gray-200"
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.55, delay: index * 0.1 }}
+      whileHover={{ y: -6 }}
+    >
+      <img
+        src={member.image}
+        alt={member.name}
+        className="h-full w-full object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f3c]/90 via-[#1a0f3c]/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
+        <h3 className="text-base font-bold text-white leading-tight mb-0.5">
+          {member.name}
+        </h3>
+        <p className="text-[10px] font-medium uppercase tracking-widest text-white/70">
+          {member.title}
+        </p>
+        <div className="mt-3 overflow-hidden max-h-0 group-hover:max-h-16 transition-all duration-400 ease-in-out">
+          <Link
+            href={`/team/${member.slug}`}
+            className="inline-flex items-center gap-2 rounded-full border border-white/40 px-4 py-1.5 text-xs font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-[#1a0f3c]"
+          >
+            {t("teamViewProfile")}
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function AccountingServicesPage() {
   const t = useTranslations("accounting");
   const heroRef = useRef(null);
@@ -106,7 +170,6 @@ export default function AccountingServicesPage() {
 
   return (
     <div className="min-h-screen bg-[#f3f5f4] font-sans">
-      {/* ── HERO ── */}
       <section
         ref={heroRef}
         className="relative w-full bg-[#1a0f3c] overflow-hidden min-h-[88vh] flex items-center"
@@ -149,57 +212,59 @@ export default function AccountingServicesPage() {
             </Link>
           </motion.div>
 
-          <div className="max-w-2xl">
-            <motion.div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/20 border border-violet-400/30 text-violet-200 text-xs font-bold uppercase tracking-widest mb-6"
-              initial={{ opacity: 0, y: -16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <BookOpen size={12} /> {t("heroBadge")}
-            </motion.div>
-
-            <motion.h1
-              className="text-5xl md:text-6xl font-extrabold text-white leading-[1.05] mb-6"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {t("heroHeading")}{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-purple-200">
-                {t("heroHeadingHighlight")}
-              </span>{" "}
-              {t("heroHeadingSuffix")}
-            </motion.h1>
-
-            <motion.p
-              className="text-violet-100/60 text-lg leading-relaxed mb-10 max-w-lg"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              {t("heroBody")}
-            </motion.p>
-
-            <motion.div
-              className="flex flex-wrap gap-4"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/30 hover:scale-[1.03]"
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <motion.div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/20 border border-violet-400/30 text-violet-200 text-xs font-bold uppercase tracking-widest mb-6"
+                initial={{ opacity: 0, y: -16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                {t("heroCta")} <ChevronRight size={16} />
-              </Link>
-              <a
-                href="#services"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
+                <BookOpen size={12} /> {t("heroBadge")}
+              </motion.div>
+
+              <motion.h1
+                className="text-4xl md:text-5xl font-bold text-white leading-[1.2] tracking-tight mb-6"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                {t("heroExplore")}
-              </a>
-            </motion.div>
+                {t("heroHeading")}{" "}
+                <span className="text-transparent bg-clip-text py-1 bg-gradient-to-r from-violet-300 to-purple-200">
+                  {t("heroHeadingHighlight")}
+                </span>{" "}
+                {t("heroHeadingSuffix")}
+              </motion.h1>
+
+              <motion.p
+                className="text-violet-100/70 text-base leading-[1.85] mb-10 max-w-lg"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                {t("heroBody")}
+              </motion.p>
+
+              <motion.div
+                className="flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/30 hover:scale-[1.03]"
+                >
+                  {t("heroCta")} <ChevronRight size={16} />
+                </Link>
+                <a
+                  href="#services"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all duration-300 backdrop-blur-sm"
+                >
+                  {t("heroExplore")}
+                </a>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
 
@@ -217,45 +282,26 @@ export default function AccountingServicesPage() {
         </div>
       </section>
 
-      {/* ── FOUNDATION + CHECKLIST ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-16 md:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-12 md:py-16">
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-0.5 bg-violet-600" />
               <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
                 {t("foundationLabel")}
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-5">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-4">
               {t("foundationHeading")}
             </h2>
-            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
+            <p className="text-gray-600 text-[15px] leading-relaxed">
               {t("foundationBody1")}
             </p>
-            <p className="text-gray-600 text-[15px] leading-relaxed mb-4">
-              {t("foundationBody2")}
-            </p>
-            <p className="text-gray-600 text-[15px] leading-relaxed mb-6">
-              {t("foundationBody3")}
-            </p>
-
-            <div className="flex items-start gap-4 p-5 bg-violet-50 border border-violet-200/60 rounded-2xl">
-              <Zap className="w-5 h-5 text-violet-600 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-violet-800 mb-1">
-                  {t("foundationAlertTitle")}
-                </p>
-                <p className="text-sm text-violet-700">
-                  {t("foundationAlertBody")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <motion.div
@@ -265,13 +311,13 @@ export default function AccountingServicesPage() {
             transition={{ duration: 0.6 }}
           >
             <div
-              className={`relative rounded-[28px] bg-gradient-to-br ${violet.bg} border ${violet.lightBorder} p-7 shadow-sm overflow-hidden`}
+              className={`relative rounded-[28px] bg-gradient-to-br ${violet.bg} border ${violet.lightBorder} p-6 shadow-sm overflow-hidden`}
             >
               <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-20 blur-2xl bg-violet-600" />
-              <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-5">
+              <h3 className="relative z-10 text-[16px] font-bold text-gray-900 mb-4">
                 {t("checklistCardTitle")}
               </h3>
-              <ul className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <ul className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {checklist.map((item, i) => (
                   <motion.li
                     key={i}
@@ -295,11 +341,10 @@ export default function AccountingServicesPage() {
         </div>
       </section>
 
-      {/* ── SERVICES ── */}
-      <section id="services" className="bg-white py-16 md:py-20">
+      <section id="services" className="bg-white py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -312,15 +357,8 @@ export default function AccountingServicesPage() {
               </span>
               <div className="w-8 h-0.5 bg-violet-600" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-              {t("servicesHeading")}
-            </h2>
-            <p className="text-gray-500 mt-2 max-w-lg mx-auto text-sm">
-              {t("servicesBody")}
-            </p>
           </motion.div>
 
-          {/* Mobile carousel */}
           <div className="block md:hidden">
             <Carousel opts={{ align: "start", loop: false }} className="w-full">
               <CarouselContent className="-ml-0 mr-6">
@@ -336,7 +374,6 @@ export default function AccountingServicesPage() {
             </Carousel>
           </div>
 
-          {/* Desktop grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {accountingServiceIcons.map((_, i) => (
               <AccountingServiceCard key={i} iconIndex={i} index={i} />
@@ -345,10 +382,75 @@ export default function AccountingServicesPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="px-6 lg:px-12 pb-20 pt-16 md:pt-20">
+      <section className="bg-[#f3f5f4] py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <motion.div
+            className="mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-0.5 bg-violet-600" />
+              <span className="text-xs font-bold uppercase tracking-[2px] text-gray-500">
+                {t("teamLabel")}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+              {t("teamHeading")}
+            </h2>
+          </motion.div>
+
+          <div className="block md:hidden">
+            <Carousel opts={{ align: "start", loop: false }} className="w-full">
+              <CarouselContent className="-ml-0 mr-6">
+                {accountingTeam.map((member, i) => (
+                  <CarouselItem
+                    key={member.slug}
+                    className="pl-6 basis-[65%] sm:basis-[50%]"
+                  >
+                    <TeamCard member={member} index={i} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          <div className="hidden md:grid sm:grid-cols-3 lg:grid-cols-4 gap-5">
+            {accountingTeam.map((member, i) => (
+              <TeamCard key={member.slug} member={member} index={i} />
+            ))}
+          </div>
+
+          <motion.div
+            className="mt-8 flex justify-center"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <Link
+              href="/team?team=accounting"
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r ${violet.lightBg} border ${violet.lightBorder} ${violet.text} font-semibold text-sm transition-all duration-300 shadow-sm hover:shadow-lg ${violet.hoverShadow} hover:border-transparent hover:scale-[1.02] group/link relative overflow-hidden`}
+            >
+              <span
+                className={`absolute inset-0 rounded-full bg-gradient-to-r ${violet.gradient} opacity-0 group-hover/link:opacity-100 transition-opacity duration-300`}
+              />
+              <span className="relative z-10 group-hover/link:text-white transition-colors duration-300">
+                {t("teamViewAll")}
+              </span>
+              <ArrowRight
+                className={`relative z-10 w-4 h-4 ${violet.text} group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1`}
+              />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="px-6 lg:px-12 pb-16">
         <motion.div
-          className="max-w-7xl mx-auto relative overflow-hidden rounded-[36px] bg-[#1a0f3c] p-10 md:p-14 text-center"
+          className="max-w-7xl mx-auto relative overflow-hidden rounded-[36px] bg-[#1a0f3c] p-10 md:p-12 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -360,10 +462,10 @@ export default function AccountingServicesPage() {
             <p className="text-violet-300/80 text-xs font-bold uppercase tracking-widest mb-3">
               {t("ctaLabel")}
             </p>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-3">
               {t("ctaHeading")}
             </h2>
-            <p className="text-violet-100/60 max-w-md mx-auto mb-7 text-sm leading-relaxed">
+            <p className="text-violet-100/60 max-w-md mx-auto mb-6 text-sm leading-relaxed">
               {t("ctaBody")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
